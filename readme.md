@@ -92,6 +92,7 @@ Come meet and learn from other bot developers! [Full video of our 2016 event is 
 
 Botkit is designed around the idea of giving developers a language-like interface for building bots.
 Instead of dealing directly with messaging platform protocols and APIs, Botkit provides semantic functions
+
 designed around the normal parts of human conversation: _hearing things_ and _saying things_.
 
 On top of these basic build blocks, Botkit offers a powerful system for creating and managing dynamic
@@ -122,6 +123,8 @@ Botkit is available via NPM.
 
 ```bash
 npm install --save botkit
+npm install dotenv --save
+npm install --save botkit-middleware-apiai
 ```
 
 You can also check out Botkit directly from Git.
