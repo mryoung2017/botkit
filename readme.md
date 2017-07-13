@@ -74,7 +74,6 @@ Botkit is available via NPM.
 
 ```bash
 npm install
-npm install dotenv --save
 npm install --save botkit-middleware-apiai
 ```
 
