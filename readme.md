@@ -74,8 +74,6 @@ Botkit is available via NPM.
 
 ```bash
 npm install
-npm install dotenv --save
-npm install --save botkit-middleware-apiai
 ```
 
 ## Running Tests
@@ -109,6 +107,30 @@ node facebook_bot.js --lt --ltsubdomain <SUBDOMAIN_NAME>
 
 https://<SUBDOMAIN_NAME>.localtunnel.me/
 
+## Update Botkit on the server
+
+First connects to the docker instance via ssh
+
+```bash
+ssh ubuntu@<your-ec2-key>.compute-1.amazonaws.com
+```
+
+You are now connected to the ec2.
+
+Note: For now, the botkit instance runs in the background.
+
+```bash
+cd botkit/
+killall node
+git pull
+node facebook_bot.js --lt --ltsubdomain <SUBDOMAIN_NAME> &
+```
+
+Note: Do not forget the & at the end of the command. This puts the node process in the baground allowing it to not be killed when you close the terminal.
+
+## Todo
+* Create init.d script to automate botkit start, stop and update.
+* Secure localtunnel
 
 ## Documentation
 
