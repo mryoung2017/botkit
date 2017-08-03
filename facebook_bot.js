@@ -66,7 +66,45 @@ This bot demonstrates many of the core features of Botkit:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 require('dotenv').load();
+var dialog =  require('./dialog.json');
+var Redshift = require('node-redshift');
+var SQL = require('sql-template-strings');
 
+var client = {
+  user: process.env.Redshift_user,
+  database: process.env.Redshift_database,
+  password: process.env.Redshift_password,
+  port: process.env.Redshift_port,
+  host: process.env.Redshift_host
+};
+var redshift  = new Redshift(client);
+
+					
+if (!process.env.Redshift_user) {
+    console.log('Error: Specify Redshift_user in environment');
+    process.exit(1);
+}
+
+if (!process.env.Redshift_database) {
+    console.log('Error: Specify Redshift_database in environment');
+    process.exit(1);
+}
+
+if (!process.env.Redshift_password) {
+    console.log('Error: Specify Redshift_password in environment');
+    process.exit(1);
+}
+
+if (!process.env.Redshift_port) {
+    console.log('Error: Specify Redshift_port in environment');
+    process.exit(1);
+}
+
+if (!process.env.Redshift_host) {
+    console.log('Error: Specify Redshift_host in environment');
+    process.exit(1);
+}
+					
 if (!process.env.page_token) {
     console.log('Error: Specify page_token in environment');
     process.exit(1);
@@ -120,11 +158,11 @@ var controller = Botkit.facebookbot({
 controller.middleware.receive.use(apiai.receive);
 console.log('API.AI ONLINE!');
 
-controller.setupWebserver(process.env.port || 3000, function(err, webserver) {
+controller.setupWebserver(process.env.port || 5000, function(err, webserver) {
     controller.createWebhookEndpoints(webserver, bot, function() {
         console.log('ONLINE!');
         if(ops.lt) {
-            var tunnel = localtunnel(process.env.port || 3000, {subdomain: ops.ltsubdomain}, function(err, tunnel) {
+            var tunnel = localtunnel(process.env.port || 5000, {subdomain: ops.ltsubdomain}, function(err, tunnel) {
                 if (err) {
                     console.log(err);
                     process.exit();
@@ -149,16 +187,16 @@ controller.api.messenger_profile.get_started('Get Started');
 
 controller.api.messenger_profile.menu([{
     "locale":"default",
-    "composer_input_disabled":true,
+    "composer_input_disabled":false,
     "call_to_actions":[
         {
             "title":"My Skills",
             "type":"nested",
             "call_to_actions":[
                 {
-                    "title":"Hello",
+                    "title":"Test",
                     "type":"postback",
-                    "payload":"Hello"
+                    "payload":"Test"
                 },
                 {
                     "title":"Hi",
@@ -210,16 +248,225 @@ controller.on('facebook_postback', function(bot, message) {
 */
 
 
+
+
+// Facebook sender To WORK ON
+
+
+var fb_send = function (msg, fb_message, fb_bot) {
+	if ( fb_message.length > 1) {
+		fb_bot.startConversation(msg, function(err,convo) {
+			//For each message
+			for (var i=0; i < fb_message.length; i++) {
+						convo.say(fb_message[i].content);
+						convo.say(['íts working']);
+						if (i < (fb_message.length - 1) ) { convo.next() };
+						if (i === (fb_message.length - 1) ) { convo.stop() };
+			};
+		});
+	}
+	else {
+		bot.reply(message, fb_message.content);
+	}
+}
+
+
 //Action if a message is received
+controller.on('message_received', function(bot, message) {
+	let FB_user_id = message.user;
+	let API_sess_uuid = message.nlpResponse.sessionId;
+	let time_stamp = new Date(message.timestamp);
+
+	console.log('intent :');
+	console.log(message);	
+
+	redshift.query(SQL`SELECT * FROM users WHERE user_uuid=${FB_user_id}`, {raw: true})
+	.then(function(user) {
+		if (!user[0]) {
+			redshift.query(SQL`INSERT INTO users (user_uuid) VALUES (${FB_user_id})`, {raw: true})
+			.then(function(){
+				redshift.query(SQL`INSERT INTO sessions (sess_uuid, start_time) VALUES (${API_sess_uuid},${time_stamp})`, {raw: true})
+				.then(function(){
+					redshift.query(SQL`SELECT * FROM users WHERE user_uuid=${FB_user_id}`, {raw: true})
+					.then(function(user){
+							let id = user[0].id;
+					
+							redshift.query(SQL`UPDATE sessions SET userid=${id} WHERE sess_uuid=${API_sess_uuid}`, {raw: true})
+							.then(function(){
+							//Check in each root node if intent is matched
+							for (var i=0; i < dialog.root_nodes.length; i++) {
+								// If intent is matched
+								if (dialog.root_nodes[i].intent_name === message.nlpResponse.result.action) {
+									
+									//fb_send(message, dialog.root_nodes[i].output, bot);				//send content
+													
+									if ( dialog.root_nodes[i].output.length > 1) {
+										bot.startConversation(message, function(err,convo) {
+											//For each message
+											for (var j=0; j < dialog.root_nodes[i].output.length; j++) {
+														convo.say(dialog.root_nodes[i].output[j].content);
+														if (i < (dialog.root_nodes[i].output.length - 1) ) { convo.next() };
+														if (i === (dialog.root_nodes[i].output.length - 1) ) { convo.stop() };
+											};
+										});
+									}
+									else {
+										bot.reply(message, dialog.root_nodes[i].output.content);
+									}	
+
+									//if found node has childs
+									if (dialog.root_nodes[i].child_nodes != ""){
+										let input_context=dialog.root_nodes[i].id				//update input_context for next message
+										redshift.query(SQL`UPDATE sessions SET context = ${input_context} WHERE userid = ${id};`, {raw: true})
+										.then(function(){
+											
+											
+											
+										})
+										.catch(function(err){
+											console.log(err);
+										});
+										current_node=dialog.root_nodes[i];						//update current node
+									}
+								}
+								// If no intent matched at all
+								else { 
+									console.log('16');
+									var has_child = false;
+									console.log('no node found');
+									bot.reply(message, 'no node found')
+								}
+							}	
+						})
+						.catch(function(err){
+						console.log(err);
+						});
+					})
+					.catch(function(err){
+					console.log(err);
+					});	
+				})
+				.catch(function(err){
+					console.log(err);
+				});
+			})
+			.catch(function(err){
+			console.log(err);
+			});
+		}
+		else {
+			
+			redshift.query(SQL`SELECT * FROM sessions WHERE sess_uuid = ${API_sess_uuid};`, {raw: true})
+			.then(function(session){
+				
+				console.log(session);
+				//let input_context = session[0].context;
+				
+				if (input_context) {
+					console.log('input_context found : '+input_context);
+					// If the current node has childs :
+					if (current_node.childs) {
+						console.log('2');
+						var search_in_root_nodes = false;
+						// Starts by searching in child nodes :
+						if (search_in_root_nodes === false) {
+							console.log('3');
+							// Check each child node if the intent is matched :
+							for (var i=0; i < dialog.child_nodes[input_context].childs.length; i++) {
+								// If intent is matched :
+								if (dialog.child_nodes[childs[i]].intent_name === message.nlpResponse.result.action) {
+									console.log('4');
+									fb_send(message, dialog.child_nodes[childs[i]].output, bot);		//send content
+									search_in_root_nodes = false;								//do not search in root nodes
+									if (dialog.child_nodes[childs[i]].child_nodes != ""){		//if found node has childs
+										input_context = dialog.child_nodes[childs[i]].id;		//update input_context for next message
+										current_node=dialog.child_nodes[childs[i]];				//update current node
+									}
+								}
+								// If no intent is matched in child nodes :
+								else { 
+									console.log('5');
+									search_in_root_nodes = true;
+								}
+							}
+						}
+						// Starts searching in root nodes :
+						else {
+							console.log('6');
+							// Check in each root node if the intent is matched
+							for (var i=0; i < dialog.root_nodes.length; i++) {
+								// If intent is matched
+								if (dialog.root_nodes[i].intent_name === message.nlpResponse.result.action) {
+									console.log('7');
+									fb_send(message, dialog.root_nodes[i].output, bot);				//send content
+									search_in_root_nodes = false;							//do not search in root nodes anymore
+									if (dialog.root_nodes[i].child_nodes != ""){			//if found node has childs
+										console.log('8');
+										input_context=i;									//update input_context for next message
+										current_node=dialog.root_nodes[i];					//update current node
+									}
+								}
+								// If no intent matched at all
+								else { 
+									console.log('no node found');
+									bot.reply(message,'no node found');
+								}
+							}
+						}
+					}
+					// If current node has no child :
+					else {
+						console.log('9');
+						// Check in each root node if the intent is matched
+						for (var i=0; i < dialog.root_nodes.length; i++) {
+							// If intent is matched
+							if (dialog.root_nodes[i].intent_name === message.nlpResponse.result.action) {
+								console.log('10');
+								fb_send(message, dialog.root_nodes[i].output , bot);				//send content
+								if (dialog.root_nodes[i].child_nodes != ""){				//if found node has childs
+									input_context=i;										//update input_context for next message
+									current_node=dialog.root_nodes[i];						//update current node
+								}
+							}
+							// If no intent matched at all
+							else { 
+								console.log('11');
+								var has_child = false;
+								console.log('no node found');
+								bot.reply(message, 'no node found')
+							}
+						}
+					}
+				}
+				else {
+					// Check in each root node if the intent is matched
+				}	
+			})
+			.catch(function(err){
+				console.log(err);
+			});
+		}
+	})
+	.catch(function(err){
+	  console.log(err);
+	});	
+	
+	// If there is an input context i.e. the current node is part of a dialog: 		
+	
+	// If there is no current context :
+	
+})
 
 
-// DIRECT TRANSIT BETWEEN API.AI AND FACEBOOK
+/*
+ // DIRECT TRANSIT BETWEEN API.AI AND FACEBOOK
 controller.on('message_received', function(bot, message) {
 	console.log('API.AI ANSWER :');
 	console.log(message.nlpResponse);
 	//If API.AI answer has more than 1 message
 	if ( message.fulfillment.messages.length > 1) {   
 		bot.startConversation(message, function(err,convo) {
+			console.log(message);
 			//For each message
 			for (var i=0; i < message.fulfillment.messages.length; i++) {	
 				// make sure the message is for facebook platform
@@ -227,8 +474,8 @@ controller.on('message_received', function(bot, message) {
 					switch (message.fulfillment.messages[i].type) {
 					//In case the message type is 0, i.e. only message
 					case 0:
+						console.log(typeof(message.fulfillment.messages[i].speech));
 						convo.say(message.fulfillment.messages[i].speech);
-						convo.next();
 						if (i < (message.fulfillment.messages.length - 1) ) { convo.next() };
 						if (i === (message.fulfillment.messages.length - 1) ) { convo.stop() };
 						break;
@@ -303,294 +550,6 @@ controller.on('message_received', function(bot, message) {
 	}
 	
 });
-
-
-
-
-// apiai.hears for intents. in this example is 'hello' the intent
-/* controller.hears(['smalltalk.greetings.hello'],'message_received',apiai.hears,function(bot, message) {
-    bot.replyWithTyping(message, 'hello, its working!!');
-});
-
-// apiai.action for actions. in this example is 'user.setName' the action
-controller.hears(['user.setName'],'message_received',apiai.action,function(bot, message) {
-    // ...
-}); */
-
-
-/*  Actions when bot hears 
-
-controller.hears(['attachment_upload'], 'message_received', function(bot, message) {
-    var attachment = {
-        "type":"image",
-        "payload":{
-            "url":"https://pbs.twimg.com/profile_images/803642201653858305/IAW1DBPw_400x400.png",
-            "is_reusable": true
-        }
-    };
-
-    controller.api.attachment_upload.upload(attachment, function (err, attachmentId) {
-        if(err) {
-            // Error
-        } else {
-            var image = {
-                "attachment":{
-                    "type":"image",
-                    "payload": {
-                        "attachment_id": attachmentId
-                    }
-                }
-            };
-            bot.replyWithTyping(message, image);
-        }
-    });
-});
-
-controller.hears(['code'], 'message_received,facebook_postback', function(bot, message) {
-    controller.api.messenger_profile.get_messenger_code(2000, function (err, url) {
-        if(err) {
-            // Error
-        } else {
-            var image = {
-                "attachment":{
-                    "type":"image",
-                    "payload":{
-                        "url": url
-                    }
-                }
-            };
-            bot.replyWithTyping(message, image);
-        }
-    });
-});
-
-controller.hears(['quick'], 'message_received', function(bot, message) {
-
-    bot.replyWithTyping(message, {
-        text: 'Hey! This message has some quick replies attached.',
-        quick_replies: [
-            {
-                "content_type": "text",
-                "title": "Yes",
-                "payload": "yes",
-            },
-            {
-                "content_type": "text",
-                "title": "No",
-                "payload": "no",
-            }
-        ]
-    });
-
-});
-
-controller.hears(['^hello', '^hi'], 'message_received,facebook_postback', function(bot, message) {
-    controller.storage.users.get(message.user, function(err, user) {
-        if (user && user.name) {
-            bot.replyWithTyping(message, 'Hello ' + user.name + '!!');
-        } else {
-            bot.replyWithTyping(message, 'Hello.');
-        }
-    });
-});
-
-controller.hears(['silent push reply'], 'message_received', function(bot, message) {
-    reply_message = {
-        text: "This message will have a push notification on a mobile phone, but no sound notification",
-        notification_type: "SILENT_PUSH"
-    }
-    bot.replyWithTyping(message, reply_message)
-})
-
-controller.hears(['no push'], 'message_received', function(bot, message) {
-    reply_message = {
-        text: "This message will not have any push notification on a mobile phone",
-        notification_type: "NO_PUSH"
-    }
-    bot.replyWithTyping(message, reply_message)
-})
-
-controller.hears(['structured'], 'message_received', function(bot, message) {
-
-    bot.startConversation(message, function(err, convo) {
-        convo.ask({
-            attachment: {
-                'type': 'template',
-                'payload': {
-                    'template_type': 'generic',
-                    'elements': [
-                        {
-                            'title': 'Classic White T-Shirt',
-                            'image_url': 'http://petersapparel.parseapp.com/img/item100-thumb.png',
-                            'subtitle': 'Soft white cotton t-shirt is back in style',
-                            'buttons': [
-                                {
-                                    'type': 'web_url',
-                                    'url': 'https://petersapparel.parseapp.com/view_item?item_id=100',
-                                    'title': 'View Item'
-                                },
-                                {
-                                    'type': 'web_url',
-                                    'url': 'https://petersapparel.parseapp.com/buy_item?item_id=100',
-                                    'title': 'Buy Item'
-                                },
-                                {
-                                    'type': 'postback',
-                                    'title': 'Bookmark Item',
-                                    'payload': 'White T-Shirt'
-                                }
-                            ]
-                        },
-                        {
-                            'title': 'Classic Grey T-Shirt',
-                            'image_url': 'http://petersapparel.parseapp.com/img/item101-thumb.png',
-                            'subtitle': 'Soft gray cotton t-shirt is back in style',
-                            'buttons': [
-                                {
-                                    'type': 'web_url',
-                                    'url': 'https://petersapparel.parseapp.com/view_item?item_id=101',
-                                    'title': 'View Item'
-                                },
-                                {
-                                    'type': 'web_url',
-                                    'url': 'https://petersapparel.parseapp.com/buy_item?item_id=101',
-                                    'title': 'Buy Item'
-                                },
-                                {
-                                    'type': 'postback',
-                                    'title': 'Bookmark Item',
-                                    'payload': 'Grey T-Shirt'
-                                }
-                            ]
-                        }
-                    ]
-                }
-            }
-        }, function(response, convo) {
-            // whoa, I got the postback payload as a response to my convo.ask!
-            convo.next();
-        });
-    });
-});
-
-controller.hears(['call me (.*)', 'my name is (.*)'], 'message_received', function(bot, message) {
-    var name = message.match[1];
-    controller.storage.users.get(message.user, function(err, user) {
-        if (!user) {
-            user = {
-                id: message.user,
-            };
-        }
-        user.name = name;
-        controller.storage.users.save(user, function(err, id) {
-            bot.replyWithTyping(message, 'Got it. I will call you ' + user.name + ' from now on.');
-        });
-    });
-});
-
-controller.hears(['what is my name', 'who am i'], 'message_received', function(bot, message) {
-    controller.storage.users.get(message.user, function(err, user) {
-        if (user && user.name) {
-            bot.replyWithTyping(message, 'Your name is ' + user.name);
-        } else {
-            bot.startConversation(message, function(err, convo) {
-                if (!err) {
-                    convo.say('I do not know your name yet!');
-                    convo.ask('What should I call you?', function(response, convo) {
-                        convo.ask('You want me to call you `' + response.text + '`?', [
-                            {
-                                pattern: 'yes',
-                                callback: function(response, convo) {
-                                    // since no further messages are queued after this,
-                                    // the conversation will end naturally with status == 'completed'
-                                    convo.next();
-                                }
-                            },
-                            {
-                                pattern: 'no',
-                                callback: function(response, convo) {
-                                    // stop the conversation. this will cause it to end with status == 'stopped'
-                                    convo.stop();
-                                }
-                            },
-                            {
-                                default: true,
-                                callback: function(response, convo) {
-                                    convo.repeat();
-                                    convo.next();
-                                }
-                            }
-                        ]);
-
-                        convo.next();
-
-                    }, {'key': 'nickname'}); // store the results in a field called nickname
-
-                    convo.on('end', function(convo) {
-                        if (convo.status == 'completed') {
-                            bot.replyWithTyping(message, 'OK! I will update my dossier...');
-
-                            controller.storage.users.get(message.user, function(err, user) {
-                                if (!user) {
-                                    user = {
-                                        id: message.user,
-                                    };
-                                }
-                                user.name = convo.extractResponse('nickname');
-                                controller.storage.users.save(user, function(err, id) {
-                                    bot.replyWithTyping(message, 'Got it. I will call you ' + user.name + ' from now on.');
-                                });
-                            });
-
-
-
-                        } else {
-                            // this happens if the conversation ended prematurely for some reason
-                            bot.replyWithTyping(message, 'OK, nevermind!');
-                        }
-                    });
-                }
-            });
-        }
-    });
-});
-
-controller.hears(['shutdown'], 'message_received', function(bot, message) {
-
-    bot.startConversation(message, function(err, convo) {
-
-        convo.ask('Are you sure you want me to shutdown?', [
-            {
-                pattern: bot.utterances.yes,
-                callback: function(response, convo) {
-                    convo.say('Bye!');
-                    convo.next();
-                    setTimeout(function() {
-                        process.exit();
-                    }, 3000);
-                }
-            },
-        {
-            pattern: bot.utterances.no,
-            default: true,
-            callback: function(response, convo) {
-                convo.say('*Phew!*');
-                convo.next();
-            }
-        }
-        ]);
-    });
-});
-
-controller.hears(['uptime', 'identify yourself', 'who are you', 'what is your name'], 'message_received', function(bot, message) {
-
-        var hostname = os.hostname();
-        var uptime = formatUptime(process.uptime());
-
-        bot.replyWithTyping(message,
-            ':|] I am a bot. I have been running for ' + uptime + ' on ' + hostname + '.');
-    });
-
 */
 
 function formatUptime(uptime) {

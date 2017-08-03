@@ -1,0 +1,119 @@
+{
+    "root_nodes": [
+      {
+        "id": "0",
+        "intent_name": "smalltalk.greetings.hello",
+        "parent_node": "",
+        "childs": [
+          "0",
+          "1"
+        ],
+        "output": [
+          {
+            "type": "0",
+            "content": "speech example"
+          },
+          {
+            "type": "1",
+            "content": {
+			"attachment": {
+              "type": "template",
+              "payload": {
+                "template_type": "generic",
+                "elements": [
+                  {
+                    "title": "generic template 1 title example",
+                    "image_url": "https://previews.123rf.com/images/gorkemdemir/gorkemdemir1409/gorkemdemir140901191/31675984-EXAMPLE-red-rubber-stamp-over-a-white-background--Stock-Vector.jpg",
+                    "subtitle": "subtitle example",
+                    "default_action": {
+                      "type": "web_url",
+                      "url": "https://previews.123rf.com/images/gorkemdemir/gorkemdemir1409/gorkemdemir140901191/31675984-EXAMPLE-red-rubber-stamp-over-a-white-background--Stock-Vector.jpg"
+                    },
+                    "buttons": [
+                      {
+                        "type": "web_url",
+                        "url": "https://previews.123rf.com/images/gorkemdemir/gorkemdemir1409/gorkemdemir140901191/31675984-EXAMPLE-red-rubber-stamp-over-a-white-background--Stock-Vector.jpg",
+                        "title": "compact url button title example",
+                        "webview_height_ratio": "compact"
+                      },
+                      {
+                        "type": "web_url",
+                        "url": "https://previews.123rf.com/images/gorkemdemir/gorkemdemir1409/gorkemdemir140901191/31675984-EXAMPLE-red-rubber-stamp-over-a-white-background--Stock-Vector.jpg",
+                        "title": "full url button title example",
+                        "webview_height_ratio": "full"
+                      },
+                      {
+                        "type": "postback",
+                        "title": "postback button title example",
+                        "payload": "postback button payload example"
+                      }
+                    ]
+                  },
+                  {
+                    "title": "generic template 2 title example",
+                    "image_url": "https://previews.123rf.com/images/gorkemdemir/gorkemdemir1409/gorkemdemir140901191/31675984-EXAMPLE-red-rubber-stamp-over-a-white-background--Stock-Vector.jpg",
+                    "subtitle": "subtitle example 2",
+                    "default_action": {
+                      "type": "web_url",
+                      "url": "https://previews.123rf.com/images/gorkemdemir/gorkemdemir1409/gorkemdemir140901191/31675984-EXAMPLE-red-rubber-stamp-over-a-white-background--Stock-Vector.jpg"
+                    },
+                    "buttons": [
+                      {
+                        "type": "element_share"
+                      },
+                      {
+                        "type": "account_link",
+                        "url": "https://www.example.com/authorize"
+                      },
+                      {
+                        "type": "account_unlink"
+                      }
+                    ]
+                  }
+                ]
+              }
+			  }
+            }
+          },
+          {
+            "type": "2",
+            "content": {
+              "text": "quick replies text example",
+              "quick_replies": [
+                {
+                  "content_type": "text",
+                  "title": "text quick reply title example",
+                  "payload": "text quick reply payload example"
+                },
+                {
+                  "content_type": "text",
+                  "title": "text and image quick reply title example",
+                  "payload": "text and image quick reply payload example",
+                  "image_url": "http://petersfantastichats.com/img/red.png"
+                },
+                {
+                  "content_type": "location"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "child_nodes": [
+      {
+        "id": "0",
+        "intent_name": "smalltalk.appraisal.good",
+        "parent_node": "0",
+        "childs": "",
+        "output": "great"
+      },
+      {
+        "id": "1",
+        "intent_name": "smalltalk.appraisal.bad",
+        "parent_node": "0",
+        "childs": "",
+        "output": "bad"
+      }
+    ]
+  }
