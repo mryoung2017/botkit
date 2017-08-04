@@ -185,6 +185,7 @@ controller.api.messenger_profile.greeting('Hello {{user_first_name}} How are you
 controller.api.messenger_profile.get_started('Get Started');
 //controller.api.messenger_profile.delete_get_started()
 
+
 controller.api.messenger_profile.menu([{
     "locale":"default",
     "composer_input_disabled":false,
@@ -277,11 +278,12 @@ controller.on('message_received', function(bot, message) {
 	let API_sess_uuid = message.nlpResponse.sessionId;
 	let time_stamp = new Date(message.timestamp);
 
-	console.log('intent :');
-	console.log(message);	
+	//console.log('intent :');
+	//console.log(message);	
 
 	redshift.query(SQL`SELECT * FROM users WHERE user_uuid=${FB_user_id}`, {raw: true})
 	.then(function(user) {
+		// If users doesn't exist in DB
 		if (!user[0]) {
 			redshift.query(SQL`INSERT INTO users (user_uuid) VALUES (${FB_user_id})`, {raw: true})
 			.then(function(){
@@ -289,10 +291,9 @@ controller.on('message_received', function(bot, message) {
 				.then(function(){
 					redshift.query(SQL`SELECT * FROM users WHERE user_uuid=${FB_user_id}`, {raw: true})
 					.then(function(user){
-							let id = user[0].id;
-					
-							redshift.query(SQL`UPDATE sessions SET userid=${id} WHERE sess_uuid=${API_sess_uuid}`, {raw: true})
-							.then(function(){
+						let userid = user[0].id;				
+						redshift.query(SQL`UPDATE sessions SET userid=${userid} WHERE sess_uuid=${API_sess_uuid}`, {raw: true})
+						.then(function(){
 							//Check in each root node if intent is matched
 							for (var i=0; i < dialog.root_nodes.length; i++) {
 								// If intent is matched
@@ -317,7 +318,7 @@ controller.on('message_received', function(bot, message) {
 									//if found node has childs
 									if (dialog.root_nodes[i].child_nodes != ""){
 										let input_context=dialog.root_nodes[i].id				//update input_context for next message
-										redshift.query(SQL`UPDATE sessions SET context = ${input_context} WHERE userid = ${id};`, {raw: true})
+										redshift.query(SQL`UPDATE sessions SET context = ${input_context} WHERE userid = ${userid};`, {raw: true})
 										.then(function(){
 											
 											
@@ -326,13 +327,11 @@ controller.on('message_received', function(bot, message) {
 										.catch(function(err){
 											console.log(err);
 										});
-										current_node=dialog.root_nodes[i];						//update current node
 									}
+									else if (!dialog.root_nodes[i].child_nodes){break;}
 								}
 								// If no intent matched at all
 								else { 
-									console.log('16');
-									var has_child = false;
 									console.log('no node found');
 									bot.reply(message, 'no node found')
 								}
@@ -354,93 +353,438 @@ controller.on('message_received', function(bot, message) {
 			console.log(err);
 			});
 		}
+		// If User already exists in DB:
 		else {
+			let userid=user[0].id;
 			
-			redshift.query(SQL`SELECT * FROM sessions WHERE sess_uuid = ${API_sess_uuid};`, {raw: true})
+			redshift.query(SQL`SELECT * FROM sessions WHERE userid = ${userid};`, {raw: true})
 			.then(function(session){
+								
 				
-				console.log(session);
-				//let input_context = session[0].context;
+				var last_session = session[session.length-1].sess_uuid;		//Pull last_session ID from DB
+				console.log('last session ID : '+last_session);
+				console.log('API session ID : '+API_sess_uuid);
 				
-				if (input_context) {
-					console.log('input_context found : '+input_context);
-					// If the current node has childs :
-					if (current_node.childs) {
-						console.log('2');
-						var search_in_root_nodes = false;
-						// Starts by searching in child nodes :
-						if (search_in_root_nodes === false) {
-							console.log('3');
-							// Check each child node if the intent is matched :
-							for (var i=0; i < dialog.child_nodes[input_context].childs.length; i++) {
-								// If intent is matched :
-								if (dialog.child_nodes[childs[i]].intent_name === message.nlpResponse.result.action) {
-									console.log('4');
-									fb_send(message, dialog.child_nodes[childs[i]].output, bot);		//send content
-									search_in_root_nodes = false;								//do not search in root nodes
-									if (dialog.child_nodes[childs[i]].child_nodes != ""){		//if found node has childs
-										input_context = dialog.child_nodes[childs[i]].id;		//update input_context for next message
-										current_node=dialog.child_nodes[childs[i]];				//update current node
+				// If user is still in the same session
+				if (last_session === API_sess_uuid) {
+					var input_context = session[0].context;					//Pull context from current session from DB
+					
+					// If input context is a root node
+					if (input_context[input_context.length -1] === 'r') {
+						
+						var current_node = parseInt(input_context);			// Convert current_node string to Int
+						var current_node_childs = dialog.root_nodes[parseInt(input_context)].childs		// Get current node childs
+						
+						// If the current node has childs :
+						if (dialog.root_nodes[current_node].childs) {
+							var search_in_root_nodes = false;
+							
+							// Starts by searching in child nodes :
+							if (search_in_root_nodes === false) {
+								
+								// Check each child node of the root node if the intent is matched :
+								for (let i=0; i < current_node_childs.length; i++) {
+									
+									// If intent is matched :
+									if (dialog.child_nodes[parseInt(current_node_childs[i])].intent_name === message.nlpResponse.result.action) {
+										
+										//fb_send(message, dialog.child_nodes[childs[i]].output, bot);		//send content
+										
+										if ( dialog.child_nodes[parseInt(current_node_childs[i])].output.length > 1) {
+											bot.startConversation(message, function(err,convo) {
+												//For each message
+												for (let j=0; j < dialog.child_nodes[parseInt(current_node_childs[i])].output.length; j++) {
+															convo.say(dialog.child_nodes[parseInt(current_node_childs[i])].output[j].content);
+															if (i < (dialog.child_nodes[parseInt(current_node_childs[i])].output.length - 1) ) { convo.next() };
+															if (i === (dialog.child_nodes[parseInt(current_node_childs[i])].output.length - 1) ) { convo.stop() };
+												};
+											});
+										}
+										else {
+											bot.reply(message, dialog.child_nodes[parseInt(current_node_childs[i])].output.content);
+										}
+										
+										search_in_root_nodes = false;								//do not search in root nodes
+										
+										//if found node has childs
+										if (dialog.child_nodes[parseInt(current_node_childs[i])].childs != ""){
+											console.log('Current node has childs');
+											let input_context=dialog.child_nodes[parseInt(current_node_childs[i])].id				//update input_context for next message
+											redshift.query(SQL`UPDATE sessions SET context = ${input_context} WHERE userid = ${userid};`, {raw: true})
+											.then(function(){
+												console.log('Current context updated to : '+input_context);
+																																				
+											})
+											.catch(function(err){
+												console.log(err);
+											});
+										}
+										else if (!dialog.child_nodes[parseInt(current_node_childs[i])].childs) { break;};
+									}
+									// If no intent is matched in child nodes :
+									else { 
+										search_in_root_nodes = true;
+										break;
 									}
 								}
-								// If no intent is matched in child nodes :
-								else { 
-									console.log('5');
-									search_in_root_nodes = true;
+							}
+							
+							// Starts searching in root nodes :
+							else if (search_in_root_nodes === true){
+								//Check in each root node if intent is matched
+								for (let i=0; i < dialog.root_nodes.length; i++) {
+									// If intent is matched
+									if (dialog.root_nodes[i].intent_name === message.nlpResponse.result.action) {
+										
+										//fb_send(message, dialog.root_nodes[i].output, bot);				//send content
+														
+										if ( dialog.root_nodes[i].output.length > 1) {
+											bot.startConversation(message, function(err,convo) {
+												//For each message
+												for (var j=0; j < dialog.root_nodes[i].output.length; j++) {
+															convo.say(dialog.root_nodes[i].output[j].content);
+															if (i < (dialog.root_nodes[i].output.length - 1) ) { convo.next() };
+															if (i === (dialog.root_nodes[i].output.length - 1) ) { convo.stop() };
+												};
+											});
+										}
+										else {
+											bot.reply(message, dialog.root_nodes[i].output.content);
+										}	
+
+										//if found node has childs
+										if (dialog.root_nodes[i].child_nodes != ""){
+											let input_context=dialog.root_nodes[i].id				//update input_context for next message
+											redshift.query(SQL`UPDATE sessions SET context = ${input_context} WHERE userid = ${userid};`, {raw: true})
+											.then(function(){
+												
+												
+												
+											})
+											.catch(function(err){
+												console.log(err);
+											});
+										}
+										else if (!dialog.root_nodes[i].child_nodes) {break;}
+									}
+									// If no intent matched at all
+									else { 
+
+										console.log('no node found');
+										bot.reply(message, 'no node found')
+									}
 								}
 							}
 						}
-						// Starts searching in root nodes :
+						
+						// If current node has no child :
 						else {
-							console.log('6');
+							console.log('9');
 							// Check in each root node if the intent is matched
 							for (var i=0; i < dialog.root_nodes.length; i++) {
 								// If intent is matched
 								if (dialog.root_nodes[i].intent_name === message.nlpResponse.result.action) {
-									console.log('7');
-									fb_send(message, dialog.root_nodes[i].output, bot);				//send content
-									search_in_root_nodes = false;							//do not search in root nodes anymore
-									if (dialog.root_nodes[i].child_nodes != ""){			//if found node has childs
-										console.log('8');
-										input_context=i;									//update input_context for next message
-										current_node=dialog.root_nodes[i];					//update current node
+									
+									//fb_send(message, dialog.root_nodes[i].output, bot);				//send content
+													
+									if ( dialog.root_nodes[i].output.length > 1) {
+										bot.startConversation(message, function(err,convo) {
+											//For each message
+											for (var j=0; j < dialog.root_nodes[i].output.length; j++) {
+														convo.say(dialog.root_nodes[i].output[j].content);
+														if (i < (dialog.root_nodes[i].output.length - 1) ) { convo.next() };
+														if (i === (dialog.root_nodes[i].output.length - 1) ) { convo.stop() };
+											};
+										});
 									}
+									else {
+										bot.reply(message, dialog.root_nodes[i].output.content);
+									}	
+
+									//if found node has childs
+									if (dialog.root_nodes[i].child_nodes != ""){
+										let input_context=dialog.root_nodes[i].id				//update input_context for next message
+										redshift.query(SQL`UPDATE sessions SET context = ${input_context} WHERE userid = ${userid};`, {raw: true})
+										.then(function(){
+											
+											
+											
+										})
+										.catch(function(err){
+											console.log(err);
+										});
+									}
+									else if (!dialog.root_nodes[i].child_nodes){break;}
 								}
 								// If no intent matched at all
 								else { 
 									console.log('no node found');
-									bot.reply(message,'no node found');
+									bot.reply(message, 'no node found')
+								}
+							}	
+						}
+					}
+					
+					// If input context is a child node
+					else if ( input_context[input_context.length -1] === 'c' ){
+						var current_node = parseInt(input_context);			// Convert current_node string to Int
+						var current_node_childs = dialog.child_nodes[parseInt(input_context)].childs		// Get current node childs
+						
+						// If the current node has childs :
+						if (dialog.child_nodes[current_node].childs) {
+							var search_in_root_nodes = false;
+							
+							// Starts by searching in child nodes :
+							if (search_in_root_nodes === false) {
+								
+								// Check each child node of the root node if the intent is matched :
+								for (let i=0; i < current_node_childs.length; i++) {
+									
+									// If intent is matched :
+									if (dialog.child_nodes[parseInt(current_node_childs[i])].intent_name === message.nlpResponse.result.action) {
+										
+										//fb_send(message, dialog.child_nodes[childs[i]].output, bot);		//send content
+										
+										if ( dialog.child_nodes[parseInt(current_node_childs[i])].output.length > 1) {
+											bot.startConversation(message, function(err,convo) {
+												//For each message
+												for (let j=0; j < dialog.child_nodes[parseInt(current_node_childs[i])].output.length; j++) {
+															convo.say(dialog.child_nodes[parseInt(current_node_childs[i])].output[j].content);
+															if (i < (dialog.child_nodes[parseInt(current_node_childs[i])].output.length - 1) ) { convo.next() };
+															if (i === (dialog.child_nodes[parseInt(current_node_childs[i])].output.length - 1) ) { convo.stop() };
+												};
+											});
+										}
+										else {
+											bot.reply(message, dialog.child_nodes[parseInt(current_node_childs[i])].output.content);
+										}
+										
+										search_in_root_nodes = false;								//do not search in root nodes
+										
+										//if found node has childs
+										if (dialog.child_nodes[parseInt(current_node_childs[i])].childs != ""){
+											console.log('Current node has childs');
+											let input_context=dialog.child_nodes[parseInt(current_node_childs[i])].id				//update input_context for next message
+											redshift.query(SQL`UPDATE sessions SET context = ${input_context} WHERE userid = ${userid};`, {raw: true})
+											.then(function(){
+												console.log('Current context updated to : '+input_context);
+																																				
+											})
+											.catch(function(err){
+												console.log(err);
+											});
+										}
+										else if (!dialog.child_nodes[parseInt(current_node_childs[i])].childs) { break;};
+									}
+									// If no intent is matched in child nodes :
+									else { 
+										search_in_root_nodes = true;
+										
+									}
+								}
+							}
+							
+							// Starts searching in root nodes :
+							else if (search_in_root_nodes === true){
+								//Check in each root node if intent is matched
+								for (let i=0; i < dialog.root_nodes.length; i++) {
+									// If intent is matched
+									if (dialog.root_nodes[i].intent_name === message.nlpResponse.result.action) {
+										
+										//fb_send(message, dialog.root_nodes[i].output, bot);				//send content
+														
+										if ( dialog.root_nodes[i].output.length > 1) {
+											bot.startConversation(message, function(err,convo) {
+												//For each message
+												for (var j=0; j < dialog.root_nodes[i].output.length; j++) {
+															convo.say(dialog.root_nodes[i].output[j].content);
+															if (i < (dialog.root_nodes[i].output.length - 1) ) { convo.next() };
+															if (i === (dialog.root_nodes[i].output.length - 1) ) { convo.stop() };
+												};
+											});
+										}
+										else {
+											bot.reply(message, dialog.root_nodes[i].output.content);
+										}	
+
+										//if found node has childs
+										if (dialog.root_nodes[i].child_nodes != ""){
+											let input_context=dialog.root_nodes[i].id				//update input_context for next message
+											redshift.query(SQL`UPDATE sessions SET context = ${input_context} WHERE userid = ${userid};`, {raw: true})
+											.then(function(){
+												
+												
+												
+											})
+											.catch(function(err){
+												console.log(err);
+											});
+										}
+										else if (!dialog.root_nodes[i].child_nodes) {break;}
+									}
+									// If no intent matched at all
+									else { 
+
+										console.log('no node found');
+										bot.reply(message, 'no node found')
+									}
 								}
 							}
 						}
+						
+						// If current node has no child :
+						else {
+							console.log('9');
+							// Check in each root node if the intent is matched
+							for (var i=0; i < dialog.root_nodes.length; i++) {
+								// If intent is matched
+								if (dialog.root_nodes[i].intent_name === message.nlpResponse.result.action) {
+									
+									//fb_send(message, dialog.root_nodes[i].output, bot);				//send content
+													
+									if ( dialog.root_nodes[i].output.length > 1) {
+										bot.startConversation(message, function(err,convo) {
+											//For each message
+											for (var j=0; j < dialog.root_nodes[i].output.length; j++) {
+														convo.say(dialog.root_nodes[i].output[j].content);
+														if (i < (dialog.root_nodes[i].output.length - 1) ) { convo.next() };
+														if (i === (dialog.root_nodes[i].output.length - 1) ) { convo.stop() };
+											};
+										});
+									}
+									else {
+										bot.reply(message, dialog.root_nodes[i].output.content);
+									}	
+
+									//if found node has childs
+									if (dialog.root_nodes[i].child_nodes != ""){
+										let input_context=dialog.root_nodes[i].id				//update input_context for next message
+										redshift.query(SQL`UPDATE sessions SET context = ${input_context} WHERE userid = ${userid};`, {raw: true})
+										.then(function(){
+											
+											
+											
+										})
+										.catch(function(err){
+											console.log(err);
+										});
+									}
+									else if (!dialog.root_nodes[i].child_nodes){break;}
+								}
+								// If no intent matched at all
+								else { 
+									console.log('no node found');
+									bot.reply(message, 'no node found')
+								}
+							}	
+						}
 					}
-					// If current node has no child :
+					
+					
+					// If there is NO input context from last message in the session.
 					else {
-						console.log('9');
-						// Check in each root node if the intent is matched
+						
 						for (var i=0; i < dialog.root_nodes.length; i++) {
-							// If intent is matched
-							if (dialog.root_nodes[i].intent_name === message.nlpResponse.result.action) {
-								console.log('10');
-								fb_send(message, dialog.root_nodes[i].output , bot);				//send content
-								if (dialog.root_nodes[i].child_nodes != ""){				//if found node has childs
-									input_context=i;										//update input_context for next message
-									current_node=dialog.root_nodes[i];						//update current node
+								// If intent is matched
+								if (dialog.root_nodes[i].intent_name === message.nlpResponse.result.action) {
+									
+									//fb_send(message, dialog.root_nodes[i].output, bot);				//send content
+													
+									if ( dialog.root_nodes[i].output.length > 1) {
+										bot.startConversation(message, function(err,convo) {
+											//For each message
+											for (var j=0; j < dialog.root_nodes[i].output.length; j++) {
+														convo.say(dialog.root_nodes[i].output[j].content);
+														if (i < (dialog.root_nodes[i].output.length - 1) ) { convo.next() };
+														if (i === (dialog.root_nodes[i].output.length - 1) ) { convo.stop() };
+											};
+										});
+									}
+									else {
+										bot.reply(message, dialog.root_nodes[i].output.content);
+									}	
+
+									//if found node has childs
+									if (dialog.root_nodes[i].child_nodes != ""){
+										let input_context=dialog.root_nodes[i].id				//update input_context for next message
+										redshift.query(SQL`UPDATE sessions SET context = ${input_context} WHERE userid = ${userid};`, {raw: true})
+										.then(function(){
+											
+											
+											
+										})
+										.catch(function(err){
+											console.log(err);
+										});
+									}
+									else if (!dialog.root_nodes[i].child_nodes){break;}
+								}
+								// If no intent matched at all
+								else { 
+									console.log('no node found');
+									bot.reply(message, 'no node found')
 								}
 							}
-							// If no intent matched at all
-							else { 
-								console.log('11');
-								var has_child = false;
-								console.log('no node found');
-								bot.reply(message, 'no node found')
-							}
-						}
-					}
+						
+						
+						
+						// Check in each root node if the intent is matched
+					};
 				}
+				
+				// If new session started
 				else {
-					// Check in each root node if the intent is matched
-				}	
+					redshift.query(SQL`INSERT INTO sessions (sess_uuid, start_time, userid) VALUES (${API_sess_uuid},${time_stamp}, ${userid})`, {raw: true})
+					.then(function(){
+						
+						//Check in each root node if intent is matched
+						for (var i=0; i < dialog.root_nodes.length; i++) {
+								// If intent is matched
+								if (dialog.root_nodes[i].intent_name === message.nlpResponse.result.action) {
+									
+									//fb_send(message, dialog.root_nodes[i].output, bot);				//send content
+													
+									if ( dialog.root_nodes[i].output.length > 1) {
+										bot.startConversation(message, function(err,convo) {
+											//For each message
+											for (var j=0; j < dialog.root_nodes[i].output.length; j++) {
+														convo.say(dialog.root_nodes[i].output[j].content);
+														if (i < (dialog.root_nodes[i].output.length - 1) ) { convo.next() };
+														if (i === (dialog.root_nodes[i].output.length - 1) ) { convo.stop() };
+											};
+										});
+									}
+									else {
+										bot.reply(message, dialog.root_nodes[i].output.content);
+									}	
+
+									//if found node has childs
+									if (dialog.root_nodes[i].child_nodes != ""){
+										let input_context=dialog.root_nodes[i].id				//update input_context for next message
+										redshift.query(SQL`UPDATE sessions SET context = ${input_context} WHERE userid = ${userid};`, {raw: true})
+										.then(function(){
+											
+											
+											
+										})
+										.catch(function(err){
+											console.log(err);
+										});
+									}
+									else if (!dialog.root_nodes[i].child_nodes){break;}
+								}
+								// If no intent matched at all
+								else { 
+									console.log('no node found');
+									bot.reply(message, 'no node found')
+								}
+							}
+						
+					})
+					.catch(function(err){
+						console.log(err);
+					});
+				};	
 			})
 			.catch(function(err){
 				console.log(err);
