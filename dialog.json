@@ -1,12 +1,12 @@
 {
     "root_nodes": [
       {
-        "id": "0",
+        "id": "0 r",
         "intent_name": "smalltalk.greetings.hello",
         "parent_node": "",
         "childs": [
-          "0",
-          "1"
+          "0 c",
+          "1 c"
         ],
         "output": [
           {
@@ -102,18 +102,48 @@
     ],
     "child_nodes": [
       {
-        "id": "0",
+        "id": "0 c",
+        "intent_name": "smalltalk.appraisal.good",
+        "parent_node": "0",
+        "childs": ["2 c","3 c"],
+        "output": 
+		{
+            "type": "0",
+            "content": "child node 0"
+        }
+      },
+      {
+        "id": "1 c",
+        "intent_name": "smalltalk.appraisal.bad",
+        "parent_node": "0",
+        "childs": ["2 c","3 c"],
+        "output": 
+		{
+            "type": "0",
+            "content": "child node 1"
+        }
+      },
+	        {
+        "id": "2 c",
         "intent_name": "smalltalk.appraisal.good",
         "parent_node": "0",
         "childs": "",
-        "output": "great"
+        "output": 
+		{
+            "type": "0",
+            "content": "child node 2"
+        }
       },
       {
-        "id": "1",
+        "id": "3 c",
         "intent_name": "smalltalk.appraisal.bad",
         "parent_node": "0",
         "childs": "",
-        "output": "bad"
+        "output": 
+		{
+            "type": "0",
+            "content": "child node 3"
+        }
       }
     ]
   }
