@@ -66,6 +66,8 @@ This bot demonstrates many of the core features of Botkit:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 require('dotenv').load();
+var Promise = require('bluebird');
+
 var dialog =  require('./dialog.json');
 var Redshift = require('node-redshift');
 var SQL = require('sql-template-strings');
@@ -254,27 +256,39 @@ controller.on('facebook_postback', function(bot, message) {
 // Facebook sender To WORK ON
 
 
-var fb_send = function (msg, fb_message, fb_bot) {
-	
-	if ( fb_message.length > 1) {
-		fb_bot.startConversation(msg, function(err,convo) {
-			//For each message
-			for (var i=0; i < fb_message.length; i++) {
-						convo.say(fb_message[i].content);
-						convo.say(['íts working']);
-						if (i < (fb_message.length - 1) ) { convo.next() };
-						if (i === (fb_message.length - 1) ) { convo.stop() };
-			};
-		});
+var fb_send = function (message, fb_message) {
+	try{
+		if ( fb_message.length > 1) {
+			bot.startConversation(message, function(err,convo) {
+				
+				//For each message
+				for (let m=0; m < fb_message.length; m++ ) {
+					
+					convo.say(fb_message[m].content)
+					.then(function(){
+						console.log('convo.say works');
+						if (m < (fb_message.length - 1) ) { convo.next() };
+						if (m == (fb_message.length - 1) ) { convo.stop() };
+					})
+					.catch(console.err);
+					
+				};
+			});
+		}
+		else {
+			bot.replyWithTyping(message, fb_message.content);
+		}
+	}catch(err){
+		console.log(err);
 	}
-	else {
-		bot.reply(message, fb_message.content);
-	}
-}
+};
 
 
 //Action if a message is received
 controller.on('message_received', function(bot, message) {
+	
+
+	
 	var FB_user_id = message.user;
 	var API_sess_uuid = message.nlpResponse.sessionId;
 	var time_stamp = new Date(message.timestamp);
@@ -300,22 +314,8 @@ controller.on('message_received', function(bot, message) {
 								// If intent is matched
 								if (dialog.root_nodes[i].intent_name === message.nlpResponse.result.action) {
 									
-									fb_send(message, dialog.root_nodes[i].output, bot);				//send content
+									fb_send(message, dialog.root_nodes[i].output);				//send content
 													
-									/* if ( dialog.root_nodes[i].output.length > 1) {
-										bot.startConversation(message, function(err,convo) {
-											//For each message
-											for (var j=0; j < dialog.root_nodes[i].output.length; j++) {
-														convo.say(dialog.root_nodes[i].output[j].content);
-														if (i < (dialog.root_nodes[i].output.length - 1) ) { convo.next() };
-														if (i === (dialog.root_nodes[i].output.length - 1) ) { convo.stop() };
-											};
-										});
-									}
-									else {
-										bot.reply(message, dialog.root_nodes[i].output.content);
-									}	
- */
 									//if found node has childs
 									if (dialog.root_nodes[i].childs != ""){
 										var input_context=dialog.root_nodes[i].id				//update input_context for next message
@@ -391,21 +391,7 @@ controller.on('message_received', function(bot, message) {
 								if (dialog.child_nodes[parseInt(current_node_childs[i])].intent_name === message.nlpResponse.result.action) {
 									
 									
-									fb_send(message, dialog.child_nodes[parseInt(current_node_childs[i])].output, bot);		//send content
-									
-									/* if ( dialog.child_nodes[parseInt(current_node_childs[i])].output.length > 1) {
-										bot.startConversation(message, function(err,convo) {
-											//For each message
-											for (var j=0; j < dialog.child_nodes[parseInt(current_node_childs[i])].output.length; j++) {
-														convo.say(dialog.child_nodes[parseInt(current_node_childs[i])].output[j].content);
-														if (i < (dialog.child_nodes[parseInt(current_node_childs[i])].output.length - 1) ) { convo.next() };
-														if (i === (dialog.child_nodes[parseInt(current_node_childs[i])].output.length - 1) ) { convo.stop() };
-											};
-										});
-									}
-									else {
-										bot.reply(message, dialog.child_nodes[parseInt(current_node_childs[i])].output.content);
-									} */					
+									fb_send(message, dialog.child_nodes[parseInt(current_node_childs[i])].output);		//send content					
 									
 									//if found node has childs
 									if (dialog.child_nodes[parseInt(current_node_childs[i])].childs !== null && dialog.child_nodes[parseInt(current_node_childs[i])].childs.length >0){
@@ -447,21 +433,7 @@ controller.on('message_received', function(bot, message) {
 								// If intent is matched
 								if (dialog.root_nodes[i].intent_name === message.nlpResponse.result.action) {
 									
-									fb_send(message, dialog.root_nodes[i].output, bot);				//send content
-													
-									/* if ( dialog.root_nodes[i].output.length > 1) {
-										bot.startConversation(message, function(err,convo) {
-											//For each message
-											for (var j=0; j < dialog.root_nodes[i].output.length; j++) {
-														convo.say(dialog.root_nodes[i].output[j].content);
-														if (i < (dialog.root_nodes[i].output.length - 1) ) { convo.next() };
-														if (i === (dialog.root_nodes[i].output.length - 1) ) { convo.stop() };
-											};
-										});
-									}
-									else {
-										bot.reply(message, dialog.root_nodes[i].output.content);
-									} */	
+									fb_send(message, dialog.root_nodes[i].output);				//send content														
 
 									//if found node has childs
 									if (dialog.root_nodes[i].childs != null && dialog.root_nodes[i].childs>0 ){
@@ -480,6 +452,7 @@ controller.on('message_received', function(bot, message) {
 									else if (dialog.root_nodes[i].childs ==null || dialog.root_nodes[i].childs.length ==0 ) {
 										// Insert command to execute if found node has no child
 										console.log('Found node has no child')
+										
 									}
 									search_in_root_nodes = false;
 									break;
@@ -510,21 +483,7 @@ controller.on('message_received', function(bot, message) {
 								// If intent is matched :
 								if (dialog.child_nodes[parseInt(current_node_childs[i])].intent_name === message.nlpResponse.result.action) {
 									
-									fb_send(message, dialog.child_nodes[parseInt(current_node_childs[i])].output, bot);		//send content
-									
-									/* if ( dialog.child_nodes[parseInt(current_node_childs[i])].output.length > 1) {
-										bot.startConversation(message, function(err,convo) {
-											//For each message
-											for (var j=0; j < dialog.child_nodes[parseInt(current_node_childs[i])].output.length; j++) {
-														convo.say(dialog.child_nodes[parseInt(current_node_childs[i])].output[j].content);
-														if (i < (dialog.child_nodes[parseInt(current_node_childs[i])].output.length - 1) ) { convo.next() };
-														if (i === (dialog.child_nodes[parseInt(current_node_childs[i])].output.length - 1) ) { convo.stop() };
-											};
-										});
-									}
-									else {
-										bot.reply(message, dialog.child_nodes[parseInt(current_node_childs[i])].output.content);
-									} */
+									fb_send(message, dialog.child_nodes[parseInt(current_node_childs[i])].output);		//send content
 									
 									search_in_root_nodes = false;								//do not search in root nodes
 									
@@ -575,21 +534,7 @@ controller.on('message_received', function(bot, message) {
 								// If intent is matched
 								if (dialog.root_nodes[i].intent_name === message.nlpResponse.result.action) {
 									
-									fb_send(message, dialog.root_nodes[i].output, bot);				//send content
-													
-									/* if ( dialog.root_nodes[i].output.length > 1) {
-										bot.startConversation(message, function(err,convo) {
-											//For each message
-											for (var j=0; j < dialog.root_nodes[i].output.length; j++) {
-														convo.say(dialog.root_nodes[i].output[j].content);
-														if (i < (dialog.root_nodes[i].output.length - 1) ) { convo.next() };
-														if (i === (dialog.root_nodes[i].output.length - 1) ) { convo.stop() };
-											};
-										});
-									}
-									else {
-										bot.reply(message, dialog.root_nodes[i].output.content);
-									} */	
+									fb_send(message, dialog.root_nodes[i].output);				//send content														
 
 									//if found node has childs
 									if (dialog.root_nodes[i].childs != null && dialog.root_nodes[i].childs.length > 0 ){
@@ -604,6 +549,8 @@ controller.on('message_received', function(bot, message) {
 											console.log(err);
 										});
 									}
+									
+									//if found node has NO child
 									else if (dialog.root_nodes[i].childs == null || dialog.root_nodes[i].childs.length == 0) {
 										// Insert command to execute if found node has no child
 										console.log('Found node has no child')
@@ -631,22 +578,8 @@ controller.on('message_received', function(bot, message) {
 								// If intent is matched
 								if (dialog.root_nodes[i].intent_name === message.nlpResponse.result.action) {
 									
-									fb_send(message, dialog.root_nodes[i].output, bot);				//send content
-													
-									/* if ( dialog.root_nodes[i].output.length > 1) {
-										bot.startConversation(message, function(err,convo) {
-											//For each message
-											for (var j=0; j < dialog.root_nodes[i].output.length; j++) {
-														convo.say(dialog.root_nodes[i].output[j].content);
-														if (i < (dialog.root_nodes[i].output.length - 1) ) { convo.next() };
-														if (i === (dialog.root_nodes[i].output.length - 1) ) { convo.stop() };
-											};
-										});
-									}
-									else {
-										bot.reply(message, dialog.root_nodes[i].output.content);
-									} */	
-
+									fb_send(message, dialog.root_nodes[i].output);				//send content
+														
 									//if found node has childs
 									if (dialog.root_nodes[i].childs != null && dialog.root_nodes[i].childs.length > 0 ){
 										var input_context=dialog.root_nodes[i].id				//update input_context for next message
@@ -686,21 +619,8 @@ controller.on('message_received', function(bot, message) {
 								// If intent is matched
 								if (dialog.root_nodes[i].intent_name === message.nlpResponse.result.action) {
 									
-									fb_send(message, dialog.root_nodes[i].output, bot);				//send content
-													
-									/* if ( dialog.root_nodes[i].output.length > 1) {
-										bot.startConversation(message, function(err,convo) {
-											//For each message
-											for (var j=0; j < dialog.root_nodes[i].output.length; j++) {
-														convo.say(dialog.root_nodes[i].output[j].content);
-														if (i < (dialog.root_nodes[i].output.length - 1) ) { convo.next() };
-														if (i === (dialog.root_nodes[i].output.length - 1) ) { convo.stop() };
-											};
-										});
-									}
-									else {
-										bot.reply(message, dialog.root_nodes[i].output.content);
-									}	 */
+									fb_send(message, dialog.root_nodes[i].output);				//send content
+										
 
 									//if found node has childs
 									if (dialog.root_nodes[i].childs != null && dialog.root_nodes[i].childs.length > 0){
