@@ -274,9 +274,9 @@ var fb_send = function (msg, fb_message, fb_bot) {
 
 //Action if a message is received
 controller.on('message_received', function(bot, message) {
-	let FB_user_id = message.user;
-	let API_sess_uuid = message.nlpResponse.sessionId;
-	let time_stamp = new Date(message.timestamp);
+	var FB_user_id = message.user;
+	var API_sess_uuid = message.nlpResponse.sessionId;
+	var time_stamp = new Date(message.timestamp);
 
 	//console.log('intent :');
 	//console.log(message);	
@@ -291,7 +291,7 @@ controller.on('message_received', function(bot, message) {
 				.then(function(){
 					redshift.query(SQL`SELECT * FROM users WHERE user_uuid=${FB_user_id}`, {raw: true})
 					.then(function(user){
-						let userid = user[0].id;				
+						var userid = user[0].id;				
 						redshift.query(SQL`UPDATE sessions SET userid=${userid} WHERE sess_uuid=${API_sess_uuid}`, {raw: true})
 						.then(function(){
 							//Check in each root node if intent is matched
@@ -317,7 +317,7 @@ controller.on('message_received', function(bot, message) {
 
 									//if found node has childs
 									if (dialog.root_nodes[i].childs != ""){
-										let input_context=dialog.root_nodes[i].id				//update input_context for next message
+										var input_context=dialog.root_nodes[i].id				//update input_context for next message
 										redshift.query(SQL`UPDATE sessions SET context = ${input_context} WHERE userid = ${userid};`, {raw: true})
 										.then(function(){
 											
@@ -359,7 +359,7 @@ controller.on('message_received', function(bot, message) {
 		}
 		// If User already exists in DB:
 		else {
-			let userid=user[0].id;
+			var userid=user[0].id;
 			
 			// Get past sessions from this user
 			redshift.query(SQL`SELECT * FROM sessions WHERE userid = ${userid} ORDER BY id DESC;`, {raw: true})
@@ -383,7 +383,7 @@ controller.on('message_received', function(bot, message) {
 						if (search_in_root_nodes === false) {
 							
 							// Check each child node of the root node if the intent is matched :
-							for (let i=0; i < current_node_childs.length; i++) {
+							for (var i=0; i < current_node_childs.length; i++) {
 								console.log(dialog.child_nodes[parseInt(current_node_childs[i])].intent_name);
 								console.log(message.nlpResponse.result.action);
 								// If intent is matched :
@@ -395,7 +395,7 @@ controller.on('message_received', function(bot, message) {
 									if ( dialog.child_nodes[parseInt(current_node_childs[i])].output.length > 1) {
 										bot.startConversation(message, function(err,convo) {
 											//For each message
-											for (let j=0; j < dialog.child_nodes[parseInt(current_node_childs[i])].output.length; j++) {
+											for (var j=0; j < dialog.child_nodes[parseInt(current_node_childs[i])].output.length; j++) {
 														convo.say(dialog.child_nodes[parseInt(current_node_childs[i])].output[j].content);
 														if (i < (dialog.child_nodes[parseInt(current_node_childs[i])].output.length - 1) ) { convo.next() };
 														if (i === (dialog.child_nodes[parseInt(current_node_childs[i])].output.length - 1) ) { convo.stop() };
@@ -411,7 +411,7 @@ controller.on('message_received', function(bot, message) {
 										
 										console.log('Current node has childs :');
 										console.log(dialog.child_nodes[parseInt(current_node_childs[i])].childs);
-										let input_context=dialog.child_nodes[parseInt(current_node_childs[i])].id;			//update input_context for next message
+										var input_context=dialog.child_nodes[parseInt(current_node_childs[i])].id;			//update input_context for next message
 										
 										redshift.query(SQL`UPDATE sessions SET context = ${input_context} WHERE sess_uuid = ${last_session}`, {raw: true})
 										.then(function(){
@@ -442,7 +442,7 @@ controller.on('message_received', function(bot, message) {
 						if (search_in_root_nodes === true){
 							
 							//Check in each root node if intent is matched
-							for (let i=0; i < dialog.root_nodes.length; i++) {
+							for (var i=0; i < dialog.root_nodes.length; i++) {
 								// If intent is matched
 								if (dialog.root_nodes[i].intent_name === message.nlpResponse.result.action) {
 									
@@ -464,7 +464,7 @@ controller.on('message_received', function(bot, message) {
 
 									//if found node has childs
 									if (dialog.root_nodes[i].childs != null && dialog.root_nodes[i].childs>0 ){
-										let input_context=dialog.root_nodes[i].id				//update input_context for next message
+										var input_context=dialog.root_nodes[i].id				//update input_context for next message
 										redshift.query(SQL`UPDATE sessions SET context = ${input_context} WHERE sess_uuid = ${last_session};`, {raw: true})
 										.then(function(){
 											console.log('Session '+last_session+' context updated to : '+input_context);
@@ -504,7 +504,7 @@ controller.on('message_received', function(bot, message) {
 						if (search_in_root_nodes === false) {
 							
 							// Check each child node of the root node if the intent is matched :
-							for (let i=0; i < current_node_childs.length; i++) {
+							for (var i=0; i < current_node_childs.length; i++) {
 								
 								// If intent is matched :
 								if (dialog.child_nodes[parseInt(current_node_childs[i])].intent_name === message.nlpResponse.result.action) {
@@ -514,7 +514,7 @@ controller.on('message_received', function(bot, message) {
 									if ( dialog.child_nodes[parseInt(current_node_childs[i])].output.length > 1) {
 										bot.startConversation(message, function(err,convo) {
 											//For each message
-											for (let j=0; j < dialog.child_nodes[parseInt(current_node_childs[i])].output.length; j++) {
+											for (var j=0; j < dialog.child_nodes[parseInt(current_node_childs[i])].output.length; j++) {
 														convo.say(dialog.child_nodes[parseInt(current_node_childs[i])].output[j].content);
 														if (i < (dialog.child_nodes[parseInt(current_node_childs[i])].output.length - 1) ) { convo.next() };
 														if (i === (dialog.child_nodes[parseInt(current_node_childs[i])].output.length - 1) ) { convo.stop() };
@@ -533,7 +533,7 @@ controller.on('message_received', function(bot, message) {
 										console.log('Current node has childs : ');
 										console.log(dialog.child_nodes[parseInt(current_node_childs[i])].childs);
 										
-										let input_context=dialog.child_nodes[parseInt(current_node_childs[i])].id				//update input_context for next message
+										var input_context=dialog.child_nodes[parseInt(current_node_childs[i])].id				//update input_context for next message
 										redshift.query(SQL`UPDATE sessions SET context = ${input_context} WHERE userid = ${userid};`, {raw: true})
 										.then(function(){
 											console.log('Session '+last_session+' context updated to : '+input_context);
@@ -546,7 +546,7 @@ controller.on('message_received', function(bot, message) {
 									
 									//if found node has NO childs
 									else if (dialog.child_nodes[parseInt(current_node_childs[i])].childs == null || dialog.child_nodes[parseInt(current_node_childs[i])].childs.length == 0) {
-										let input_context=""				//update input_context for next message
+										var input_context=""				//update input_context for next message
 										redshift.query(SQL`UPDATE sessions SET context = ${input_context} WHERE userid = ${userid};`, {raw: true})
 										.then(function(){
 											console.log('Session '+last_session+' context reset');
@@ -570,7 +570,7 @@ controller.on('message_received', function(bot, message) {
 						// Starts searching in root nodes :
 						if (search_in_root_nodes === true){
 							//Check in each root node if intent is matched
-							for (let i=0; i < dialog.root_nodes.length; i++) {
+							for (var i=0; i < dialog.root_nodes.length; i++) {
 								// If intent is matched
 								if (dialog.root_nodes[i].intent_name === message.nlpResponse.result.action) {
 									
@@ -592,7 +592,7 @@ controller.on('message_received', function(bot, message) {
 
 									//if found node has childs
 									if (dialog.root_nodes[i].childs != null && dialog.root_nodes[i].childs.length > 0 ){
-										let input_context=dialog.root_nodes[i].id				//update input_context for next message
+										var input_context=dialog.root_nodes[i].id				//update input_context for next message
 										redshift.query(SQL`UPDATE sessions SET context = ${input_context} WHERE userid = ${userid};`, {raw: true})
 										.then(function(){
 											
@@ -648,7 +648,7 @@ controller.on('message_received', function(bot, message) {
 
 									//if found node has childs
 									if (dialog.root_nodes[i].childs != null && dialog.root_nodes[i].childs.length > 0 ){
-										let input_context=dialog.root_nodes[i].id				//update input_context for next message
+										var input_context=dialog.root_nodes[i].id				//update input_context for next message
 										redshift.query(SQL`UPDATE sessions SET context = ${input_context} WHERE userid = ${userid};`, {raw: true})
 										.then(function(){
 											
@@ -703,7 +703,7 @@ controller.on('message_received', function(bot, message) {
 
 									//if found node has childs
 									if (dialog.root_nodes[i].childs != null && dialog.root_nodes[i].childs.length > 0){
-										let input_context=dialog.root_nodes[i].id				//update input_context for next message
+										var input_context=dialog.root_nodes[i].id				//update input_context for next message
 										redshift.query(SQL`UPDATE sessions SET context = ${input_context} WHERE userid = ${userid};`, {raw: true})
 										.then(function(){
 											
