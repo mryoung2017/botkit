@@ -1,7 +1,7 @@
 {
     "root_nodes": [
-      {
-        "id": "0 r",
+      { "id": "0 r",
+        "uuid": "0",
         "intent_name": "smalltalk.greetings.hello",
         "parent_node": "",
         "childs": [
@@ -103,6 +103,7 @@
     "child_nodes": [
       {
         "id": "0 c",
+        "uuid": "1",
         "intent_name": "smalltalk.appraisal.good",
         "parent_node": "0",
         "childs": ["2 c","3 c"],
@@ -114,6 +115,7 @@
       },
       {
         "id": "1 c",
+        "uuid": "2",
         "intent_name": "smalltalk.appraisal.bad",
         "parent_node": "0",
         "childs": ["2 c","3 c"],
@@ -123,8 +125,9 @@
             "content": "child node 1"
         }
       },
-	        {
+	  {
         "id": "2 c",
+        "uuid": "3",
         "intent_name": "smalltalk.appraisal.good",
         "parent_node": "0",
         "childs": "",
@@ -136,6 +139,7 @@
       },
       {
         "id": "3 c",
+        "uuid": "4",
         "intent_name": "smalltalk.appraisal.bad",
         "parent_node": "0",
         "childs": "",
