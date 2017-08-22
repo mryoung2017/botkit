@@ -67,44 +67,7 @@ This bot demonstrates many of the core features of Botkit:
 
 require('dotenv').load();
 
-var dialog =  require('./dialog.json');
-var Redshift = require('node-redshift');
-var SQL = require('sql-template-strings');
-
-var client = {
-  user: process.env.Redshift_user,
-  database: process.env.Redshift_database,
-  password: process.env.Redshift_password,
-  port: process.env.Redshift_port,
-  host: process.env.Redshift_host
-};
-var redshift  = new Redshift(client);
-
-					
-if (!process.env.Redshift_user) {
-    console.log('Error: Specify Redshift_user in environment');
-    process.exit(1);
-}
-
-if (!process.env.Redshift_database) {
-    console.log('Error: Specify Redshift_database in environment');
-    process.exit(1);
-}
-
-if (!process.env.Redshift_password) {
-    console.log('Error: Specify Redshift_password in environment');
-    process.exit(1);
-}
-
-if (!process.env.Redshift_port) {
-    console.log('Error: Specify Redshift_port in environment');
-    process.exit(1);
-}
-
-if (!process.env.Redshift_host) {
-    console.log('Error: Specify Redshift_host in environment');
-    process.exit(1);
-}
+var dialog =  require('./dialog_simple.json');
 					
 if (!process.env.page_token) {
     console.log('Error: Specify page_token in environment');
@@ -129,6 +92,7 @@ var apiai = require('botkit-middleware-apiai')({
 
 var node_search = require('./lib/node_search.js');
 var fb_send = require('./lib/fb_send.js'); 
+var Session = require('./lib/Session.js');
 
 var Botkit = require('./lib/Botkit.js');
 var os = require('os');
@@ -256,16 +220,17 @@ controller.on('facebook_postback', function(bot, message) {
 controller.on('message_received', function(bot, message) {
 	
 	var FB_user_id = message.user;
-	var API_sess_uuid = message.nlpResponse.sessionId;
 	var time_stamp = new Date(message.timestamp);
 	
 	//console.log('intent :');
 	console.log(message.text);	
 	
 	controller.storage.users.get(message.user, function(err, user_data) {
-		
 		if (!user_data) {
-			controller.storage.users.save(message.user, {last_session : API_sess_uuid}, function(){});
+			
+			
+			var sess = Session.get(user_data, time_stamp, null);
+			controller.storage.users.save(message.user, {last_session : sess.uuid}, function(){});
 
 			var current_node = null;			// Convert current_node string to Int
 			var current_node_childs = null;		// Get current node childs
@@ -273,6 +238,7 @@ controller.on('message_received', function(bot, message) {
 			Promise.resolve(node_search(dialog, current_node, current_node_childs, message))
 			.then(function(found_node) {
 				fb_send(bot, message, found_node.output);
+				console.log('input context : '+ found_node.input_context);
 				var message_to_store = [{
 										input: message.text,
 										received_at: time_stamp,
@@ -281,7 +247,7 @@ controller.on('message_received', function(bot, message) {
 										outputid: found_node.id
 				}];
 				
-				controller.storage.sessions.save(API_sess_uuid, {start_time: time_stamp, userid: FB_user_id, last_context: found_node.input_context, messages: message_to_store});
+				controller.storage.sessions.save(sess.uuid, {start_time: time_stamp, timeout: sess.timeout, userid: FB_user_id, last_context: found_node.input_context, messages: message_to_store});
 			})
 			.catch(function(err){
 				console.log(err);
@@ -290,13 +256,14 @@ controller.on('message_received', function(bot, message) {
 			
 			
 		} else {
-			
-			// If user is still in the same session
-			if (user_data.last_session === API_sess_uuid) {
+			controller.storage.sessions.get(user_data.last_session, function(err, session_data) {
+				if (err) {console.log(err);}
+				else {
+					var sess = Session.get(user_data, time_stamp, session_data);
+					
+					// If user is still in the same session
+					if (user_data.last_session === sess.uuid) {
 				
-				controller.storage.sessions.get(API_sess_uuid, function(err, session_data) {
-					if (err) {console.log(err);}
-					else{
 						
 						//console.log(session_data);
 						var input_context = session_data.last_context;					//GET context from current session from DB
@@ -309,7 +276,6 @@ controller.on('message_received', function(bot, message) {
 							
 							Promise.resolve(node_search(dialog, current_node, current_node_childs, message))
 							.then(function(found_node){
-								console.log(found_node);
 								console.log('input context : '+ found_node.input_context);
 								fb_send(bot, message, found_node.output);
 								var message_to_store = [{
@@ -320,7 +286,7 @@ controller.on('message_received', function(bot, message) {
 														outputid: found_node.id
 														}];
 								
-								controller.storage.sessions.save(API_sess_uuid, {last_context: found_node.input_context, messages: message_to_store});
+								controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: found_node.input_context, messages: message_to_store});
 							
 							})
 							.catch(function(err){
@@ -347,7 +313,7 @@ controller.on('message_received', function(bot, message) {
 											outputid: found_node.id
 								}];
 								
-								controller.storage.sessions.save(API_sess_uuid, {last_context: found_node.input_context, messages: message_to_store});
+								controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: found_node.input_context, messages: message_to_store});
 							})
 							.catch(function(err){
 								console.log(err);
@@ -374,7 +340,7 @@ controller.on('message_received', function(bot, message) {
 											outputid: found_node.id
 								}];
 			
-								controller.storage.sessions.save(API_sess_uuid, {last_context: found_node.input_context, messages: message_to_store});
+								controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: found_node.input_context, messages: message_to_store});
 							})
 							.catch(function(err){
 								console.log(err);
@@ -382,43 +348,39 @@ controller.on('message_received', function(bot, message) {
 									
 						};
 					}
-				});
-			}
-			
-			// If new session started
-			else {
-				
-				controller.storage.users.save(message.user, {last_session : API_sess_uuid}, function(){});
-				
-				var current_node = null;			// Convert current_node string to Int
-				var current_node_childs = null;		// Get current node childs
-				
-				Promise.resolve(node_search(dialog, current_node, current_node_childs, message)).then(function(found_node){
-					console.log('input context : '+ found_node.input_context);
-					fb_send(bot, message, found_node.output);
 					
-					var message_to_store = [{
-											input: message.text,
-											received_at: time_stamp,
-											intent: message.intent,
-											entity: message.entities,
-											outputid: found_node.id
-											}];
-							
-					controller.storage.sessions.save(API_sess_uuid, {last_context: found_node.input_context, messages: message_to_store});
+					// If new session started
+					else {
 						
-					
-				}).catch(function(err){
-					console.log(err);
-				});
-			};
-			
-		}
-		
-		});
- 	
-})
-
+						controller.storage.users.save(message.user, {last_session : sess.uuid}, function(){});
+						
+						var current_node = null;			// Convert current_node string to Int
+						var current_node_childs = null;		// Get current node childs
+						
+						Promise.resolve(node_search(dialog, current_node, current_node_childs, message)).then(function(found_node){
+							console.log('input context : '+ found_node.input_context);
+							fb_send(bot, message, found_node.output);
+							
+							var message_to_store = [{
+													input: message.text,
+													received_at: time_stamp,
+													intent: message.intent,
+													entity: message.entities,
+													outputid: found_node.id
+													}];
+									
+							controller.storage.sessions.save(sess.uuid, {start_time: time_stamp, timeout: sess.timeout, userid: FB_user_id, last_context: found_node.input_context, messages: message_to_store});
+								
+							
+						}).catch(function(err){
+							console.log(err);
+						});
+					}
+				}
+			});
+		}		
+	});
+});
 
 /*
  // DIRECT TRANSIT BETWEEN API.AI AND FACEBOOK
