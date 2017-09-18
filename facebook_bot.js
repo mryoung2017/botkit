@@ -254,36 +254,31 @@ controller.on('message_received', function(bot, message) {
 			Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message))
 			.then(function(found_node) {
 				fb_send(bot, message, found_node.output);
+				Promise.resolve(fb_send(bot, message, found_node.output)).then(function(sent_at){
+          var message_to_store = [{
+  										mess_uuid: message.mid,
+  										content: message.text,
+  										received_at: time_stamp,
+  										intent: message.intent,
+  										entity: message.entities,
+  										resp_uuid: found_node.id,
+                      sent_at: sent_at
+  										}];
+  				controller.storage.sessions.save(sess.uuid, {start_time: time_stamp, timeout: sess.timeout, userid: user_uuid, last_context: found_node.input_context, messages: message_to_store});
+        });
 				console.log('input context : '+ found_node.input_context);
-				var message_to_store = [{
-										input: message.text,
-										received_at: time_stamp,
-										intent: message.intent,
-										entity: message.entities,
-										outputid: found_node.id
-				}];
-				
-				controller.storage.sessions.save(sess.uuid, {start_time: time_stamp, timeout: sess.timeout, userid: FB_user_id, last_context: found_node.input_context, messages: message_to_store});
 			})
 			.catch(function(err){
 				console.log(err);
-			});	
-
-			
-			
+			});
 		} else {
 			controller.storage.sessions.get(user_data.last_session, function(err, session_data) {
 				if (err) {console.log(err);}
 				else {
 					var sess = Session.get(user_data, time_stamp, session_data);
-					
 					// If user is still in the same session
 					if (user_data.last_session === sess.uuid) {
-				
-						
-						//console.log(session_data);
 						var input_context = session_data.last_context;					//GET context from current session from DB
-						
 						// If input context is a root node
 						if (input_context[input_context.length -1] === 'r') {
 
@@ -293,25 +288,24 @@ controller.on('message_received', function(bot, message) {
 
 							Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message))
 							.then(function(found_node){
-								console.log('input context : '+ found_node.input_context);
-								fb_send(bot, message, found_node.output);
-								var message_to_store = [{
-														input: message.text,
-														received_at: time_stamp,
-														intent: message.intent,
-														entity: message.entities,
-														outputid: found_node.id
-														}];
-								
-								controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: found_node.input_context, messages: message_to_store});
-							
+                console.log('new context : '+ found_node.input_context);
+								Promise.resolve(fb_send(bot, message, found_node.output)).then(function(sent_at){
+                  var message_to_store = [{
+  														mess_uuid: message.mid,
+  														content: message.text,
+  														received_at: time_stamp,
+  														intent: message.intent,
+  														entity: message.entities,
+  														resp_uuid: found_node.id,
+                              sent_at: sent_at
+  														}];
+  								controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: found_node.input_context, messages: message_to_store});
+                });
 							})
 							.catch(function(err){
 								console.log(err);
 							});
-
 						}
-							
 						// If input context is a child node
 						else if ( input_context[input_context.length -1] === 'c' ){
 
@@ -321,25 +315,25 @@ controller.on('message_received', function(bot, message) {
 
 							Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message))
 							.then(function(found_node){
-								console.log('input context : '+ found_node.input_context);
-								fb_send(bot, message, found_node.output);
-								var message_to_store = [{
-											input: message.text,
-											received_at: time_stamp,
-											intent: message.intent,
-											entity: message.entities,
-											outputid: found_node.id
-								}];
-								
-								controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: found_node.input_context, messages: message_to_store});
-							})
-							.catch(function(err){
-								console.log(err);
-							});
-						
+								console.log('new context : '+ found_node.input_context);
+								Promise.resolve(fb_send(bot, message, found_node.output)).then(function(sent_at){
+                  var message_to_store = [{
+  														mess_uuid: message.mid,
+  														content: message.text,
+  														received_at: time_stamp,
+  														intent: message.intent,
+  														entity: message.entities,
+  														resp_uuid: found_node.id,
+                              sent_at: sent_at
+  														}];
+  								controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: found_node.input_context, messages: message_to_store});
+                });
+                })
+  							.catch(function(err){
+  								console.log(err);
+  							});
+
 						}
-						
-						
 						// If there is NO input context from last message in the session.
 						else {
 
@@ -349,48 +343,51 @@ controller.on('message_received', function(bot, message) {
 
 							Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message))
 							.then( function(found_node) {
-								console.log('input context : '+ found_node.input_context);
-								fb_send(bot, message, found_node.output);
-								var message_to_store = [{
-											input: message.text,
-											received_at: time_stamp,
-											intent: message.intent,
-											entity: message.entities,
-											outputid: found_node.id
-								}];
-			
-								controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: found_node.input_context, messages: message_to_store});
+								console.log('new context : '+ found_node.input_context);
+								Promise.resolve(fb_send(bot, message, found_node.output)).then(function(sent_at){
+                  var message_to_store = [{
+  														mess_uuid: message.mid,
+  														content: message.text,
+  														received_at: time_stamp,
+  														intent: message.intent,
+  														entity: message.entities,
+  														resp_uuid: found_node.id,
+                              sent_at: sent_at
+  														}];
+                  controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: found_node.input_context, messages: message_to_store});
+                });
 							})
 							.catch(function(err){
 								console.log(err);
-							});	
-									
+							});
+
 						};
 					}
-					
+
 					// If new session started
 					else {
-						
+
 						controller.storage.users.save(message.user, {last_session : sess.uuid}, function(){});
 						var current_node = "null";			// Convert current_node string to Int
 						var current_node_childs = null;		// Get current node childs
-							console.log('input context : '+ found_node.input_context);
-							fb_send(bot, message, found_node.output);
-							
-							var message_to_store = [{
-													input: message.text,
-													received_at: time_stamp,
-													intent: message.intent,
-													entity: message.entities,
-													outputid: found_node.id
-													}];
-									
-							controller.storage.sessions.save(sess.uuid, {start_time: time_stamp, timeout: sess.timeout, userid: FB_user_id, last_context: found_node.input_context, messages: message_to_store});
-								
-							
             var current_node_fallback = null;		// Get current node fallback
 
 						Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message)).then(function(found_node){
+							console.log('new context : '+ found_node.input_context);
+							Promise.resolve(fb_send(bot, message, found_node.output)).then(function(sent_at){
+
+                var message_to_store = [{
+                            mess_uuid: message.mid,
+                            content: message.text,
+                            received_at: time_stamp,
+                            intent: message.intent,
+                            entity: message.entities,
+                            resp_uuid: found_node.id,
+                            sent_at: sent_at
+                            }];
+                            controller.storage.sessions.save(sess.uuid, {start_time: time_stamp, timeout: sess.timeout, userid: userid, last_context: found_node.input_context, messages: message_to_store});
+
+              });
 						}).catch(function(err){
 							console.log(err);
 						});
