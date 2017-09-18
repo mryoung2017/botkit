@@ -242,8 +242,10 @@ controller.on('message_received', function(bot, message) {
 		if (!user_data) {
 			
 			
+			var user_uuid = 'usr-'+uuidv1();
+      console.log('New user : '+user_uuid);
 			var sess = Session.get(user_data, time_stamp, null);
-			controller.storage.users.save(message.user, {last_session : sess.uuid}, function(){});
+			controller.storage.users.save(message.user, {last_session : sess.uuid, user_uuid : user_uuid}, function(){});
 
 			var current_node = null;			// Convert current_node string to Int
 			var current_node_childs = null;		// Get current node childs
