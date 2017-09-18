@@ -253,7 +253,6 @@ controller.on('message_received', function(bot, message) {
 
 			Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message))
 			.then(function(found_node) {
-				fb_send(bot, message, found_node.output);
 				Promise.resolve(fb_send(bot, message, found_node.output)).then(function(sent_at){
           var message_to_store = [{
   										mess_uuid: message.mid,
@@ -279,6 +278,8 @@ controller.on('message_received', function(bot, message) {
 					// If user is still in the same session
 					if (user_data.last_session === sess.uuid) {
 						var input_context = session_data.last_context;					//GET context from current session from DB
+            console.log('input context : '+ input_context);
+
 						// If input context is a root node
 						if (input_context[input_context.length -1] === 'r') {
 
@@ -368,6 +369,8 @@ controller.on('message_received', function(bot, message) {
 					else {
 
 						controller.storage.users.save(message.user, {last_session : sess.uuid}, function(){});
+
+						var userid = user_data.user_uuid;
 						var current_node = "null";			// Convert current_node string to Int
 						var current_node_childs = null;		// Get current node childs
             var current_node_fallback = null;		// Get current node fallback
