@@ -247,7 +247,7 @@ controller.on('message_received', function(bot, message) {
 			var sess = Session.get(user_data, time_stamp, null);
 			controller.storage.users.save(message.user, {last_session : sess.uuid, user_uuid : user_uuid}, function(){});
 
-			var current_node = null;			// Convert current_node string to Int
+			var current_node = "null";			// Convert current_node string to Int
 			var current_node_childs = null;		// Get current node childs
 			
 			Promise.resolve(node_search(dialog, current_node, current_node_childs, message))
@@ -285,8 +285,8 @@ controller.on('message_received', function(bot, message) {
 						
 						// If input context is a root node
 						if (input_context[input_context.length -1] === 'r') {
-							
-							var current_node = parseInt(input_context);			// Convert current_node string to Int
+
+							var current_node = input_context;			// Convert current_node string to Int
 							var current_node_childs = dialog.root_nodes[parseInt(input_context)].childs;	// Get current node childs
 							
 							Promise.resolve(node_search(dialog, current_node, current_node_childs, message))
@@ -312,8 +312,8 @@ controller.on('message_received', function(bot, message) {
 							
 						// If input context is a child node
 						else if ( input_context[input_context.length -1] === 'c' ){
-							
-							var current_node = parseInt(input_context);			// Convert current_node string to Int
+
+							var current_node = input_context;			// Convert current_node string to Int
 							var current_node_childs = dialog.child_nodes[parseInt(input_context)].childs		// Get current node childs
 							
 							Promise.resolve(node_search(dialog, current_node, current_node_childs, message))
@@ -339,8 +339,8 @@ controller.on('message_received', function(bot, message) {
 						
 						// If there is NO input context from last message in the session.
 						else {
-							
-							var current_node = null;			// Convert current_node string to Int
+
+							var current_node = "null";			// Convert current_node string to Int
 							var current_node_childs = null;		// Get current node childs
 							
 							Promise.resolve(node_search(dialog, current_node, current_node_childs, message))
@@ -368,8 +368,7 @@ controller.on('message_received', function(bot, message) {
 					else {
 						
 						controller.storage.users.save(message.user, {last_session : sess.uuid}, function(){});
-						
-						var current_node = null;			// Convert current_node string to Int
+						var current_node = "null";			// Convert current_node string to Int
 						var current_node_childs = null;		// Get current node childs
 						
 						Promise.resolve(node_search(dialog, current_node, current_node_childs, message)).then(function(found_node){
