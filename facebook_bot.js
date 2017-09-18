@@ -249,8 +249,9 @@ controller.on('message_received', function(bot, message) {
 
 			var current_node = "null";			// Convert current_node string to Int
 			var current_node_childs = null;		// Get current node childs
-			
-			Promise.resolve(node_search(dialog, current_node, current_node_childs, message))
+      var current_node_fallback = null;		// Get current node fallback
+
+			Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message))
 			.then(function(found_node) {
 				fb_send(bot, message, found_node.output);
 				console.log('input context : '+ found_node.input_context);
@@ -288,8 +289,9 @@ controller.on('message_received', function(bot, message) {
 
 							var current_node = input_context;			// Convert current_node string to Int
 							var current_node_childs = dialog.root_nodes[parseInt(input_context)].childs;	// Get current node childs
-							
-							Promise.resolve(node_search(dialog, current_node, current_node_childs, message))
+              var current_node_fallback = dialog.root_nodes[parseInt(input_context)].fallback;		// Get current node fallback
+
+							Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message))
 							.then(function(found_node){
 								console.log('input context : '+ found_node.input_context);
 								fb_send(bot, message, found_node.output);
@@ -315,8 +317,9 @@ controller.on('message_received', function(bot, message) {
 
 							var current_node = input_context;			// Convert current_node string to Int
 							var current_node_childs = dialog.child_nodes[parseInt(input_context)].childs		// Get current node childs
-							
-							Promise.resolve(node_search(dialog, current_node, current_node_childs, message))
+              var current_node_fallback = dialog.child_nodes[parseInt(input_context)].fallback;		// Get current node fallback
+
+							Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message))
 							.then(function(found_node){
 								console.log('input context : '+ found_node.input_context);
 								fb_send(bot, message, found_node.output);
@@ -342,8 +345,9 @@ controller.on('message_received', function(bot, message) {
 
 							var current_node = "null";			// Convert current_node string to Int
 							var current_node_childs = null;		// Get current node childs
-							
-							Promise.resolve(node_search(dialog, current_node, current_node_childs, message))
+              var current_node_fallback = null;		// Get current node fallback
+
+							Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message))
 							.then( function(found_node) {
 								console.log('input context : '+ found_node.input_context);
 								fb_send(bot, message, found_node.output);
@@ -370,8 +374,6 @@ controller.on('message_received', function(bot, message) {
 						controller.storage.users.save(message.user, {last_session : sess.uuid}, function(){});
 						var current_node = "null";			// Convert current_node string to Int
 						var current_node_childs = null;		// Get current node childs
-						
-						Promise.resolve(node_search(dialog, current_node, current_node_childs, message)).then(function(found_node){
 							console.log('input context : '+ found_node.input_context);
 							fb_send(bot, message, found_node.output);
 							
@@ -386,6 +388,9 @@ controller.on('message_received', function(bot, message) {
 							controller.storage.sessions.save(sess.uuid, {start_time: time_stamp, timeout: sess.timeout, userid: FB_user_id, last_context: found_node.input_context, messages: message_to_store});
 								
 							
+            var current_node_fallback = null;		// Get current node fallback
+
+						Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message)).then(function(found_node){
 						}).catch(function(err){
 							console.log(err);
 						});
