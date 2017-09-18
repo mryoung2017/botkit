@@ -112,6 +112,19 @@ if(ops.lt === false && ops.ltsubdomain !== null) {
     process.exit();
 }
 
+if (ops.lt === true && ops.ltsubdomain !== null) {
+  var ltsubdomain = ops.ltsubdomain;
+}
+else if (ops.lt === true && ops.ltsubdomain === null) {
+  if (!process.env.ltsubdomain) {
+    console.log('Error: Specify ltsubdomain in environment');
+    process.exit(1);
+  }
+  else {
+    var ltsubdomain = process.env.ltsubdomain;
+  }
+}
+
 var controller = Botkit.facebookbot({
     debug: false,
     log: false,
@@ -130,7 +143,7 @@ controller.setupWebserver(process.env.port || 5000, function(err, webserver) {
     controller.createWebhookEndpoints(webserver, bot, function() {
         console.log('ONLINE!');
         if(ops.lt) {
-            var tunnel = localtunnel(process.env.port || 5000, {subdomain: ops.ltsubdomain}, function(err, tunnel) {
+            var tunnel = localtunnel(process.env.port || 5000, {subdomain: ltsubdomain}, function(err, tunnel) {
                 if (err) {
                     console.log(err);
                     process.exit();
