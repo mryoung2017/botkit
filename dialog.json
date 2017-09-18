@@ -1,22 +1,22 @@
 {
-    "root_nodes": [
-      { "id": "0 r",
-        "uuid": "0",
-        "intent_name": "smalltalk.greetings.hello",
-        "parent_node": "",
-        "childs": [
-          "0 c",
-          "1 c"
-        ],
-        "output": [
-          {
-            "type": "0",
-            "content": "speech example"
-          },
-          {
-            "type": "1",
-            "content": {
-			"attachment": {
+  "root_nodes": [
+    { "id": "0 r",
+      "uuid": "0",
+      "intent_name": "smalltalk.greetings.hello",
+      "parent_node": "",
+      "childs": [
+        "0 c",
+        "1 c"
+      ],
+      "output": [
+        {
+          "type": "0",
+          "content": "speech example"
+        },
+        {
+          "type": "1",
+          "content": {
+            "attachment": {
               "type": "template",
               "payload": {
                 "template_type": "generic",
@@ -72,82 +72,106 @@
                   }
                 ]
               }
-			  }
-            }
-          },
-          {
-            "type": "2",
-            "content": {
-              "text": "quick replies text example",
-              "quick_replies": [
-                {
-                  "content_type": "text",
-                  "title": "text quick reply title example",
-                  "payload": "text quick reply payload example"
-                },
-                {
-                  "content_type": "text",
-                  "title": "text and image quick reply title example",
-                  "payload": "text and image quick reply payload example",
-                  "image_url": "http://petersfantastichats.com/img/red.png"
-                },
-                {
-                  "content_type": "location"
-                }
-              ]
             }
           }
-        ]
+        },
+        {
+          "type": "2",
+          "content": {
+            "text": "quick replies text example",
+            "quick_replies": [
+              {
+                "content_type": "text",
+                "title": "text quick reply title example",
+                "payload": "text quick reply payload example"
+              },
+              {
+                "content_type": "text",
+                "title": "text and image quick reply title example",
+                "payload": "text and image quick reply payload example",
+                "image_url": "http://petersfantastichats.com/img/red.png"
+              },
+              {
+                "content_type": "location"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "child_nodes": [
+    {
+      "id": "0 c",
+      "uuid": "1",
+      "intent_name": "smalltalk.appraisal.good",
+      "parent_node": "0 r",
+      "childs": ["2 c","3 c"],
+      "fallback": "1 f",
+      "output":
+      {
+        "type": "0",
+        "content": "child node 0"
       }
-    ],
-    "child_nodes": [
+    },
+    {
+      "id": "1 c",
+      "uuid": "2",
+      "intent_name": "smalltalk.appraisal.bad",
+      "parent_node": "0 r",
+      "childs": ["2 c","3 c"],
+      "fallback": "1 f",
+      "output":
       {
-        "id": "0 c",
-        "uuid": "1",
-        "intent_name": "smalltalk.appraisal.good",
-        "parent_node": "0",
-        "childs": ["2 c","3 c"],
-        "output": 
-		{
-            "type": "0",
-            "content": "child node 0"
-        }
-      },
-      {
-        "id": "1 c",
-        "uuid": "2",
-        "intent_name": "smalltalk.appraisal.bad",
-        "parent_node": "0",
-        "childs": ["2 c","3 c"],
-        "output": 
-		{
-            "type": "0",
-            "content": "child node 1"
-        }
-      },
-	  {
-        "id": "2 c",
-        "uuid": "3",
-        "intent_name": "smalltalk.appraisal.good",
-        "parent_node": "0",
-        "childs": "",
-        "output": 
-		{
-            "type": "0",
-            "content": "child node 2"
-        }
-      },
-      {
-        "id": "3 c",
-        "uuid": "4",
-        "intent_name": "smalltalk.appraisal.bad",
-        "parent_node": "0",
-        "childs": "",
-        "output": 
-		{
-            "type": "0",
-            "content": "child node 3"
-        }
+        "type": "0",
+        "content": "child node 1"
       }
-    ]
-  }
+    },
+    {
+      "id": "2 c",
+      "uuid": "3",
+      "intent_name": "smalltalk.appraisal.good",
+      "parent_node": ["0 c","1 c"],
+      "childs": "",
+      "fallback": "",
+      "output":
+      {
+        "type": "0",
+        "content": "child node 2"
+      }
+    },
+    {
+      "id": "3 c",
+      "uuid": "4",
+      "intent_name": "smalltalk.appraisal.bad",
+      "parent_node": ["0 c","1 c"],
+      "childs": "",
+      "fallback": "",
+      "output":
+      {
+        "type": "0",
+        "content": "child node 3"
+      }
+    }
+  ],
+  "fallback_nodes": [
+    {
+      "id": "0 f",
+      "uuid": "5",
+      "output":
+      {
+        "type": "0",
+        "content": "default fallback"
+      }
+    },
+    {
+      "id": "1 f",
+      "uuid": "6",
+      "output":
+      {
+        "type": "0",
+        "content": "fallback 1"
+      }
+    }
+  ]
+}
