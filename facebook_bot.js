@@ -68,7 +68,7 @@ This bot demonstrates many of the core features of Botkit:
 require('dotenv').load();
 
 var dialog =  require('./dialog_simple.json');
-					
+
 if (!process.env.page_token) {
     console.log('Error: Specify page_token in environment');
     process.exit(1);
@@ -90,10 +90,10 @@ var apiai = require('botkit-middleware-apiai')({
     skip_bot: true // or false. If true, the middleware don't send the bot reply/says to api.ai
 });
 
+var uuidv1 = require('uuid/v1');
 var node_search = require('./lib/node_search.js');
 var fb_send = require('./lib/fb_send.js'); 
 var Session = require('./lib/Session.js');
-
 var Botkit = require('./lib/Botkit.js');
 var os = require('os');
 var commandLineArgs = require('command-line-args');
@@ -400,100 +400,6 @@ controller.on('message_received', function(bot, message) {
 		}		
 	});
 });
-
-/*
- // DIRECT TRANSIT BETWEEN API.AI AND FACEBOOK
-controller.on('message_received', function(bot, message) {
-	console.log('API.AI ANSWER :');
-	console.log(message.nlpResponse);
-	//If API.AI answer has more than 1 message
-	if ( message.fulfillment.messages.length > 1) {   
-		bot.startConversation(message, function(err,convo) {
-			console.log(message);
-			//For each message
-			for (var i=0; i < message.fulfillment.messages.length; i++) {	
-				// make sure the message is for facebook platform
-				if ( message.fulfillment.messages[i].platform === 'facebook') {	
-					switch (message.fulfillment.messages[i].type) {
-					//In case the message type is 0, i.e. only message
-					case 0:
-						console.log(typeof(message.fulfillment.messages[i].speech));
-						convo.say(message.fulfillment.messages[i].speech);
-						if (i < (message.fulfillment.messages.length - 1) ) { convo.next() };
-						if (i === (message.fulfillment.messages.length - 1) ) { convo.stop() };
-						break;
-					//In case the message type is 1, i.e. cards
-					case 1:
-						var card_opt={}; 	// object with single card 
-						var card_opts=[];	// object with all the cards
-						var button_opt={};	// object with a single button
-						var button_opts=[];	// object with all the buttons for 1 card		
-						while ( message.fulfillment.messages[i].type === 1) {
-							for ( var j=0; j< message.fulfillment.messages[i].buttons.length; j++) {
-								button_opt = {
-												'type': 'web_url',
-												'url': message.fulfillment.messages[i].buttons[j].postback,
-												'title': message.fulfillment.messages[i].buttons[j].text,
-											};
-								button_opts = button_opts.concat(button_opt);
-							};
-							card_opt = {
-											"title": message.fulfillment.messages[i].title,
-											"image_url": message.fulfillment.messages[i].imageUrl,
-											"subtitle": message.fulfillment.messages[i].subtitle,
-											"buttons": button_opts
-										};
-							card_opts = card_opts.concat(card_opt);
-							button_opts=[];
-							i++;						
-						};
-						convo.say({
-							attachment: {
-								'type': 'template',
-								'payload': {
-									'template_type': 'generic',
-									'elements': card_opts
-								}
-							}
-						});
-						if (i < (message.fulfillment.messages.length - 1) ) { convo.next() };
-						if (i === (message.fulfillment.messages.length - 1) ) { convo.stop() };
-						i--;
-						break;
-					//In case the message type is 2, i.e. quick replies
-					case 2:						
-						var quick_replies_opt={};	//object with one quick reply
-						var quick_replies_opts=[];	//object with one all the quick replies
-						for ( var j=0; j< message.fulfillment.messages[i].replies.length; j++) {
-							quick_replies_opt = {
-													"content_type": "text",
-													"title": message.fulfillment.messages[i].replies[j],
-													"payload": message.fulfillment.messages[i].replies[j],
-												};
-							quick_replies_opts = quick_replies_opts.concat(quick_replies_opt);
-												
-						};													
-						convo.say({
-							text: message.fulfillment.messages[i].title,
-							quick_replies: quick_replies_opts,
-						});
-						if (i < (message.fulfillment.messages.length - 1) ) { convo.next() };
-						if (i === (message.fulfillment.messages.length - 1) ) { convo.stop() };
-						break;
-					default:	
-						break;
-					};
-				
-				};
-			};
-		});
-	}
-	else {
-		bot.replyWithTyping(message, message.fulfillment.messages.speech);
-	}
-	
-});
-*/
 
 function formatUptime(uptime) {
     var unit = 'second';
