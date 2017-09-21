@@ -92,7 +92,7 @@ var apiai = require('botkit-middleware-apiai')({
 
 var uuidv1 = require('uuid/v1');
 var node_search = require('./lib/node_search.js');
-var fb_send = require('./lib/fb_send.js'); 
+var fb_send = require('./lib/fb_send.js');
 var Session = require('./lib/Session.js');
 var Botkit = require('./lib/Botkit.js');
 var os = require('os');
@@ -231,21 +231,26 @@ controller.on('facebook_postback', function(bot, message) {
 
 //Action if a message is received
 controller.on('message_received', function(bot, message) {
-	
+
 	var FB_user_id = message.user;
 	var time_stamp = new Date(message.timestamp);
-	
+
 	//console.log('intent :');
-	console.log(message.text);	
-	
+	console.log(message.text);
+
 	controller.storage.users.get(message.user, function(err, user_data) {
 		if (!user_data) {
-			
-			
-			var user_uuid = 'usr-'+uuidv1();
+
+      var user_uuid = 'usr-'+uuidv1();
       console.log('New user : '+user_uuid);
-			var sess = Session.get(user_data, time_stamp, null);
-			controller.storage.users.save(message.user, {last_session : sess.uuid, user_uuid : user_uuid}, function(){});
+      var sess = Session.get(user_data, time_stamp, null);
+
+      bot.getUserInfo(FB_user_id, function(err,body) {
+        var user_data_to_save = JSON.parse(body);
+        user_data_to_save.user_uuid = user_uuid;
+        user_data_to_save.last_session = sess.uuid;
+        controller.storage.users.save(message.user, user_data_to_save, function(){});
+      });
 
 			var current_node = "null";			// Convert current_node string to Int
 			var current_node_childs = null;		// Get current node childs
@@ -397,7 +402,7 @@ controller.on('message_received', function(bot, message) {
 					}
 				}
 			});
-		}		
+		}
 	});
 });
 
