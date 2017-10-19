@@ -114,23 +114,37 @@ First connects to the docker instance via ssh
 ```bash
 ssh ubuntu@<your-ec2-key>.compute-1.amazonaws.com
 ```
-
+or use the DNS:
+```bash
+ssh ubuntu@botkit.mryoung.co
+```
 You are now connected to the ec2.
 
-Note: For now, the botkit instance runs in the background.
-
 ```bash
-cd botkit/
-killall node
+git stash
 git pull
-node facebook_bot.js --lt --ltsubdomain <SUBDOMAIN_NAME> &
+git stash pop
+systemctl botkit restart
 ```
 
-Note: Do not forget the & at the end of the command. This puts the node process in the baground allowing it to not be killed when you close the terminal.
+## Debugging Botkit
+
+To view botkit logs, run:
+
+```bash
+journalctl -f
+```
+
+To know if botkit is running, you can run:
+
+```bash
+systemctl botkit status
+```
 
 ## Todo
-* Create init.d script to automate botkit start, stop and update.
-* Secure localtunnel
+* ~~Create init.d script to automate botkit start, stop and update.~~
+* ~~Secure localtunnel~~
+* Auto update letsencrypt ssl certificate
 
 ## Documentation
 
