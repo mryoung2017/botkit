@@ -1,93 +1,402 @@
 {
-  "root_nodes": [
-    {
-      "id": "0 r",
-      "uuid": "0",
-      "intent_name": "smalltalk.greetings.hello",
-      "parent_node": "",
-      "childs": [
-        "0 c",
-        "1 c"
-      ],
-      "output":
-      {
-        "type": "0",
-        "content": "root node 0"
-      }
-    }
-  ],
-  "child_nodes": [
-    {
-      "id": "0 c",
-      "uuid": "1",
-      "intent_name": "smalltalk.appraisal.good",
-      "parent_node": "0 r",
-      "childs": ["2 c","3 c"],
-      "fallback": "1 f",
-      "output":
-      {
-        "type": "0",
-        "content": "child node 0"
-      }
-    },
-    {
-      "id": "1 c",
-      "uuid": "2",
-      "intent_name": "smalltalk.appraisal.bad",
-      "parent_node": "0 r",
-      "childs": ["2 c","3 c"],
-      "fallback": "1 f",
-      "output":
-      {
-        "type": "0",
-        "content": "child node 1"
-      }
-    },
-    {
-      "id": "2 c",
-      "uuid": "3",
-      "intent_name": "smalltalk.appraisal.good",
-      "parent_node": ["0 c","1 c"],
-      "childs": "",
-      "fallback": "",
-      "output":
-      {
-        "type": "0",
-        "content": "child node 2"
-      }
-    },
-    {
-      "id": "3 c",
-      "uuid": "4",
-      "intent_name": "smalltalk.appraisal.bad",
-      "parent_node": ["0 c","1 c"],
-      "childs": "",
-      "fallback": "",
-      "output":
-      {
-        "type": "0",
-        "content": "child node 3"
-      }
-    }
-  ],
-  "fallback_nodes": [
-    {
-      "id": "0 f",
-      "uuid": "5",
-      "output":
-      {
-        "type": "0",
-        "content": "default fallback"
-      }
-    },
-    {
-      "id": "1 f",
-      "uuid": "6",
-      "output":
-      {
-        "type": "0",
-        "content": "fallback 1"
-      }
-    }
-  ]
+	"root_nodes": [
+		[
+			{
+				"id": "0 r",
+				"uuid": "",
+				"conditions": [
+					{
+						"entities": []
+					}
+				],
+				"childs": [
+					"0 c",
+					"1 c"
+				],
+				"fallback": "",
+				"output": [
+					{
+						"type": "0",
+						"content": "Hi"
+					},
+					{
+						"type": "0",
+						"content": "How are you?"
+					},
+					{
+						"type": "2",
+						"content": {
+							"text": "change this text",
+							"quick_replies": [
+								{
+									"content_type": "text",
+									"title": "Good",
+									"payload": "Good"
+								},
+								{
+									"content_type": "text",
+									"title": "Bad",
+									"payload": "Bad"
+								}
+							]
+						}
+					},
+					{
+						"type": "0",
+						"content": "Hi"
+					},
+					{
+						"type": "0",
+						"content": "How are you?"
+					}
+				],
+				"title": "Hi",
+				"position": {
+					"x": 608,
+					"y": 240
+				},
+				"colorID": 1
+			}
+		]
+	],
+	"child_nodes": [
+		[
+			{
+				"id": "0 c",
+				"uuid": "",
+				"conditions": [
+					{
+						"entities": []
+					}
+				],
+				"childs": [
+					"2 c",
+					"3 c",
+					"4 c"
+				],
+				"fallback": "",
+				"output": [
+					{
+						"type": "0",
+						"content": "Great!"
+					},
+					{
+						"type": "0",
+						"content": "How was your day?"
+					},
+					{
+						"type": "2",
+						"content": {
+							"text": "change this text",
+							"quick_replies": [
+								{
+									"content_type": "text",
+									"title": "Good",
+									"payload": "Good"
+								},
+								{
+									"content_type": "text",
+									"title": "Bad",
+									"payload": "Bad"
+								},
+								{
+									"content_type": "text",
+									"title": "So so",
+									"payload": "So so"
+								}
+							]
+						}
+					},
+					{
+						"type": "0",
+						"content": "Great!"
+					},
+					{
+						"type": "0",
+						"content": "How was your day?"
+					}
+				],
+				"title": "Good",
+				"position": {
+					"x": 908,
+					"y": 240
+				},
+				"colorID": 1
+			}
+		],
+		[
+			{
+				"id": "1 c",
+				"uuid": "",
+				"conditions": [
+					{
+						"entities": []
+					}
+				],
+				"childs": [
+					"5 c",
+					"6 c"
+				],
+				"fallback": "",
+				"output": [
+					{
+						"type": "0",
+						"content": "Ho, what happened?"
+					},
+					{
+						"type": "2",
+						"content": {
+							"text": "change this text",
+							"quick_replies": [
+								{
+									"content_type": "text",
+									"title": "Nothing",
+									"payload": "Nothing"
+								},
+								{
+									"content_type": "text",
+									"title": "Something",
+									"payload": "Something"
+								}
+							]
+						}
+					},
+					{
+						"type": "0",
+						"content": "Ho, what happened?"
+					}
+				],
+				"title": "Bad",
+				"position": {
+					"x": 908,
+					"y": 490
+				},
+				"colorID": 1
+			}
+		],
+		[
+			{
+				"id": "2 c",
+				"uuid": "",
+				"conditions": [
+					{
+						"entities": []
+					}
+				],
+				"childs": [
+					"7 c",
+					"8 c"
+				],
+				"fallback": "",
+				"output": [
+					{
+						"type": "0",
+						"content": "What did you do?"
+					},
+					{
+						"type": "2",
+						"content": {
+							"text": "change this text",
+							"quick_replies": [
+								{
+									"content_type": "text",
+									"title": "Nothing",
+									"payload": "Nothing"
+								},
+								{
+									"content_type": "text",
+									"title": "Something",
+									"payload": "Something"
+								}
+							]
+						}
+					},
+					{
+						"type": "0",
+						"content": "What did you do?"
+					}
+				],
+				"title": "Good",
+				"position": {
+					"x": 1208,
+					"y": 240
+				},
+				"colorID": 1
+			}
+		],
+		[
+			{
+				"id": "3 c",
+				"uuid": "",
+				"conditions": [
+					{
+						"entities": []
+					}
+				],
+				"childs": [
+					"9 c"
+				],
+				"fallback": "",
+				"output": [
+					{
+						"type": "0",
+						"content": "What happened?"
+					},
+					{
+						"type": "2",
+						"content": {
+							"text": "change this text",
+							"quick_replies": [
+								{
+									"content_type": "text",
+									"title": "I don't know",
+									"payload": "I don't know"
+								}
+							]
+						}
+					},
+					{
+						"type": "0",
+						"content": "What happened?"
+					}
+				],
+				"title": "Bad",
+				"position": {
+					"x": 1208,
+					"y": 490
+				},
+				"colorID": 1
+			}
+		],
+		[
+			{
+				"id": "4 c",
+				"uuid": "",
+				"conditions": [
+					{
+						"entities": []
+					}
+				],
+				"childs": [],
+				"fallback": "",
+				"output": [],
+				"title": "So so",
+				"position": {
+					"x": 1208,
+					"y": 740
+				},
+				"colorID": 1
+			}
+		],
+		[
+			{
+				"id": "5 c",
+				"uuid": "",
+				"conditions": [
+					{
+						"entities": []
+					}
+				],
+				"childs": [],
+				"fallback": "",
+				"output": [],
+				"title": "Nothing",
+				"position": {
+					"x": 1208,
+					"y": 990
+				},
+				"colorID": 1
+			}
+		],
+		[
+			{
+				"id": "6 c",
+				"uuid": "",
+				"conditions": [
+					{
+						"entities": []
+					}
+				],
+				"childs": [],
+				"fallback": "",
+				"output": [],
+				"title": "Something",
+				"position": {
+					"x": 1208,
+					"y": 1240
+				},
+				"colorID": 1
+			}
+		],
+		[
+			{
+				"id": "7 c",
+				"uuid": "",
+				"conditions": [
+					{
+						"entities": []
+					}
+				],
+				"childs": [],
+				"fallback": "",
+				"output": [],
+				"title": "Nothing",
+				"position": {
+					"x": 1508,
+					"y": 240
+				},
+				"colorID": 1
+			}
+		],
+		[
+			{
+				"id": "8 c",
+				"uuid": "",
+				"conditions": [
+					{
+						"entities": []
+					}
+				],
+				"childs": [],
+				"fallback": "",
+				"output": [
+					{
+						"type": "0",
+						"content": "What?"
+					},
+					{
+						"type": "0",
+						"content": "What?"
+					}
+				],
+				"title": "Something",
+				"position": {
+					"x": 1505,
+					"y": 3
+				},
+				"colorID": 1
+			}
+		],
+		[
+			{
+				"id": "9 c",
+				"uuid": "",
+				"conditions": [
+					{
+						"entities": []
+					}
+				],
+				"childs": [],
+				"fallback": "",
+				"output": [],
+				"title": "I don't know",
+				"position": {
+					"x": 1508,
+					"y": 490
+				},
+				"colorID": 1
+			}
+		]
+	],
+	"fallback_nodes": []
 }
