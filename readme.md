@@ -124,7 +124,7 @@ You are now connected to the ec2.
 git stash
 git pull
 git stash pop
-systemctl botkit restart
+sudo systemctl restart botkit
 ```
 
 ## Debugging Botkit
@@ -138,7 +138,7 @@ journalctl -f
 To know if botkit is running, you can run:
 
 ```bash
-systemctl botkit status
+systemctl status botkit
 ```
 
 ## Todo
