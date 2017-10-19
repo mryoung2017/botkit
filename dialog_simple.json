@@ -4,6 +4,7 @@
 			{
 				"id": "0 r",
 				"uuid": "",
+				"intent_name": "smalltalk.greetings.hello",
 				"conditions": [
 					{
 						"entities": []
