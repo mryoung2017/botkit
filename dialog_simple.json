@@ -3,37 +3,35 @@
 		{
 			"id": "0 r",
 			"uuid": "d140155f-2fdb-24ef-c3a2-b32e4ca78d3c",
-			"intent_name": "Get Started",
+			"intent_name": " ",
 			"conditions": [
 				{
-					"intent": "Get Started",
+					"intent": " ",
 					"entities": []
 				}
 			],
 			"childs": [
-				"0 c",
-				"1 c"
+				"0 c"
 			],
 			"fallback": "",
 			"output": [
 				{
 					"type": "0",
-					"content": "Hi"
+					"content": "Hello there!"
+				},
+				{
+					"type": "0",
+					"content": "Look at my button words down there"
 				},
 				{
 					"type": "2",
 					"content": {
-						"text": "How are you?",
+						"text": "Can you see them alright ?",
 						"quick_replies": [
 							{
 								"content_type": "text",
-								"title": "Good",
-								"payload": "Good"
-							},
-							{
-								"content_type": "text",
-								"title": "Bad",
-								"payload": "Bad"
+								"title": "Yes, I see your word buttons",
+								"payload": "Yes, I see your word buttons"
 							}
 						]
 					}
@@ -41,8 +39,8 @@
 			],
 			"title": "Get Started",
 			"position": {
-				"x": 181,
-				"y": 113
+				"x": 248,
+				"y": 436
 			},
 			"colorID": 1
 		}
@@ -59,44 +57,28 @@
 				}
 			],
 			"childs": [
-				"2 c",
-				"3 c",
-				"4 c"
+				"1 c"
 			],
 			"fallback": "",
 			"output": [
 				{
-					"type": "0",
-					"content": "Great"
-				},
-				{
 					"type": "2",
 					"content": {
-						"text": "How was your day?",
+						"text": "These buttons are the main way to communicate with me as of today, sounds good ?",
 						"quick_replies": [
 							{
 								"content_type": "text",
-								"title": "Good",
-								"payload": "Good"
-							},
-							{
-								"content_type": "text",
-								"title": "Bad",
-								"payload": "Bad"
-							},
-							{
-								"content_type": "text",
-								"title": "So so",
-								"payload": "So so"
+								"title": "Cool, I know how to communicate with you",
+								"payload": "Cool, I know how to communicate with you"
 							}
 						]
 					}
 				}
 			],
-			"title": "Good",
+			"title": "Yes, I see your word buttons",
 			"position": {
-				"x": 431,
-				"y": 110
+				"x": 548,
+				"y": 439
 			},
 			"colorID": 1
 		},
@@ -110,22 +92,33 @@
 					"entities": []
 				}
 			],
-			"childs": [],
+			"childs": [
+				"2 c"
+			],
 			"fallback": "",
 			"output": [
 				{
 					"type": "0",
-					"content": "Awww"
+					"content": "So here's how I work, I can help you by asking your questions to evaluate your anziety, get access to ressources that can help you, provide you some general knowledge on anziety demystifying it, and help you with self-guided coping mecanisms. The more I get to know you the better I can teach you some good stuff"
 				},
 				{
-					"type": "0",
-					"content": "What happened?"
+					"type": "2",
+					"content": {
+						"text": "I'm essentially here as a first ear and resource regarding anxiety and well being. The more I get to know you the better I can teach you some good stuff. Therefore, let's keep the chat engaging, shall we?",
+						"quick_replies": [
+							{
+								"content_type": "text",
+								"title": "Yes, I'm onboard",
+								"payload": "Yes, I'm onboard"
+							}
+						]
+					}
 				}
 			],
-			"title": "Bad",
+			"title": "Cool, I know how to communicate with you",
 			"position": {
-				"x": 430,
-				"y": 363
+				"x": 832,
+				"y": 407
 			},
 			"colorID": 1
 		},
@@ -139,18 +132,29 @@
 					"entities": []
 				}
 			],
-			"childs": [],
+			"childs": [
+				"3 c"
+			],
 			"fallback": "",
 			"output": [
 				{
-					"type": "0",
-					"content": "Terrific! :)"
+					"type": "2",
+					"content": {
+						"text": "So I'm trained to help with anxiety, mental health and well being.",
+						"quick_replies": [
+							{
+								"content_type": "text",
+								"title": "What's anxiety ?",
+								"payload": "What's anxiety ?"
+							}
+						]
+					}
 				}
 			],
-			"title": "Good",
+			"title": "Yes, I'm onboard",
 			"position": {
-				"x": 681,
-				"y": 110
+				"x": 1194,
+				"y": 409
 			},
 			"colorID": 1
 		},
@@ -164,18 +168,33 @@
 					"entities": []
 				}
 			],
-			"childs": [],
-			"fallback": "0 f",
+			"childs": [
+				"4 c"
+			],
+			"fallback": "",
 			"output": [
 				{
 					"type": "0",
-					"content": "What did you do?"
+					"content": "Anxiety is a feeling lived by everyone of us when confronted to a situation of uncertainty. Anxiety is a normal reaction to have, it is how your react in terms of security. Everyone needs a certain level of anxiety to live, just like a little bit of stress"
+				},
+				{
+					"type": "2",
+					"content": {
+						"text": "Anxiety can become a problem when it the feeling becomes frequent, hard to cope with, and influencing your thoughts and behaviours. In which case it will impact your mental health.",
+						"quick_replies": [
+							{
+								"content_type": "text",
+								"title": "What's mental health?",
+								"payload": "What's mental health?"
+							}
+						]
+					}
 				}
 			],
-			"title": "Bad",
+			"title": "What's anxiety ?",
 			"position": {
-				"x": 681,
-				"y": 359
+				"x": 1525,
+				"y": 412
 			},
 			"colorID": 1
 		},
@@ -189,25 +208,34 @@
 					"entities": []
 				}
 			],
-			"childs": [],
-			"fallback": "1 f",
+			"childs": [
+				"5 c"
+			],
+			"fallback": "",
 			"output": [
 				{
-					"type": "0",
-					"content": "What did you do?"
+					"type": "2",
+					"content": {
+						"text": "Mental health refers to your mental health.... definition, based on what, how important it is",
+						"quick_replies": [
+							{
+								"content_type": "text",
+								"title": "What's well-being ?",
+								"payload": "What's well-being ?"
+							}
+						]
+					}
 				}
 			],
-			"title": "So so",
+			"title": "What's mental health?",
 			"position": {
-				"x": 681,
-				"y": 610
+				"x": 1833,
+				"y": 414
 			},
 			"colorID": 1
-		}
-	],
-	"fallback_nodes": [
+		},
 		{
-			"id": "0 f",
+			"id": "5 c",
 			"uuid": "7b1be873-d5c7-6bdd-8f65-7e7a85c0e63c",
 			"intent_name": " ",
 			"conditions": [
@@ -216,23 +244,132 @@
 					"entities": []
 				}
 			],
-			"childs": [],
+			"childs": [
+				"6 c"
+			],
+			"fallback": "",
+			"output": [
+				{
+					"type": "2",
+					"content": {
+						"text": "Well being refers to ... it is based on... it is important to",
+						"quick_replies": [
+							{
+								"content_type": "text",
+								"title": "Talking to Mr. Young",
+								"payload": "Talking to Mr. Young"
+							}
+						]
+					}
+				}
+			],
+			"title": "What's well-being ?",
+			"position": {
+				"x": 2107,
+				"y": 416
+			},
+			"colorID": 1
+		},
+		{
+			"id": "6 c",
+			"uuid": "eaa104a0-ee28-7f1f-8b78-b348e0f82ea7",
+			"intent_name": " ",
+			"conditions": [
+				{
+					"intent": " ",
+					"entities": []
+				}
+			],
+			"childs": [
+				"7 c"
+			],
 			"fallback": "",
 			"output": [
 				{
 					"type": "0",
-					"content": "You did something!"
+					"content": "The beauty about talking to me is that I help you understand what they all are, and based on our discussion, provide you with help that you might need, whatever that would be, regarding your anxiety, mental health or well-being"
+				},
+				{
+					"type": "2",
+					"content": {
+						"text": "Get it ?",
+						"quick_replies": [
+							{
+								"content_type": "text",
+								"title": "Yes, let's chat",
+								"payload": "Yes, let's chat"
+							}
+						]
+					}
 				}
 			],
-			"title": "Node 1 f",
+			"title": "Talking to Mr. Young",
 			"position": {
-				"x": 975,
-				"y": 353
+				"x": 2377,
+				"y": 424
 			},
-			"colorID": 3
+			"colorID": 1
 		},
 		{
-			"id": "1 f",
+			"id": "7 c",
+			"uuid": "eaa104a0-ee28-7f1f-8b78-b348e0f82ea7",
+			"intent_name": " ",
+			"conditions": [
+				{
+					"intent": " ",
+					"entities": []
+				}
+			],
+			"childs": [
+				"11 c",
+				"10 c",
+				"9 c",
+				"8 c"
+			],
+			"fallback": "",
+			"output": [
+				{
+					"type": "0",
+					"content": "Good"
+				},
+				{
+					"type": "2",
+					"content": {
+						"text": "What could I help you with today ?",
+						"quick_replies": [
+							{
+								"content_type": "text",
+								"title": "Evaluate my anxiety",
+								"payload": "Evaluate my anxiety"
+							},
+							{
+								"content_type": "text",
+								"title": "Get access to resources",
+								"payload": "Get access to resources"
+							},
+							{
+								"content_type": "text",
+								"title": "Learn more about anxiety",
+								"payload": "Learn more about anxiety"
+							},
+							{
+								"content_type": "text",
+								"title": "Self-help guided well being mechanisms",
+								"payload": "Self-help guided well being mechanisms"
+							}
+						]
+					}
+				}
+			],
+			"title": "Yes, let's chat",
+			"position": {
+				"x": 2679,
+				"y": 424
+			},
+			"colorID": 1
+		},
+		{
+			"id": "8 c",
 			"uuid": "eaa104a0-ee28-7f1f-8b78-b348e0f82ea7",
 			"intent_name": " ",
 			"conditions": [
@@ -243,16 +380,98 @@
 			],
 			"childs": [],
 			"fallback": "",
+			"output": [],
+			"title": "Evaluate my anxiety",
+			"position": {
+				"x": 2923,
+				"y": 214
+			},
+			"colorID": 1
+		},
+		{
+			"id": "9 c",
+			"uuid": "eaa104a0-ee28-7f1f-8b78-b348e0f82ea7",
+			"intent_name": " ",
+			"conditions": [
+				{
+					"intent": " ",
+					"entities": []
+				}
+			],
+			"childs": [],
+			"fallback": "0 f",
 			"output": [
 				{
 					"type": "0",
-					"content": "You did something!"
+					"content": "To do that you need to first evaluate your anxiety"
 				}
 			],
-			"title": "Node 2 f",
+			"title": "Get access to resources",
 			"position": {
-				"x": 974,
-				"y": 607
+				"x": 2939,
+				"y": 844
+			},
+			"colorID": 1
+		},
+		{
+			"id": "10 c",
+			"uuid": "eaa104a0-ee28-7f1f-8b78-b348e0f82ea7",
+			"intent_name": " ",
+			"conditions": [
+				{
+					"intent": " ",
+					"entities": []
+				}
+			],
+			"childs": [],
+			"fallback": "",
+			"output": [],
+			"title": "Learn more about anxiety",
+			"position": {
+				"x": 2923,
+				"y": 660
+			},
+			"colorID": 1
+		},
+		{
+			"id": "11 c",
+			"uuid": "eaa104a0-ee28-7f1f-8b78-b348e0f82ea7",
+			"intent_name": " ",
+			"conditions": [
+				{
+					"intent": " ",
+					"entities": []
+				}
+			],
+			"childs": [],
+			"fallback": "",
+			"output": [],
+			"title": "Self-help guided well being mechanisms",
+			"position": {
+				"x": 2941,
+				"y": 422
+			},
+			"colorID": 1
+		}
+	],
+	"fallback_nodes": [
+		{
+			"id": "0 f",
+			"uuid": "1b9e5e05-0f36-74e9-c3dd-5c1fb43c3817",
+			"intent_name": " ",
+			"conditions": [
+				{
+					"intent": " ",
+					"entities": []
+				}
+			],
+			"childs": [],
+			"fallback": "",
+			"output": [],
+			"title": "Node 0 f",
+			"position": {
+				"x": 2940,
+				"y": 1140
 			},
 			"colorID": 3
 		}
