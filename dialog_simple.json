@@ -4,7 +4,7 @@
 			{
 				"id": "0 r",
 				"uuid": "26f4fc66-28c7-377f-2420-8d29ef9880c8",
-				"intent_name": "smalltalk.greetings.hello"
+				"intent_name": "smalltalk.greetings.hello",
 				"conditions": [
 					{
 						"intent": "Get Started",
