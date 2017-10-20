@@ -11,8 +11,8 @@
 				}
 			],
 			"childs": [
-				"1 c",
-				"0 c"
+				"0 c",
+				"1 c"
 			],
 			"fallback": "",
 			"output": [
@@ -27,7 +27,6 @@
 				{
 					"type": "2",
 					"content": {
-						"text": "",
 						"quick_replies": [
 							{
 								"content_type": "text",
@@ -63,9 +62,9 @@
 				}
 			],
 			"childs": [
-				"4 c",
+				"2 c",
 				"3 c",
-				"2 c"
+				"4 c"
 			],
 			"fallback": "",
 			"output": [
@@ -80,7 +79,6 @@
 				{
 					"type": "2",
 					"content": {
-						"text": "",
 						"quick_replies": [
 							{
 								"content_type": "text",
