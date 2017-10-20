@@ -11,8 +11,8 @@
 				}
 			],
 			"childs": [
-				"1 c",
-				"0 c"
+				"0 c",
+				"1 c"
 			],
 			"fallback": "",
 			"output": [
@@ -21,13 +21,9 @@
 					"content": "Hi"
 				},
 				{
-					"type": "0",
-					"content": "How are you?"
-				},
-				{
 					"type": "2",
 					"content": {
-						"payload": "",
+						"text": "How are you?",
 						"quick_replies": [
 							{
 								"content_type": "text",
@@ -63,9 +59,9 @@
 				}
 			],
 			"childs": [
-				"4 c",
+				"2 c",
 				"3 c",
-				"2 c"
+				"4 c"
 			],
 			"fallback": "",
 			"output": [
@@ -74,13 +70,9 @@
 					"content": "Great"
 				},
 				{
-					"type": "0",
-					"content": "How was your day?"
-				},
-				{
 					"type": "2",
 					"content": {
-						"payload": "",
+						"text": "How was your day?",
 						"quick_replies": [
 							{
 								"content_type": "text",
