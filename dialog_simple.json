@@ -11,6 +11,7 @@
 				}
 			],
 			"childs": [
+				"0 c",
 				"0 c"
 			],
 			"fallback": "",
@@ -30,8 +31,50 @@
 						"quick_replies": [
 							{
 								"content_type": "text",
-								"title": "Yes, I see your word buttons",
-								"payload": "Yes, I see your word buttons"
+								"title": "Yes, I do!",
+								"payload": "Yes, I do!"
+							}
+						]
+					}
+				}
+			],
+			"title": "Get Started",
+			"position": {
+				"x": 248,
+				"y": 436
+			},
+			"colorID": 1
+		},
+		{
+			"id": "0 r",
+			"uuid": "d140155f-2fdb-24ef-c3a2-b32e4ca78d3c",
+			"intent_name": " ",
+			"conditions": [
+				{
+					"intent": " ",
+					"entities": []
+				}
+			],
+			"childs": [],
+			"fallback": "",
+			"output": [
+				{
+					"type": "0",
+					"content": "Hello there!"
+				},
+				{
+					"type": "0",
+					"content": "Look at my button words down there"
+				},
+				{
+					"type": "2",
+					"content": {
+						"text": "Can you see them alright ?",
+						"quick_replies": [
+							{
+								"content_type": "text",
+								"title": "Yes, I do!",
+								"payload": "Yes, I do!"
 							}
 						]
 					}
@@ -48,7 +91,7 @@
 	"child_nodes": [
 		{
 			"id": "0 c",
-			"uuid": "40e29905-17bd-1987-340c-3be76583417d",
+			"uuid": "297890cc-dffe-687e-67ef-4854a683a480",
 			"intent_name": " ",
 			"conditions": [
 				{
@@ -57,6 +100,7 @@
 				}
 			],
 			"childs": [
+				"1 c",
 				"1 c"
 			],
 			"fallback": "",
@@ -68,14 +112,14 @@
 						"quick_replies": [
 							{
 								"content_type": "text",
-								"title": "Cool, I know how to communicate with you",
-								"payload": "Cool, I know how to communicate with you"
+								"title": "Cool!",
+								"payload": "Cool!"
 							}
 						]
 					}
 				}
 			],
-			"title": "Yes, I see your word buttons",
+			"title": "Yes, I do!",
 			"position": {
 				"x": 548,
 				"y": 439
@@ -93,6 +137,7 @@
 				}
 			],
 			"childs": [
+				"2 c",
 				"2 c"
 			],
 			"fallback": "",
@@ -108,14 +153,14 @@
 						"quick_replies": [
 							{
 								"content_type": "text",
-								"title": "Yes, I'm onboard",
-								"payload": "Yes, I'm onboard"
+								"title": "I'm onboard!",
+								"payload": "I'm onboard!"
 							}
 						]
 					}
 				}
 			],
-			"title": "Cool, I know how to communicate with you",
+			"title": "Cool!",
 			"position": {
 				"x": 832,
 				"y": 407
@@ -133,6 +178,7 @@
 				}
 			],
 			"childs": [
+				"3 c",
 				"3 c"
 			],
 			"fallback": "",
@@ -144,14 +190,14 @@
 						"quick_replies": [
 							{
 								"content_type": "text",
-								"title": "What's anxiety ?",
-								"payload": "What's anxiety ?"
+								"title": "What's anxiety?",
+								"payload": "What's anxiety?"
 							}
 						]
 					}
 				}
 			],
-			"title": "Yes, I'm onboard",
+			"title": "I'm onboard!",
 			"position": {
 				"x": 1194,
 				"y": 409
@@ -169,6 +215,7 @@
 				}
 			],
 			"childs": [
+				"4 c",
 				"4 c"
 			],
 			"fallback": "",
@@ -184,14 +231,14 @@
 						"quick_replies": [
 							{
 								"content_type": "text",
-								"title": "What's mental health?",
-								"payload": "What's mental health?"
+								"title": "Mental health?",
+								"payload": "Mental health?"
 							}
 						]
 					}
 				}
 			],
-			"title": "What's anxiety ?",
+			"title": "What's anxiety?",
 			"position": {
 				"x": 1525,
 				"y": 412
@@ -200,7 +247,7 @@
 		},
 		{
 			"id": "4 c",
-			"uuid": "739a7060-1407-8213-2225-57f6bf9bfdaf",
+			"uuid": "da126cc3-75cf-53a1-bdaf-7e475de81f14",
 			"intent_name": " ",
 			"conditions": [
 				{
@@ -209,6 +256,7 @@
 				}
 			],
 			"childs": [
+				"5 c",
 				"5 c"
 			],
 			"fallback": "",
@@ -220,14 +268,14 @@
 						"quick_replies": [
 							{
 								"content_type": "text",
-								"title": "What's well-being ?",
-								"payload": "What's well-being ?"
+								"title": "Well-being ?",
+								"payload": "Well-being ?"
 							}
 						]
 					}
 				}
 			],
-			"title": "What's mental health?",
+			"title": "Mental health?",
 			"position": {
 				"x": 1833,
 				"y": 414
@@ -245,6 +293,7 @@
 				}
 			],
 			"childs": [
+				"6 c",
 				"6 c"
 			],
 			"fallback": "",
@@ -256,8 +305,8 @@
 						"quick_replies": [
 							{
 								"content_type": "text",
-								"title": "Talking to Mr. Young",
-								"payload": "Talking to Mr. Young"
+								"title": "Let's talk",
+								"payload": "Let's talk"
 							}
 						]
 					}
@@ -272,7 +321,7 @@
 		},
 		{
 			"id": "6 c",
-			"uuid": "eaa104a0-ee28-7f1f-8b78-b348e0f82ea7",
+			"uuid": "c30220fd-f4aa-23a6-da81-898c5d8cc7aa",
 			"intent_name": " ",
 			"conditions": [
 				{
@@ -281,6 +330,7 @@
 				}
 			],
 			"childs": [
+				"7 c",
 				"7 c"
 			],
 			"fallback": "",
@@ -303,16 +353,16 @@
 					}
 				}
 			],
-			"title": "Talking to Mr. Young",
+			"title": "Let's talk",
 			"position": {
 				"x": 2377,
-				"y": 424
+				"y": 434
 			},
 			"colorID": 1
 		},
 		{
 			"id": "7 c",
-			"uuid": "eaa104a0-ee28-7f1f-8b78-b348e0f82ea7",
+			"uuid": "6ef99d8d-5f12-7056-80e9-aa1ebf77852a",
 			"intent_name": " ",
 			"conditions": [
 				{
@@ -321,9 +371,9 @@
 				}
 			],
 			"childs": [
-				"11 c",
-				"10 c",
-				"9 c",
+				"12 c",
+				"13 c",
+				"14 c",
 				"8 c"
 			],
 			"fallback": "",
@@ -339,23 +389,18 @@
 						"quick_replies": [
 							{
 								"content_type": "text",
-								"title": "Evaluate my anxiety",
-								"payload": "Evaluate my anxiety"
+								"title": "Take assessment",
+								"payload": "Take assessment"
 							},
 							{
 								"content_type": "text",
-								"title": "Get access to resources",
-								"payload": "Get access to resources"
+								"title": "Get ressources",
+								"payload": "Get ressources"
 							},
 							{
 								"content_type": "text",
-								"title": "Learn more about anxiety",
-								"payload": "Learn more about anxiety"
-							},
-							{
-								"content_type": "text",
-								"title": "Self-help guided well being mechanisms",
-								"payload": "Self-help guided well being mechanisms"
+								"title": "Find Psy",
+								"payload": "Find Psy"
 							}
 						]
 					}
@@ -369,8 +414,8 @@
 			"colorID": 1
 		},
 		{
-			"id": "8 c",
-			"uuid": "eaa104a0-ee28-7f1f-8b78-b348e0f82ea7",
+			"id": "12 c",
+			"uuid": "dbfb7a64-e8ec-6efe-dbf8-71de27de3dd4",
 			"intent_name": " ",
 			"conditions": [
 				{
@@ -381,16 +426,16 @@
 			"childs": [],
 			"fallback": "",
 			"output": [],
-			"title": "Evaluate my anxiety",
+			"title": "Take assessment",
 			"position": {
-				"x": 2923,
-				"y": 214
+				"x": 2929,
+				"y": 424
 			},
 			"colorID": 1
 		},
 		{
-			"id": "9 c",
-			"uuid": "eaa104a0-ee28-7f1f-8b78-b348e0f82ea7",
+			"id": "13 c",
+			"uuid": "1969b2e5-5489-31a9-6194-f2b9f54eda58",
 			"intent_name": " ",
 			"conditions": [
 				{
@@ -399,23 +444,110 @@
 				}
 			],
 			"childs": [],
-			"fallback": "0 f",
+			"fallback": "",
+			"output": [],
+			"title": "Get ressources",
+			"position": {
+				"x": 2929,
+				"y": 674
+			},
+			"colorID": 1
+		},
+		{
+			"id": "14 c",
+			"uuid": "5c3e16af-e8db-a44b-4409-096c2712d997",
+			"intent_name": " ",
+			"conditions": [
+				{
+					"intent": " ",
+					"entities": []
+				}
+			],
+			"childs": [],
+			"fallback": "",
+			"output": [],
+			"title": "Find Psy",
+			"position": {
+				"x": 2929,
+				"y": 924
+			},
+			"colorID": 1
+		},
+		{
+			"id": "0 c",
+			"uuid": "297890cc-dffe-687e-67ef-4854a683a480",
+			"intent_name": " ",
+			"conditions": [
+				{
+					"intent": " ",
+					"entities": []
+				}
+			],
+			"childs": [],
+			"fallback": "",
+			"output": [
+				{
+					"type": "2",
+					"content": {
+						"text": "These buttons are the main way to communicate with me as of today, sounds good ?",
+						"quick_replies": [
+							{
+								"content_type": "text",
+								"title": "Cool!",
+								"payload": "Cool!"
+							}
+						]
+					}
+				}
+			],
+			"title": "Yes, I do!",
+			"position": {
+				"x": 548,
+				"y": 439
+			},
+			"colorID": 1
+		},
+		{
+			"id": "1 c",
+			"uuid": "28ad1040-51f9-0515-4d3c-564f1aec4f2e",
+			"intent_name": " ",
+			"conditions": [
+				{
+					"intent": " ",
+					"entities": []
+				}
+			],
+			"childs": [],
+			"fallback": "",
 			"output": [
 				{
 					"type": "0",
-					"content": "To do that you need to first evaluate your anxiety"
+					"content": "So here's how I work, I can help you by asking your questions to evaluate your anziety, get access to ressources that can help you, provide you some general knowledge on anziety demystifying it, and help you with self-guided coping mecanisms. The more I get to know you the better I can teach you some good stuff"
+				},
+				{
+					"type": "2",
+					"content": {
+						"text": "I'm essentially here as a first ear and resource regarding anxiety and well being. The more I get to know you the better I can teach you some good stuff. Therefore, let's keep the chat engaging, shall we?",
+						"quick_replies": [
+							{
+								"content_type": "text",
+								"title": "I'm onboard!",
+								"payload": "I'm onboard!"
+							}
+						]
+					}
 				}
 			],
-			"title": "Get access to resources",
+			"title": "Cool!",
 			"position": {
-				"x": 2939,
-				"y": 844
+				"x": 832,
+				"y": 407
 			},
 			"colorID": 1
 		},
 		{
-			"id": "10 c",
-			"uuid": "eaa104a0-ee28-7f1f-8b78-b348e0f82ea7",
+			"id": "2 c",
+			"uuid": "0b0d61cc-f9dc-59f2-ab20-d7fe9dc8d3ca",
 			"intent_name": " ",
 			"conditions": [
 				{
@@ -425,17 +557,31 @@
 			],
 			"childs": [],
 			"fallback": "",
-			"output": [],
-			"title": "Learn more about anxiety",
+			"output": [
+				{
+					"type": "2",
+					"content": {
+						"text": "So I'm trained to help with anxiety, mental health and well being.",
+						"quick_replies": [
+							{
+								"content_type": "text",
+								"title": "What's anxiety?",
+								"payload": "What's anxiety?"
+							}
+						]
+					}
+				}
+			],
+			"title": "I'm onboard!",
 			"position": {
-				"x": 2923,
-				"y": 660
+				"x": 1194,
+				"y": 409
 			},
 			"colorID": 1
 		},
 		{
-			"id": "11 c",
-			"uuid": "eaa104a0-ee28-7f1f-8b78-b348e0f82ea7",
+			"id": "3 c",
+			"uuid": "138e9e54-38c2-9960-bb53-09d874a19b3e",
 			"intent_name": " ",
 			"conditions": [
 				{
@@ -445,35 +591,186 @@
 			],
 			"childs": [],
 			"fallback": "",
-			"output": [],
-			"title": "Self-help guided well being mechanisms",
+			"output": [
+				{
+					"type": "0",
+					"content": "Anxiety is a feeling lived by everyone of us when confronted to a situation of uncertainty. Anxiety is a normal reaction to have, it is how your react in terms of security. Everyone needs a certain level of anxiety to live, just like a little bit of stress"
+				},
+				{
+					"type": "2",
+					"content": {
+						"text": "Anxiety can become a problem when it the feeling becomes frequent, hard to cope with, and influencing your thoughts and behaviours. In which case it will impact your mental health.",
+						"quick_replies": [
+							{
+								"content_type": "text",
+								"title": "Mental health?",
+								"payload": "Mental health?"
+							}
+						]
+					}
+				}
+			],
+			"title": "What's anxiety?",
 			"position": {
-				"x": 2941,
-				"y": 422
+				"x": 1525,
+				"y": 412
+			},
+			"colorID": 1
+		},
+		{
+			"id": "4 c",
+			"uuid": "da126cc3-75cf-53a1-bdaf-7e475de81f14",
+			"intent_name": " ",
+			"conditions": [
+				{
+					"intent": " ",
+					"entities": []
+				}
+			],
+			"childs": [],
+			"fallback": "",
+			"output": [
+				{
+					"type": "2",
+					"content": {
+						"text": "Mental health refers to your mental health.... definition, based on what, how important it is",
+						"quick_replies": [
+							{
+								"content_type": "text",
+								"title": "Well-being?",
+								"payload": "Well-being?"
+							}
+						]
+					}
+				}
+			],
+			"title": "Mental health?",
+			"position": {
+				"x": 1833,
+				"y": 414
+			},
+			"colorID": 1
+		},
+		{
+			"id": "5 c",
+			"uuid": "1ffd2015-bd4d-28e7-6d91-8726f3df40ec",
+			"intent_name": " ",
+			"conditions": [
+				{
+					"intent": " ",
+					"entities": []
+				}
+			],
+			"childs": [],
+			"fallback": "",
+			"output": [
+				{
+					"type": "2",
+					"content": {
+						"text": "Well being refers to ... it is based on... it is important to",
+						"quick_replies": [
+							{
+								"content_type": "text",
+								"title": "Let's talk",
+								"payload": "Let's talk"
+							}
+						]
+					}
+				}
+			],
+			"title": "Well-being?",
+			"position": {
+				"x": 2107,
+				"y": 416
+			},
+			"colorID": 1
+		},
+		{
+			"id": "6 c",
+			"uuid": "915e9637-3595-5974-a9ca-d77578bb6106",
+			"intent_name": " ",
+			"conditions": [
+				{
+					"intent": " ",
+					"entities": []
+				}
+			],
+			"childs": [],
+			"fallback": "",
+			"output": [
+				{
+					"type": "0",
+					"content": "The beauty about talking to me is that I help you understand what they all are, and based on our discussion, provide you with help that you might need, whatever that would be, regarding your anxiety, mental health or well-being"
+				},
+				{
+					"type": "2",
+					"content": {
+						"text": "Get it ?",
+						"quick_replies": [
+							{
+								"content_type": "text",
+								"title": "Yes, let's chat",
+								"payload": "Yes, let's chat"
+							}
+						]
+					}
+				}
+			],
+			"title": "Let's talk",
+			"position": {
+				"x": 2377,
+				"y": 434
+			},
+			"colorID": 1
+		},
+		{
+			"id": "7 c",
+			"uuid": "6ef99d8d-5f12-7056-80e9-aa1ebf77852a",
+			"intent_name": " ",
+			"conditions": [
+				{
+					"intent": " ",
+					"entities": []
+				}
+			],
+			"childs": [],
+			"fallback": "",
+			"output": [
+				{
+					"type": "0",
+					"content": "Good"
+				},
+				{
+					"type": "2",
+					"content": {
+						"text": "What could I help you with today ?",
+						"quick_replies": [
+							{
+								"content_type": "text",
+								"title": "Take assessment",
+								"payload": "Take assessment"
+							},
+							{
+								"content_type": "text",
+								"title": "Get ressources",
+								"payload": "Get ressources"
+							},
+							{
+								"content_type": "text",
+								"title": "Find Psy",
+								"payload": "Find Psy"
+							}
+						]
+					}
+				}
+			],
+			"title": "Yes, let's chat",
+			"position": {
+				"x": 2679,
+				"y": 424
 			},
 			"colorID": 1
 		}
 	],
-	"fallback_nodes": [
-		{
-			"id": "0 f",
-			"uuid": "1b9e5e05-0f36-74e9-c3dd-5c1fb43c3817",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [],
-			"fallback": "",
-			"output": [],
-			"title": "Node 0 f",
-			"position": {
-				"x": 2940,
-				"y": 1140
-			},
-			"colorID": 3
-		}
-	]
+	"fallback_nodes": []
 }
