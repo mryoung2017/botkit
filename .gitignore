@@ -17,3 +17,4 @@ lib/storage/users
 lib/storage/sessions
 lib/storage/users_to_add.json
 lib/storage/users_to_update.json
+dialog_simple.json
