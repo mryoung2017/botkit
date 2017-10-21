@@ -59,15 +59,18 @@ else if (ops.lt === true && ops.ltsubdomain === null) {
 }
 
 var controller = Botkit.facebookbot({
-    debug: false,
-    log: false,
-	json_file_store: './lib/storage',
-    access_token: process.env.page_token,
-    verify_token: process.env.verify_token,
-    app_secret: process.env.app_secret,
-	require_delivery: true,
-    validate_requests: true, // Refuse any requests that don't come from FB on your receive webhook, must provide FB_APP_SECRET in environment variables
+  debug: false,
+  log: false,
+  session_duration: 0.5, //in minutes
+  json_file_store: './lib/storage',
+  access_token: process.env.page_token,
+  verify_token: process.env.verify_token,
+  app_secret: process.env.app_secret,
+  require_delivery: true,
+  validate_requests: true, // Refuse any requests that don't come from FB on your receive webhook, must provide FB_APP_SECRET in environment variables
 });
+
+Session.session_duration = controller.session_duration;
 
 controller.middleware.receive.use(apiai.receive);
 console.log('API.AI ONLINE!');
