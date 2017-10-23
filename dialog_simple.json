@@ -268,8 +268,8 @@
 						"quick_replies": [
 							{
 								"content_type": "text",
-								"title": "Well-being ?",
-								"payload": "Well-being ?"
+								"title": "Well-being?",
+								"payload": "Well-being?"
 							}
 						]
 					}
@@ -312,7 +312,7 @@
 					}
 				}
 			],
-			"title": "What's well-being ?",
+			"title": "Well-being?",
 			"position": {
 				"x": 2107,
 				"y": 416
@@ -772,5 +772,31 @@
 			"colorID": 1
 		}
 	],
-	"fallback_nodes": []
+	"fallback_nodes": [
+	{
+			"id": "0 f",
+			"uuid": "d140155f-2fdb-24ef-c3a2-b32e4ca78d3c",
+			"intent_name": " ",
+			"conditions": [
+				{
+					"intent": " ",
+					"entities": []
+				}
+			],
+			"childs": [],
+			"fallback": "",
+			"output": [
+				{
+					"type": "0",
+					"content": "Sorry I didn't get this, can you repeat please?"
+				}
+			],
+			"title": "Default Fallback",
+			"position": {
+				"x": 248,
+				"y": 436
+			},
+			"colorID": 1
+		}
+	]
 }

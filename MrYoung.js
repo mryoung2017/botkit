@@ -112,9 +112,9 @@ controller.api.messenger_profile.menu([{
             "type":"nested",
             "call_to_actions":[
                 {
-                    "title":"Test",
+                    "title":"Get Started",
                     "type":"postback",
-                    "payload":"Test"
+                    "payload":"Get Started"
                 },
                 {
                     "title":"Hi",
