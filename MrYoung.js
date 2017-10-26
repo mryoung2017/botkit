@@ -61,7 +61,6 @@ else if (ops.lt === true && ops.ltsubdomain === null) {
 var controller = Botkit.facebookbot({
   debug: false,
   log: false,
-  session_duration: 0.5, //in minutes
   json_file_store: './lib/storage',
   access_token: process.env.page_token,
   verify_token: process.env.verify_token,
@@ -202,6 +201,7 @@ controller.on('message_received', function(bot, message) {
   										intent: message.intent,
   										entity: message.entities,
   										resp_uuid: found_node.id,
+                      tag: found_node.tag,
                       sent_at: sent_at
   										}];
   				controller.storage.sessions.save(sess.uuid, {start_time: time_stamp, timeout: sess.timeout, userid: user_uuid, last_context: found_node.input_context, messages: message_to_store});
@@ -231,7 +231,7 @@ controller.on('message_received', function(bot, message) {
 							Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message))
 							.then(function(found_node){
                 console.log('new context : '+ found_node.input_context);
-								Promise.resolve(fb_send(bot, message, found_node.output)).then(function(sent_at){
+								Promise.resolve(fb_send(bot, message, found_node.output, user_data)).then(function(sent_at){
                   var message_to_store = [{
   														mess_uuid: message.mid,
   														content: message.text,
@@ -239,6 +239,7 @@ controller.on('message_received', function(bot, message) {
   														intent: message.intent,
   														entity: message.entities,
   														resp_uuid: found_node.id,
+                              tag: found_node.tag,
                               sent_at: sent_at
   														}];
   								controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: found_node.input_context, messages: message_to_store});
@@ -258,7 +259,36 @@ controller.on('message_received', function(bot, message) {
 							Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message))
 							.then(function(found_node){
 								console.log('new context : '+ found_node.input_context);
-								Promise.resolve(fb_send(bot, message, found_node.output)).then(function(sent_at){
+								Promise.resolve(fb_send(bot, message, found_node.output, user_data)).then(function(sent_at){
+                  var message_to_store = [{
+  														mess_uuid: message.mid,
+  														content: message.text,
+  														received_at: time_stamp,
+  														intent: message.intent,
+  														entity: message.entities,
+                              context: found_node.context,
+  														resp_uuid: found_node.id,
+                              tag: found_node.tag,
+                              sent_at: sent_at
+  														}];
+  								controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: found_node.input_context, messages: message_to_store});
+                });
+                })
+  							.catch(function(err){
+  								console.log(err);
+  							});
+
+						}
+            else if ( input_context[input_context.length -1] === 'f' ){
+
+							var current_node = input_context;			// Convert current_node string to Int
+							var current_node_childs = dialog.fallback_nodes[parseInt(input_context)].childs		// Get current node childs
+              var current_node_fallback = dialog.fallback_nodes[parseInt(input_context)].fallback;		// Get current node fallback
+
+							Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message))
+							.then(function(found_node){
+								console.log('new context : '+ found_node.input_context);
+								Promise.resolve(fb_send(bot, message, found_node.output, user_data)).then(function(sent_at){
                   var message_to_store = [{
   														mess_uuid: message.mid,
   														content: message.text,
@@ -266,6 +296,7 @@ controller.on('message_received', function(bot, message) {
   														intent: message.intent,
   														entity: message.entities,
   														resp_uuid: found_node.id,
+                              tag: found_node.tag,
                               sent_at: sent_at
   														}];
   								controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: found_node.input_context, messages: message_to_store});
@@ -286,7 +317,7 @@ controller.on('message_received', function(bot, message) {
 							Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message))
 							.then( function(found_node) {
 								console.log('new context : '+ found_node.input_context);
-								Promise.resolve(fb_send(bot, message, found_node.output)).then(function(sent_at){
+								Promise.resolve(fb_send(bot, message, found_node.output, user_data)).then(function(sent_at){
                   var message_to_store = [{
   														mess_uuid: message.mid,
   														content: message.text,
@@ -294,6 +325,7 @@ controller.on('message_received', function(bot, message) {
   														intent: message.intent,
   														entity: message.entities,
   														resp_uuid: found_node.id,
+                              tag: found_node.tag,
                               sent_at: sent_at
   														}];
                   controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: found_node.input_context, messages: message_to_store});
@@ -318,7 +350,7 @@ controller.on('message_received', function(bot, message) {
 
 						Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message)).then(function(found_node){
 							console.log('new context : '+ found_node.input_context);
-							Promise.resolve(fb_send(bot, message, found_node.output)).then(function(sent_at){
+							Promise.resolve(fb_send(bot, message, found_node.output, user_data)).then(function(sent_at){
 
                 var message_to_store = [{
                             mess_uuid: message.mid,
@@ -327,9 +359,10 @@ controller.on('message_received', function(bot, message) {
                             intent: message.intent,
                             entity: message.entities,
                             resp_uuid: found_node.id,
+                            tag: found_node.tag,
                             sent_at: sent_at
                             }];
-                            controller.storage.sessions.save(sess.uuid, {start_time: time_stamp, timeout: sess.timeout, userid: userid, last_context: found_node.input_context, messages: message_to_store});
+                controller.storage.sessions.save(sess.uuid, {start_time: time_stamp, timeout: sess.timeout, userid: userid, last_context: found_node.input_context, messages: message_to_store});
 
               });
 						}).catch(function(err){
