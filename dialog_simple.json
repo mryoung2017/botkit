@@ -1,802 +1,2183 @@
 {
-	"root_nodes": [
+   "root_nodes": [
+      {
+         "id": "0 r",
+         "uuid": "479d7e5a-39f8-d7ab-ea9c-48d256e94819",
+         "title": "Get Started",
+         "intent_name": "Get Started",
+         "conditions": [
+            {
+               "intent": "Get Started",
+               "entities": []
+            }
+         ],
+         "parent_node": [],
+         "childs": [
+            "19 c",
+            "0 c",
+            "8 c",
+            "7 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "Hello, my name is Mr. Young. I'm here to help you cope with anxiety. "
+            },
+            {
+               "type": "0",
+               "content": "My current version is a development and test one in order to build the functions of my proof of concept."
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "Which one would you like to test ?",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Onboarding",
+                        "payload": "Onboarding"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Take Assessment",
+                        "payload": "Take Assessment"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Symptoms",
+                        "payload": "Symptoms"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Triggers",
+                        "payload": "Triggers"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 583,
+            "y": 218
+         },
+         "colorID": 1
+      }
+   ],
+   "child_nodes": [
+      {
+         "id": "0 c",
+         "uuid": "adfc15cf-6e36-fff4-96ad-a3e6a11ef2a3",
+         "title": "Onboarding",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "0 r"
+         ],
+         "childs": [
+            "1 c",
+            "2 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "2",
+               "content": {
+                  "text": "Welcome to the chat with me. Would you like to know how to chat with me or how I work?",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Chat",
+                        "payload": "Chat"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Work",
+                        "payload": "Work"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 833,
+            "y": 218
+         },
+         "colorID": 1
+      },
+      {
+         "id": "1 c",
+         "uuid": "6bf0142c-7ab3-ac29-e263-ae827bb199a5",
+         "title": "Chat",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "0 c"
+         ],
+         "childs": [
+            "3 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "Look at my button down there with words"
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "Can you see them alright ?",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Yes",
+                        "payload": "Yes"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 1083,
+            "y": 218
+         },
+         "colorID": 1
+      },
+      {
+         "id": "2 c",
+         "uuid": "f4bcd2bd-bfb2-bf84-d5db-5f417f58114e",
+         "title": "Work",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "5 c",
+            "0 c"
+         ],
+         "childs": [
+            "6 c"
+         ],
+         "fallback": "8 f",
+         "output": [
+            {
+               "type": "0",
+               "content": "So here is how I work"
+            },
+            {
+               "type": "0",
+               "content": "I can help you by asking your questions to evaluate your anxiety, your symptoms and triggers."
+            },
+            {
+               "type": "0",
+               "content": "I'm essentially here as a first ear and first resource regarding anxiety and well-being."
+            },
+            {
+               "type": "0",
+               "content": "The more I get to know you, the better I can teach you some helpful stuff."
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "Sounds good ?",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Yes",
+                        "payload": "Yes"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 1083,
+            "y": 468
+         },
+         "colorID": 1
+      },
+      {
+         "id": "3 c",
+         "uuid": "38e27aef-7143-2a54-4e01-6b29eea01bf6",
+         "title": "Yes",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "1 c"
+         ],
+         "childs": [
+            "4 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "As of today, these buttons are the main way for you to communicate with me. "
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "Sounds good to you?",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Yes",
+                        "payload": "Yes"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 1333,
+            "y": 218
+         },
+         "colorID": 1
+      },
+      {
+         "id": "4 c",
+         "uuid": "5f06190e-4a9a-be2d-ed05-90f9fa490941",
+         "title": "Yes",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "3 c"
+         ],
+         "childs": [
+            "5 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "2",
+               "content": {
+                  "text": "Great, now that we now how to communicate together, do you want to know how I work and how I can help ?",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Yes",
+                        "payload": "Yes"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 1583,
+            "y": 218
+         },
+         "colorID": 1
+      },
+      {
+         "id": "5 c",
+         "uuid": "4a20020d-c052-8ab1-6090-297c7c56e99c",
+         "title": "Yes",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "4 c"
+         ],
+         "childs": [
+            "2 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "2",
+               "content": {
+                  "text": "Alright",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Work",
+                        "payload": "Work"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 1833,
+            "y": 218
+         },
+         "colorID": 1
+      },
+      {
+         "id": "6 c",
+         "uuid": "0dc981fc-46fa-fa56-b324-78a65f7774bd",
+         "title": "Yes",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "2 c"
+         ],
+         "childs": [
+            "19 c",
+            "7 c",
+            "8 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "2",
+               "content": {
+                  "text": "Alright, let's jump in. How can I help you today?",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Take Assessment",
+                        "payload": "Take Assessment"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Symptoms",
+                        "payload": "Symptoms"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Triggers",
+                        "payload": "Triggers"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 1333,
+            "y": 468
+         },
+         "colorID": 1
+      },
+      {
+         "id": "7 c",
+         "uuid": "ff7cf00d-8782-6cec-3638-b6e775b6524d",
+         "title": "Triggers",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "6 c",
+            "0 r"
+         ],
+         "childs": [],
+         "fallback": "",
+         "output": [],
+         "position": {
+            "x": 1567,
+            "y": 751
+         },
+         "colorID": 1
+      },
+      {
+         "id": "8 c",
+         "uuid": "949ade59-3234-f535-0359-4793718cf8c8",
+         "title": "Take Assessment",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "26 c",
+            "6 c",
+            "20 c",
+            "0 r",
+            "27 c"
+         ],
+         "childs": [
+            "9 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "This GAD 7 test aims to measure whether you may have been affected by anxiety over the last 2 weeks. "
+            },
+            {
+               "type": "0",
+               "content": "Your answers and results are totally confidential."
+            },
+            {
+               "type": "0",
+               "content": "For each of the problems that could have bothered you over the last 2 weeks, please answer either \"Not at all sure\", \"Several days\", \"Over half of the day\" or \"Nearly every day\"."
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "Ready to start ?",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Yes",
+                        "payload": "Yes"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 810,
+            "y": 1021
+         },
+         "colorID": 1
+      },
+      {
+         "id": "9 c",
+         "uuid": "243c8b75-2a92-5096-20f9-8c4614d17185",
+         "title": "Yes",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "8 c"
+         ],
+         "childs": [],
+         "fallback": "1 f",
+         "output": [
+            {
+               "type": "2",
+               "content": {
+                  "text": "1. Over the last 2 weeks, how often have you been bothered by feeling nervous, anxious, or on edge?",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Not at all sure",
+                        "payload": "Not at all sure"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Several days",
+                        "payload": "Several days"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Over half of the days",
+                        "payload": "Over half of the days"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Nearly every day",
+                        "payload": "Nearly every day"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 1062,
+            "y": 1025
+         },
+         "colorID": 1
+      },
+      {
+         "id": "10 c",
+         "uuid": "7caee5ed-4628-eacf-9c3d-c1bad4f1931e",
+         "title": "Connect",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "7 f"
+         ],
+         "childs": [
+            "13 c",
+            "12 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "Connection with a human being."
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "The humans being that can do that are : list the different professionals that can diagnose mental health or do a further assessment",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Diagnose",
+                        "payload": "Diagnose"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Assessment",
+                        "payload": "Assessment"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 3144,
+            "y": 789
+         },
+         "colorID": 1
+      },
+      {
+         "id": "11 c",
+         "uuid": "bf4448c5-fc7d-9ece-4ba5-6ad91dd6578d",
+         "title": "Know more",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "7 f"
+         ],
+         "childs": [
+            "14 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "Your result means...."
+            },
+            {
+               "type": "0",
+               "content": "follow same logic as InsideBlue from Amelie AI"
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "Do you want to know what you can do now ?",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Yes",
+                        "payload": "Yes"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 3139,
+            "y": 1285
+         },
+         "colorID": 1
+      },
+      {
+         "id": "12 c",
+         "uuid": "92afe7f7-9e3d-bdbf-1c65-55f6846a3058",
+         "title": "Diagnose",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "10 c"
+         ],
+         "childs": [],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "Which of the following would you like to be connected with ?"
+            },
+            {
+               "type": "0",
+               "content": "List types of pros that can do diagnosis"
+            },
+            {
+               "type": "0",
+               "content": "Next slide follows same as find a psychologist"
+            },
+            {
+               "type": "0",
+               "content": "Then Book an appointment process"
+            }
+         ],
+         "position": {
+            "x": 3407,
+            "y": 655
+         },
+         "colorID": 1
+      },
+      {
+         "id": "13 c",
+         "uuid": "d9e5b3ed-d7e8-0d7c-6505-6b034010a9b3",
+         "title": "Assessment",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "10 c"
+         ],
+         "childs": [],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "Which of the following type of professionnals that are trained to do the assessment would you like me to connect you with"
+            },
+            {
+               "type": "0",
+               "content": "List type of pros that can do an assessment"
+            },
+            {
+               "type": "0",
+               "content": "Then follow same logic as for find a psychologist"
+            },
+            {
+               "type": "0",
+               "content": "Book appointment process flow"
+            }
+         ],
+         "position": {
+            "x": 3394,
+            "y": 1041
+         },
+         "colorID": 1
+      },
+      {
+         "id": "14 c",
+         "uuid": "18e4015f-3bda-4431-4c6c-80cfb8e19cf0",
+         "title": "Yes",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "11 c"
+         ],
+         "childs": [
+            "18 c",
+            "17 c",
+            "16 c",
+            "15 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "Many things can be done. "
+            },
+            {
+               "type": "0",
+               "content": "You could book an appointment with a professional to discuss your feelings. That's a good place to start. I can help with that"
+            },
+            {
+               "type": "0",
+               "content": "You can also learn about other health professionals and their treatments"
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "Find out more about the signs and symptoms of anxiety",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Book an appointment",
+                        "payload": "Book an appointment"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Health Pros",
+                        "payload": "Health Pros"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Treatments",
+                        "payload": "Treatments"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Signs & Symptoms",
+                        "payload": "Signs & Symptoms"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 3389,
+            "y": 1285
+         },
+         "colorID": 1
+      },
+      {
+         "id": "15 c",
+         "uuid": "274b3ba6-25f0-3568-1406-1ecd441f67c9",
+         "title": "Book an appointment",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "14 c"
+         ],
+         "childs": [],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "What kind do you want to be connected for ? (Assement or Diagnosis)"
+            },
+            {
+               "type": "0",
+               "content": "What type of health professional would you like to be connected with ? (Nurse, GP, Psychologist)"
+            },
+            {
+               "type": "0",
+               "content": "Which area ? (Send location)"
+            }
+         ],
+         "position": {
+            "x": 3636,
+            "y": 1285
+         },
+         "colorID": 1
+      },
+      {
+         "id": "16 c",
+         "uuid": "06a9ca70-8d12-c3a4-2e5a-63cbddf25069",
+         "title": "Health Pros",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "14 c"
+         ],
+         "childs": [],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "Explain the different categories of health pros and what they can do"
+            },
+            {
+               "type": "0",
+               "content": "Sum it a up with a picture to send on which there is the table of the different pros they can see (branded Mr. Young)"
+            }
+         ],
+         "position": {
+            "x": 3639,
+            "y": 1535
+         },
+         "colorID": 1
+      },
+      {
+         "id": "17 c",
+         "uuid": "f221b594-6eea-92ab-9ac6-a1bf32649f55",
+         "title": "Treatments",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "14 c"
+         ],
+         "childs": [],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "Explain the different categories of treatment available, their effectiveness, who they are for, what cost ?"
+            }
+         ],
+         "position": {
+            "x": 3639,
+            "y": 1785
+         },
+         "colorID": 1
+      },
+      {
+         "id": "18 c",
+         "uuid": "1312e810-16de-8293-6121-f9a3ea7e902c",
+         "title": "Signs & Symptoms",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "14 c"
+         ],
+         "childs": [],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "Provide some education on the signs of anxiety and depression"
+            },
+            {
+               "type": "0",
+               "content": "Provide some education on the symptoms of anxiety and education"
+            },
+            {
+               "type": "0",
+               "content": "Provide education on how to evaluate the signs of anxiety (\"Am I living with the signs of anxiety or depression? How do I know ? What should I do?)"
+            }
+         ],
+         "position": {
+            "x": 3639,
+            "y": 2035
+         },
+         "colorID": 1
+      },
+      {
+         "id": "19 c",
+         "uuid": "385a832c-7255-4ac1-bd9d-d07811df27ba",
+         "title": "Symptoms",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "0 r",
+            "6 c",
+            "20 c",
+            "20 c"
+         ],
+         "childs": [
+            "22 c",
+            "21 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "To start with, we are going to focus on the different symptoms of anxiety that you are feeling when living anxious or stressful situations ?"
+            },
+            {
+               "type": "0",
+               "content": "Réponse doit être du user input"
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "Si la personne a du mal à savoir, prends du temps à répondre, ou ne donne que peu de réponse, alors proposer automatiquement des exemples (voir prochain noeud)",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Répond Symptomes",
+                        "payload": "Répond Symptomes"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Pas symptomes",
+                        "payload": "Pas symptomes"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 783,
+            "y": 1501
+         },
+         "colorID": 1
+      },
+      {
+         "id": "20 c",
+         "uuid": "856b9cae-fc3d-7e79-d13c-2900c1c00f08",
+         "title": "Yes",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "8 f"
+         ],
+         "childs": [
+            "8 c",
+            "19 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "This protocol is in three parts. It can take 20 mins to complete, and it is important that you do it in one shot. "
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "Let's start with your symptoms of anxiety",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Symptoms",
+                        "payload": "Symptoms"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 898,
+            "y": 695
+         },
+         "colorID": 1
+      },
+      {
+         "id": "21 c",
+         "uuid": "d6028a41-4473-bdf7-2e3a-d604b850d84a",
+         "title": "Répond Symptomes",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "19 c"
+         ],
+         "childs": [],
+         "fallback": "9 f",
+         "output": [
+            {
+               "type": "0",
+               "content": "Utilisation NLP et classifier par rapport aux symptomes physiques communs et la facon de les exprimer"
+            },
+            {
+               "type": "0",
+               "content": "Alright, thank you for the information."
+            }
+         ],
+         "position": {
+            "x": 1033,
+            "y": 1501
+         },
+         "colorID": 1
+      },
+      {
+         "id": "22 c",
+         "uuid": "f3d02b6d-98c1-b2b6-45ac-0f3e539b9b78",
+         "title": "Pas symptomes",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "19 c"
+         ],
+         "childs": [],
+         "fallback": "9 f",
+         "output": [
+            {
+               "type": "0",
+               "content": "Maybe it would be easier for you to tell us what you feel like by selecting the symptoms in this list that you feel when anxious in that situation."
+            },
+            {
+               "type": "0",
+               "content": "Fournir une liste de différents choix de symptomes assez commun (comme les 13 attaques de paniques)"
+            }
+         ],
+         "position": {
+            "x": 1033,
+            "y": 1751
+         },
+         "colorID": 1
+      },
+      {
+         "id": "23 c",
+         "uuid": "8966056d-480c-f406-c810-c8e8f945d439",
+         "title": "Répond réactions",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "10 f"
+         ],
+         "childs": [],
+         "fallback": "11 f",
+         "output": [
+            {
+               "type": "0",
+               "content": "Utilisation NLP et classifier par rapport aux symptomes physiques communs et la facon de les exprimer"
+            },
+            {
+               "type": "0",
+               "content": "Alright, thank you for the information"
+            }
+         ],
+         "position": {
+            "x": 1825,
+            "y": 1562
+         },
+         "colorID": 1
+      },
+      {
+         "id": "24 c",
+         "uuid": "ab8e6ccc-e29d-a03c-9f1e-23aa0885255a",
+         "title": "Pas de réponse",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "10 f"
+         ],
+         "childs": [
+            "25 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "Maybe it would be easier for you to tell me what you think, what your thoughts are, by selecting symptoms in this list"
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "Fournir une liste de différents choix de symptomes assez commun (comme les 13 attaques de paniques)",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Sélection List Symptomes",
+                        "payload": "Sélection List Symptomes"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 1829,
+            "y": 1815
+         },
+         "colorID": 1
+      },
+      {
+         "id": "25 c",
+         "uuid": "f6460888-1eb4-b31b-008e-6e537e8a8f74",
+         "title": "Sélection List Symptomes",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "24 c"
+         ],
+         "childs": [],
+         "fallback": "11 f",
+         "output": [
+            {
+               "type": "0",
+               "content": "Alright, thank you for selecting some"
+            }
+         ],
+         "position": {
+            "x": 2079,
+            "y": 1816
+         },
+         "colorID": 1
+      },
+      {
+         "id": "26 c",
+         "uuid": "689d7dfc-c42d-4498-cabe-40cf5714abb1",
+         "title": "Yes",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "12 f"
+         ],
+         "childs": [
+            "8 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "Alright, I understand, thank you for sharing the information. "
+            },
+            {
+               "type": "0",
+               "content": "We've now completed the first part of the protocol regarding the symptoms. The second part is related to assessing your level of anxiety. "
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "Ready to do so ?",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Take Assessment",
+                        "payload": "Take Assessment"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 2591,
+            "y": 1553
+         },
+         "colorID": 1
+      },
+      {
+         "id": "27 c",
+         "uuid": "1d3a7c2c-adcb-2d87-cce2-9f4cfbdd0565",
+         "title": "No",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "12 f"
+         ],
+         "childs": [
+            "8 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "Alright, good to know. Thank you for sharing the information. "
+            },
+            {
+               "type": "0",
+               "content": "We've now completed the first part of the protocol regarding the symptoms. The second part is related to assessing your level of anxiety. "
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "Ready to start ?",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Take Assessment",
+                        "payload": "Take Assessment"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 2591,
+            "y": 1803
+         },
+         "colorID": 1
+      },
+      {
+         "id": "28 c",
+         "uuid": "9132b9c5-983a-be5e-8315-39261c13c47c",
+         "title": "Normal, light",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "13 f"
+         ],
+         "childs": [
+            "31 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "With the answers provided to all the questions asked, it appears to us that you do no seem to be suffering from hard or severe anxiety."
+            },
+            {
+               "type": "0",
+               "content": "Your anxious reactions seems to be normal, and according to you, they are associated to stressful events, therefore reactionnal and discontinued, rather than chronic and continued."
+            },
+            {
+               "type": "0",
+               "content": "If you're interested, Mr. Young can suggest you a few simple exercices to learn how to manage your anxiety so that it no longer is a break when you have to face stressful events."
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "To do that, press the button Solutions down below.",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Solutions",
+                        "payload": "Solutions"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 3410,
+            "y": -147
+         },
+         "colorID": 1
+      },
+      {
+         "id": "29 c",
+         "uuid": "9b6a643d-0a7a-8d25-fc5e-0f3298530010",
+         "title": "Moderate",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "13 f"
+         ],
+         "childs": [
+            "32 c",
+            "31 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "With the answers provided to all the questions asked, it appears to us that you seem to be impacted by your anxiety and your psychological and physiological reactions derived from it."
+            },
+            {
+               "type": "0",
+               "content": "Sometimes, anxiety seems to really be disabling in your daily life. "
+            },
+            {
+               "type": "0",
+               "content": "It could be useful for you to meet with a specialist, like a psychologist or psychiatrist, to refine this evaluation and take charge of your anxiety."
+            },
+            {
+               "type": "0",
+               "content": "If you would like to do that, feel free to click the Book Appointment button. We can help you finding the professional near you."
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "In addition to this path, you're invited to go through our Solutions section. If so, click the button to be directed towards these. ",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Book Appointment",
+                        "payload": "Book Appointment"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 3424,
+            "y": 151
+         },
+         "colorID": 1
+      },
+      {
+         "id": "30 c",
+         "uuid": "9b1a0440-be53-74cb-1f06-71f8856fdefb",
+         "title": "High",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "13 f"
+         ],
+         "childs": [
+            "33 c",
+            "32 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "With the answers provided to all the questions asked, it appears to us that you seem to be presenting a severe anxiety that is strongly disabling you in your day to day life, causing you lots of problems. "
+            },
+            {
+               "type": "0",
+               "content": "Maybe you never realized but solutions to help you face your difficulties are available. "
+            },
+            {
+               "type": "0",
+               "content": "To start with, I strongly invite you to reach out to a specialist, like a psychiatrist or psychologist, to refine this evaluation, and implement, with the specialist, the solutions adapted to your situation. "
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "I offer help towards that. In fact, I suggest we book an appointment together right now. Sounds good ?",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Book appointment",
+                        "payload": "Book appointment"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "No",
+                        "payload": "No"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 3439,
+            "y": 418
+         },
+         "colorID": 1
+      },
+      {
+         "id": "31 c",
+         "uuid": "ac38bb27-107e-4a3d-b144-ad119def97bf",
+         "title": "Solutions",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "28 c",
+            "29 c"
+         ],
+         "childs": [],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "TBD avec les psychologues pour préparer quelques exercices à présenter et expliquer pour apprendre à gérer son anxiété. "
+            }
+         ],
+         "position": {
+            "x": 3654,
+            "y": -148
+         },
+         "colorID": 1
+      },
+      {
+         "id": "32 c",
+         "uuid": "1f99ee5a-17f3-b68b-5bd0-e493006b9654",
+         "title": "Book Appointment",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "29 c",
+            "30 c"
+         ],
+         "childs": [],
+         "fallback": "",
+         "output": [],
+         "position": {
+            "x": 3674,
+            "y": 151
+         },
+         "colorID": 1
+      },
+      {
+         "id": "33 c",
+         "uuid": "4c78937d-6c14-606a-019b-9ecdf6329c74",
+         "title": "No",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "30 c"
+         ],
+         "childs": [],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "I understand that this part can be difficult, but it appears to me as the very useful. If you change your mind, feel free to go through the section Book Appointment"
+            }
+         ],
+         "position": {
+            "x": 3689,
+            "y": 418
+         },
+         "colorID": 1
+      }
+   ],
+   "fallback_nodes": [
 		{
-			"id": "0 r",
-			"uuid": "d140155f-2fdb-24ef-c3a2-b32e4ca78d3c",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [
-				"0 c",
-				"0 c"
-			],
-			"fallback": "",
-			"output": [
-				{
-					"type": "0",
-					"content": "Hello there!"
-				},
-				{
-					"type": "0",
-					"content": "Look at my button words down there"
-				},
-				{
-					"type": "2",
-					"content": {
-						"text": "Can you see them alright ?",
-						"quick_replies": [
-							{
-								"content_type": "text",
-								"title": "Yes, I do!",
-								"payload": "Yes, I do!"
-							}
-						]
-					}
-				}
-			],
-			"title": "Get Started",
-			"position": {
-				"x": 248,
-				"y": 436
-			},
-			"colorID": 1
-		},
-		{
-			"id": "0 r",
-			"uuid": "d140155f-2fdb-24ef-c3a2-b32e4ca78d3c",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [],
-			"fallback": "",
-			"output": [
-				{
-					"type": "0",
-					"content": "Hello there!"
-				},
-				{
-					"type": "0",
-					"content": "Look at my button words down there"
-				},
-				{
-					"type": "2",
-					"content": {
-						"text": "Can you see them alright ?",
-						"quick_replies": [
-							{
-								"content_type": "text",
-								"title": "Yes, I do!",
-								"payload": "Yes, I do!"
-							}
-						]
-					}
-				}
-			],
-			"title": "Get Started",
-			"position": {
-				"x": 248,
-				"y": 436
-			},
-			"colorID": 1
-		}
-	],
-	"child_nodes": [
-		{
-			"id": "0 c",
-			"uuid": "297890cc-dffe-687e-67ef-4854a683a480",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [
-				"1 c",
-				"1 c"
-			],
-			"fallback": "",
-			"output": [
-				{
-					"type": "2",
-					"content": {
-						"text": "These buttons are the main way to communicate with me as of today, sounds good ?",
-						"quick_replies": [
-							{
-								"content_type": "text",
-								"title": "Cool!",
-								"payload": "Cool!"
-							}
-						]
-					}
-				}
-			],
-			"title": "Yes, I do!",
-			"position": {
-				"x": 548,
-				"y": 439
-			},
-			"colorID": 1
-		},
-		{
-			"id": "1 c",
-			"uuid": "28ad1040-51f9-0515-4d3c-564f1aec4f2e",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [
-				"2 c",
-				"2 c"
-			],
-			"fallback": "",
-			"output": [
-				{
-					"type": "0",
-					"content": "So here's how I work, I can help you by asking your questions to evaluate your anziety, get access to ressources that can help you, provide you some general knowledge on anziety demystifying it, and help you with self-guided coping mecanisms. The more I get to know you the better I can teach you some good stuff"
-				},
-				{
-					"type": "2",
-					"content": {
-						"text": "I'm essentially here as a first ear and resource regarding anxiety and well being. The more I get to know you the better I can teach you some good stuff. Therefore, let's keep the chat engaging, shall we?",
-						"quick_replies": [
-							{
-								"content_type": "text",
-								"title": "I'm onboard!",
-								"payload": "I'm onboard!"
-							}
-						]
-					}
-				}
-			],
-			"title": "Cool!",
-			"position": {
-				"x": 832,
-				"y": 407
-			},
-			"colorID": 1
-		},
-		{
-			"id": "2 c",
-			"uuid": "0b0d61cc-f9dc-59f2-ab20-d7fe9dc8d3ca",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [
-				"3 c",
-				"3 c"
-			],
-			"fallback": "",
-			"output": [
-				{
-					"type": "2",
-					"content": {
-						"text": "So I'm trained to help with anxiety, mental health and well being.",
-						"quick_replies": [
-							{
-								"content_type": "text",
-								"title": "What's anxiety?",
-								"payload": "What's anxiety?"
-							}
-						]
-					}
-				}
-			],
-			"title": "I'm onboard!",
-			"position": {
-				"x": 1194,
-				"y": 409
-			},
-			"colorID": 1
-		},
-		{
-			"id": "3 c",
-			"uuid": "138e9e54-38c2-9960-bb53-09d874a19b3e",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [
-				"4 c",
-				"4 c"
-			],
-			"fallback": "",
-			"output": [
-				{
-					"type": "0",
-					"content": "Anxiety is a feeling lived by everyone of us when confronted to a situation of uncertainty. Anxiety is a normal reaction to have, it is how your react in terms of security. Everyone needs a certain level of anxiety to live, just like a little bit of stress"
-				},
-				{
-					"type": "2",
-					"content": {
-						"text": "Anxiety can become a problem when it the feeling becomes frequent, hard to cope with, and influencing your thoughts and behaviours. In which case it will impact your mental health.",
-						"quick_replies": [
-							{
-								"content_type": "text",
-								"title": "Mental health?",
-								"payload": "Mental health?"
-							}
-						]
-					}
-				}
-			],
-			"title": "What's anxiety?",
-			"position": {
-				"x": 1525,
-				"y": 412
-			},
-			"colorID": 1
-		},
-		{
-			"id": "4 c",
-			"uuid": "da126cc3-75cf-53a1-bdaf-7e475de81f14",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [
-				"5 c",
-				"5 c"
-			],
-			"fallback": "",
-			"output": [
-				{
-					"type": "2",
-					"content": {
-						"text": "Mental health refers to your mental health.... definition, based on what, how important it is",
-						"quick_replies": [
-							{
-								"content_type": "text",
-								"title": "Well-being?",
-								"payload": "Well-being?"
-							}
-						]
-					}
-				}
-			],
-			"title": "Mental health?",
-			"position": {
-				"x": 1833,
-				"y": 414
-			},
-			"colorID": 1
-		},
-		{
-			"id": "5 c",
-			"uuid": "7b1be873-d5c7-6bdd-8f65-7e7a85c0e63c",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [
-				"6 c",
-				"6 c"
-			],
-			"fallback": "",
-			"output": [
-				{
-					"type": "2",
-					"content": {
-						"text": "Well being refers to ... it is based on... it is important to",
-						"quick_replies": [
-							{
-								"content_type": "text",
-								"title": "Let's talk",
-								"payload": "Let's talk"
-							}
-						]
-					}
-				}
-			],
-			"title": "Well-being?",
-			"position": {
-				"x": 2107,
-				"y": 416
-			},
-			"colorID": 1
-		},
-		{
-			"id": "6 c",
-			"uuid": "c30220fd-f4aa-23a6-da81-898c5d8cc7aa",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [
-				"7 c",
-				"7 c"
-			],
-			"fallback": "",
-			"output": [
-				{
-					"type": "0",
-					"content": "The beauty about talking to me is that I help you understand what they all are, and based on our discussion, provide you with help that you might need, whatever that would be, regarding your anxiety, mental health or well-being"
-				},
-				{
-					"type": "2",
-					"content": {
-						"text": "Get it ?",
-						"quick_replies": [
-							{
-								"content_type": "text",
-								"title": "Yes, let's chat",
-								"payload": "Yes, let's chat"
-							}
-						]
-					}
-				}
-			],
-			"title": "Let's talk",
-			"position": {
-				"x": 2377,
-				"y": 434
-			},
-			"colorID": 1
-		},
-		{
-			"id": "7 c",
-			"uuid": "6ef99d8d-5f12-7056-80e9-aa1ebf77852a",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [
-				"12 c",
-				"13 c",
-				"14 c",
-				"8 c"
-			],
-			"fallback": "",
-			"output": [
-				{
-					"type": "0",
-					"content": "Good"
-				},
-				{
-					"type": "2",
-					"content": {
-						"text": "What could I help you with today ?",
-						"quick_replies": [
-							{
-								"content_type": "text",
-								"title": "Take assessment",
-								"payload": "Take assessment"
-							},
-							{
-								"content_type": "text",
-								"title": "Get ressources",
-								"payload": "Get ressources"
-							},
-							{
-								"content_type": "text",
-								"title": "Find Psy",
-								"payload": "Find Psy"
-							}
-						]
-					}
-				}
-			],
-			"title": "Yes, let's chat",
-			"position": {
-				"x": 2679,
-				"y": 424
-			},
-			"colorID": 1
-		},
-		{
-			"id": "12 c",
-			"uuid": "dbfb7a64-e8ec-6efe-dbf8-71de27de3dd4",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [],
-			"fallback": "",
-			"output": [],
-			"title": "Take assessment",
-			"position": {
-				"x": 2929,
-				"y": 424
-			},
-			"colorID": 1
-		},
-		{
-			"id": "13 c",
-			"uuid": "1969b2e5-5489-31a9-6194-f2b9f54eda58",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [],
-			"fallback": "",
-			"output": [],
-			"title": "Get ressources",
-			"position": {
-				"x": 2929,
-				"y": 674
-			},
-			"colorID": 1
-		},
-		{
-			"id": "14 c",
-			"uuid": "5c3e16af-e8db-a44b-4409-096c2712d997",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [],
-			"fallback": "",
-			"output": [],
-			"title": "Find Psy",
-			"position": {
-				"x": 2929,
-				"y": 924
-			},
-			"colorID": 1
-		},
-		{
-			"id": "0 c",
-			"uuid": "297890cc-dffe-687e-67ef-4854a683a480",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [],
-			"fallback": "",
-			"output": [
-				{
-					"type": "2",
-					"content": {
-						"text": "These buttons are the main way to communicate with me as of today, sounds good ?",
-						"quick_replies": [
-							{
-								"content_type": "text",
-								"title": "Cool!",
-								"payload": "Cool!"
-							}
-						]
-					}
-				}
-			],
-			"title": "Yes, I do!",
-			"position": {
-				"x": 548,
-				"y": 439
-			},
-			"colorID": 1
-		},
-		{
-			"id": "1 c",
-			"uuid": "28ad1040-51f9-0515-4d3c-564f1aec4f2e",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [],
-			"fallback": "",
-			"output": [
-				{
-					"type": "0",
-					"content": "So here's how I work, I can help you by asking your questions to evaluate your anziety, get access to ressources that can help you, provide you some general knowledge on anziety demystifying it, and help you with self-guided coping mecanisms. The more I get to know you the better I can teach you some good stuff"
-				},
-				{
-					"type": "2",
-					"content": {
-						"text": "I'm essentially here as a first ear and resource regarding anxiety and well being. The more I get to know you the better I can teach you some good stuff. Therefore, let's keep the chat engaging, shall we?",
-						"quick_replies": [
-							{
-								"content_type": "text",
-								"title": "I'm onboard!",
-								"payload": "I'm onboard!"
-							}
-						]
-					}
-				}
-			],
-			"title": "Cool!",
-			"position": {
-				"x": 832,
-				"y": 407
-			},
-			"colorID": 1
-		},
-		{
-			"id": "2 c",
-			"uuid": "0b0d61cc-f9dc-59f2-ab20-d7fe9dc8d3ca",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [],
-			"fallback": "",
-			"output": [
-				{
-					"type": "2",
-					"content": {
-						"text": "So I'm trained to help with anxiety, mental health and well being.",
-						"quick_replies": [
-							{
-								"content_type": "text",
-								"title": "What's anxiety?",
-								"payload": "What's anxiety?"
-							}
-						]
-					}
-				}
-			],
-			"title": "I'm onboard!",
-			"position": {
-				"x": 1194,
-				"y": 409
-			},
-			"colorID": 1
-		},
-		{
-			"id": "3 c",
-			"uuid": "138e9e54-38c2-9960-bb53-09d874a19b3e",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [],
-			"fallback": "",
-			"output": [
-				{
-					"type": "0",
-					"content": "Anxiety is a feeling lived by everyone of us when confronted to a situation of uncertainty. Anxiety is a normal reaction to have, it is how your react in terms of security. Everyone needs a certain level of anxiety to live, just like a little bit of stress"
-				},
-				{
-					"type": "2",
-					"content": {
-						"text": "Anxiety can become a problem when it the feeling becomes frequent, hard to cope with, and influencing your thoughts and behaviours. In which case it will impact your mental health.",
-						"quick_replies": [
-							{
-								"content_type": "text",
-								"title": "Mental health?",
-								"payload": "Mental health?"
-							}
-						]
-					}
-				}
-			],
-			"title": "What's anxiety?",
-			"position": {
-				"x": 1525,
-				"y": 412
-			},
-			"colorID": 1
-		},
-		{
-			"id": "4 c",
-			"uuid": "da126cc3-75cf-53a1-bdaf-7e475de81f14",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [],
-			"fallback": "",
-			"output": [
-				{
-					"type": "2",
-					"content": {
-						"text": "Mental health refers to your mental health.... definition, based on what, how important it is",
-						"quick_replies": [
-							{
-								"content_type": "text",
-								"title": "Well-being?",
-								"payload": "Well-being?"
-							}
-						]
-					}
-				}
-			],
-			"title": "Mental health?",
-			"position": {
-				"x": 1833,
-				"y": 414
-			},
-			"colorID": 1
-		},
-		{
-			"id": "5 c",
-			"uuid": "1ffd2015-bd4d-28e7-6d91-8726f3df40ec",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [],
-			"fallback": "",
-			"output": [
-				{
-					"type": "2",
-					"content": {
-						"text": "Well being refers to ... it is based on... it is important to",
-						"quick_replies": [
-							{
-								"content_type": "text",
-								"title": "Let's talk",
-								"payload": "Let's talk"
-							}
-						]
-					}
-				}
-			],
-			"title": "Well-being?",
-			"position": {
-				"x": 2107,
-				"y": 416
-			},
-			"colorID": 1
-		},
-		{
-			"id": "6 c",
-			"uuid": "915e9637-3595-5974-a9ca-d77578bb6106",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [],
-			"fallback": "",
-			"output": [
-				{
-					"type": "0",
-					"content": "The beauty about talking to me is that I help you understand what they all are, and based on our discussion, provide you with help that you might need, whatever that would be, regarding your anxiety, mental health or well-being"
-				},
-				{
-					"type": "2",
-					"content": {
-						"text": "Get it ?",
-						"quick_replies": [
-							{
-								"content_type": "text",
-								"title": "Yes, let's chat",
-								"payload": "Yes, let's chat"
-							}
-						]
-					}
-				}
-			],
-			"title": "Let's talk",
-			"position": {
-				"x": 2377,
-				"y": 434
-			},
-			"colorID": 1
-		},
-		{
-			"id": "7 c",
-			"uuid": "6ef99d8d-5f12-7056-80e9-aa1ebf77852a",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [],
-			"fallback": "",
-			"output": [
-				{
-					"type": "0",
-					"content": "Good"
-				},
-				{
-					"type": "2",
-					"content": {
-						"text": "What could I help you with today ?",
-						"quick_replies": [
-							{
-								"content_type": "text",
-								"title": "Take assessment",
-								"payload": "Take assessment"
-							},
-							{
-								"content_type": "text",
-								"title": "Get ressources",
-								"payload": "Get ressources"
-							},
-							{
-								"content_type": "text",
-								"title": "Find Psy",
-								"payload": "Find Psy"
-							}
-						]
-					}
-				}
-			],
-			"title": "Yes, let's chat",
-			"position": {
-				"x": 2679,
-				"y": 424
-			},
-			"colorID": 1
-		}
-	],
-	"fallback_nodes": [
-	{
-			"id": "0 f",
-			"uuid": "d140155f-2fdb-24ef-c3a2-b32e4ca78d3c",
-			"intent_name": " ",
-			"conditions": [
-				{
-					"intent": " ",
-					"entities": []
-				}
-			],
-			"childs": [],
-			"fallback": "",
-			"output": [
-				{
-					"type": "0",
-					"content": "Sorry I didn't get this, can you repeat please?"
-				}
-			],
-			"title": "Default Fallback",
-			"position": {
-				"x": 248,
-				"y": 436
-			},
-			"colorID": 1
-		}
-	]
+         "id": "0 f",
+         "uuid": "0b0a710a-f306-7c56-754d-1881427b7912",
+         "title": "Default Fallback",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [],
+         "childs": [],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "I didn't understand, can you restate your querry"
+            }
+         ],
+         "position": {
+            "x": 283,
+            "y": 218
+         },
+         "colorID": 3
+      },
+      {
+         "id": "1 f",
+         "uuid": "0b0a710a-f306-7c56-754d-1881427b7918",
+         "title": "Q2 GAD 7",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "9 c"
+         ],
+         "childs": [],
+         "fallback": "2 f",
+         "output": [
+            {
+               "type": "2",
+               "content": {
+                  "text": "2. Over the last 2 weeks, how often have you been bothered by not being able to stop or control worrying? ",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Not at all sure",
+                        "payload": "Not at all sure"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Several days",
+                        "payload": "Several days"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Over 1/2 of the days",
+                        "payload": "Over 1/2 of the days"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Nearly every day",
+                        "payload": "Nearly every day"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 1374,
+            "y": 1031
+         },
+         "colorID": 3
+      },
+      {
+         "id": "2 f",
+         "uuid": "7f04fda7-2d38-6399-76e2-ca2d06c3f847",
+         "title": "Q3 GAD 7",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "1 f"
+         ],
+         "childs": [],
+         "fallback": "3 f",
+         "output": [
+            {
+               "type": "2",
+               "content": {
+                  "text": "3. Over the last 2 weeks, how often have you been bothered by worrying too much about different things? ",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Not at all sure",
+                        "payload": "Not at all sure"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Several days",
+                        "payload": "Several days"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Over 1/2 of the days",
+                        "payload": "Over 1/2 of the days"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Nearly every day",
+                        "payload": "Nearly every day"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 1636,
+            "y": 1032
+         },
+         "colorID": 3
+      },
+      {
+         "id": "3 f",
+         "uuid": "2fd31750-2c4e-9c3d-e438-3d810a159d74",
+         "title": "Q4 GAD 7",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "2 f"
+         ],
+         "childs": [],
+         "fallback": "4 f",
+         "output": [
+            {
+               "type": "2",
+               "content": {
+                  "text": "4. Over the last 2 weeks, how often have you been bothered by having trouble relaxing? ",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Not at all sure",
+                        "payload": "Not at all sure"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Several days",
+                        "payload": "Several days"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Over 1/2 of the days",
+                        "payload": "Over 1/2 of the days"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Nearly every day",
+                        "payload": "Nearly every day"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 1899,
+            "y": 1035
+         },
+         "colorID": 3
+      },
+      {
+         "id": "4 f",
+         "uuid": "0749532f-c10e-cc25-8659-9c5cb180796e",
+         "title": "Q5 GAD 7",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "3 f"
+         ],
+         "childs": [],
+         "fallback": "5 f",
+         "output": [
+            {
+               "type": "2",
+               "content": {
+                  "text": "5. Over the last 2 weeks, how often have you been bothered by being so restless that it's hard to sit still  ?",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Not at all sure",
+                        "payload": "Not at all sure"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Several days",
+                        "payload": "Several days"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Over 1/2 of the days",
+                        "payload": "Over 1/2 of the days"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Nearly every day",
+                        "payload": "Nearly every day"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 2158,
+            "y": 1036
+         },
+         "colorID": 3
+      },
+      {
+         "id": "5 f",
+         "uuid": "31a52875-f9c2-168a-039d-62348c21be78",
+         "title": "Q6 GAD 7",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "4 f"
+         ],
+         "childs": [],
+         "fallback": "6 f",
+         "output": [
+            {
+               "type": "2",
+               "content": {
+                  "text": "6. Over the last 2 weeks, how often have you been bothered by becoming easily annoyed or irritable? ",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Not at all sure",
+                        "payload": "Not at all sure"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Several days",
+                        "payload": "Several days"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Over 1/2 of the days",
+                        "payload": "Over 1/2 of the days"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Nearly every day",
+                        "payload": "Nearly every day"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 2385,
+            "y": 1039
+         },
+         "colorID": 3
+      },
+      {
+         "id": "6 f",
+         "uuid": "3b0464c9-b707-92c9-eb24-b3a3a8a75c0c",
+         "title": "Q7 GAD 7",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "5 f"
+         ],
+         "childs": [],
+         "fallback": "7 f",
+         "output": [
+            {
+               "type": "2",
+               "content": {
+                  "text": "7. Over the last 2 weeks, how often have you been bothered by feeling afraid as if something awful might happen?  ",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Not at all sure",
+                        "payload": "Not at all sure"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Several days",
+                        "payload": "Several days"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Over 1/2 of the days",
+                        "payload": "Over 1/2 of the days"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Nearly every day",
+                        "payload": "Nearly every day"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 2645,
+            "y": 1037
+         },
+         "colorID": 3
+      },
+      {
+         "id": "7 f",
+         "uuid": "191683ec-5ebc-276a-2667-a1288954a9e1",
+         "title": "Results",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "6 f"
+         ],
+         "childs": [
+            "11 c",
+            "10 c"
+         ],
+         "fallback": "13 f",
+         "output": [
+            {
+               "type": "0",
+               "content": "Your result indicates that you have low risks of generalized anxiety symptoms."
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "That is not a diagnosis and serves no clinical validation. That has to be done by a human being. I can connect you with that appropriate person if you want.",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Connect",
+                        "payload": "Connect"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Know more",
+                        "payload": "Know more"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 2889,
+            "y": 1035
+         },
+         "colorID": 3
+      },
+      {
+         "id": "8 f",
+         "uuid": "51b7c7dd-8fdd-3554-17e5-165073d0ccdf",
+         "title": "Onboarding 2",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "2 c"
+         ],
+         "childs": [
+            "20 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "Mr. Young is a public health solution that provides its users (you) with an evaluation of their anxiety following a detailed protocol"
+            },
+            {
+               "type": "0",
+               "content": "With the information collected, Mr. Young tries to suggest the solutions adapted to each user."
+            },
+            {
+               "type": "0",
+               "content": "As it is your first time, I am offering you to go through this completely anonymous and confidential protocol."
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "Do you agree ?",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Yes",
+                        "payload": "Yes"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 840,
+            "y": 472
+         },
+         "colorID": 3
+      },
+      {
+         "id": "9 f",
+         "uuid": "beb0efb8-8b32-c8e4-9f40-d2c8483d24d6",
+         "title": "Psychoeducation Symptoms",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "22 c",
+            "21 c"
+         ],
+         "childs": [],
+         "fallback": "10 f",
+         "output": [
+            {
+               "type": "0",
+               "content": "These symptoms are totally common and normal during those anxious situations"
+            }
+         ],
+         "position": {
+            "x": 1315,
+            "y": 1562
+         },
+         "colorID": 3
+      },
+      {
+         "id": "10 f",
+         "uuid": "4da56ae5-ee01-7847-12bc-810aefd80f2c",
+         "title": "Psychological reactions",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "9 f"
+         ],
+         "childs": [
+            "24 c",
+            "23 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "After having covered your physical symptoms, let's address your psychological reactions."
+            },
+            {
+               "type": "0",
+               "content": "Put yourself in situation (context) and think of the thoughts that come to your mind when you're anxious ?"
+            },
+            {
+               "type": "0",
+               "content": "Réponse doit être user input"
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "Si utilisateur a du mal a repondre ou donne peu de réponses alors lui fournir des exemples (voir prochain noeud)",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Répond réactions",
+                        "payload": "Répond réactions"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Pas de réponse",
+                        "payload": "Pas de réponse"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 1579,
+            "y": 1562
+         },
+         "colorID": 3
+      },
+      {
+         "id": "11 f",
+         "uuid": "66ec271b-a16b-e670-5e8e-0ab2062e2276",
+         "title": "PsychoEd Reactions",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "25 c",
+            "23 c"
+         ],
+         "childs": [],
+         "fallback": "12 f",
+         "output": [
+            {
+               "type": "0",
+               "content": "These reactions are totally common and normal during those anxious situations"
+            }
+         ],
+         "position": {
+            "x": 2109,
+            "y": 1552
+         },
+         "colorID": 3
+      },
+      {
+         "id": "12 f",
+         "uuid": "698e1456-6330-bc8c-3911-674d8dc37dd4",
+         "title": "Fréquence & Intensité",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "11 f"
+         ],
+         "childs": [
+            "27 c",
+            "26 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "Thank you for your answers"
+            },
+            {
+               "type": "0",
+               "content": "Generally speaking, do you have the impression of being anxious in a permanent way, without interruption and without any apparent reason ?"
+            },
+            {
+               "type": "0",
+               "content": "If Yes, the bot must think GAD"
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "If no, the GAD diagnosis is less likely",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Yes",
+                        "payload": "Yes"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "No",
+                        "payload": "No"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 2341,
+            "y": 1553
+         },
+         "colorID": 3
+      },
+      {
+         "id": "13 f",
+         "uuid": "bff8454b-c9bb-e8d6-097c-cc8f32a7d83c",
+         "title": "Low anxiety",
+         "intent_name": " ",
+         "conditions": [
+            {
+               "intent": " ",
+               "entities": []
+            }
+         ],
+         "parent_node": [
+            "7 f"
+         ],
+         "childs": [
+            "30 c",
+            "29 c",
+            "28 c"
+         ],
+         "fallback": "",
+         "output": [
+            {
+               "type": "0",
+               "content": "With the answers provided to all the questions asked, it appears to us that you do no seem to be suffering from hard or severe anxiety."
+            },
+            {
+               "type": "0",
+               "content": "Your anxious reactions seems to be normal, and according to you, they are associated to stressful events, therefore reactionnal and discontinued, rather than chronic and continued."
+            },
+            {
+               "type": "0",
+               "content": "If you're interested, Mr. Young can suggest you a few simple exercices to learn how to manage your anxiety so that it no longer is a break when you have to face stressful events."
+            },
+            {
+               "type": "0",
+               "content": "To do that, press the button Solutions down below."
+            },
+            {
+               "type": "2",
+               "content": {
+                  "text": "Levels of anxiety",
+                  "quick_replies": [
+                     {
+                        "content_type": "text",
+                        "title": "Solutions",
+                        "payload": "Solutions"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Normal, light",
+                        "payload": "Normal, light"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "Moderate",
+                        "payload": "Moderate"
+                     },
+                     {
+                        "content_type": "text",
+                        "title": "High",
+                        "payload": "High"
+                     }
+                  ]
+               }
+            }
+         ],
+         "position": {
+            "x": 3095,
+            "y": 545
+         },
+         "colorID": 3
+      }
+   ]
 }
