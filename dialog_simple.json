@@ -1514,7 +1514,7 @@
          "output": [
             {
                "type": "0",
-               "content": "I didn't understand, can you restate your querry"
+               "content": "I didn't understand, can you please restate your querry?"
             }
          ],
          "position": {
@@ -1528,6 +1528,7 @@
          "uuid": "0b0a710a-f306-7c56-754d-1881427b7918",
          "title": "Q2 GAD 7",
          "intent_name": " ",
+		 "tag": "GAD",
          "conditions": [
             {
                "intent": " ",
@@ -1580,6 +1581,7 @@
          "uuid": "7f04fda7-2d38-6399-76e2-ca2d06c3f847",
          "title": "Q3 GAD 7",
          "intent_name": " ",
+		 "tag": "GAD",
          "conditions": [
             {
                "intent": " ",
@@ -1632,6 +1634,7 @@
          "uuid": "2fd31750-2c4e-9c3d-e438-3d810a159d74",
          "title": "Q4 GAD 7",
          "intent_name": " ",
+		 "tag": "GAD",
          "conditions": [
             {
                "intent": " ",
@@ -1684,6 +1687,7 @@
          "uuid": "0749532f-c10e-cc25-8659-9c5cb180796e",
          "title": "Q5 GAD 7",
          "intent_name": " ",
+		 "tag": "GAD",
          "conditions": [
             {
                "intent": " ",
@@ -1736,6 +1740,7 @@
          "uuid": "31a52875-f9c2-168a-039d-62348c21be78",
          "title": "Q6 GAD 7",
          "intent_name": " ",
+		 "tag": "GAD",
          "conditions": [
             {
                "intent": " ",
@@ -1788,6 +1793,7 @@
          "uuid": "3b0464c9-b707-92c9-eb24-b3a3a8a75c0c",
          "title": "Q7 GAD 7",
          "intent_name": " ",
+		 "tag": "GAD",
          "conditions": [
             {
                "intent": " ",
@@ -1839,6 +1845,7 @@
          "id": "7 f",
          "uuid": "191683ec-5ebc-276a-2667-a1288954a9e1",
          "title": "Results",
+		 "tag": "GAD",
          "intent_name": " ",
          "conditions": [
             {
@@ -1855,6 +1862,10 @@
          ],
          "fallback": "13 f",
          "output": [
+			{
+               "type": "0",
+               "content": "%%GAD(user_data)%%."
+            },
             {
                "type": "0",
                "content": "Your result indicates that you have low risks of generalized anxiety symptoms."
