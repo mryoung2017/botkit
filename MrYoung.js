@@ -24,7 +24,7 @@ var apiai = require('botkit-middleware-apiai')({
 });
 
 var uuidv1 = require('uuid/v1');
-var node_search = require('./lib/node_search.js');
+var nodeSearch = require('./lib/node_search.js');
 var fb_send = require('./lib/fb_send.js');
 var Session = require('./lib/Session.js');
 var Botkit = require('./lib/Botkit.js');
@@ -184,19 +184,20 @@ controller.on('message_received', function(bot, message) {
         var user_data_to_save = JSON.parse(body);
         user_data_to_save.user_uuid = user_uuid;
         user_data_to_save.last_session = sess.uuid;
-        controller.storage.users.save(message.user, user_data_to_save, function(){});
+        controller.storage.users.save(message.user, user_data_to_save);
       });
 
       var current_node = "null";			// Convert current_node string to Int
       var current_node_childs = null;		// Get current node childs
       var current_node_fallback = null;		// Get current node fallback
 
-      Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message))
+      nodeSearch(dialog, current_node, current_node_childs,current_node_fallback, message)
       .then(function(found_node) {
-        Promise.resolve(fb_send(bot, message, found_node)).then(function(exchange_to_store){
-          controller.storage.sessions.save(sess.uuid, {start_time: time_stamp, timeout: sess.timeout, userid: user_uuid, last_context: found_node.input_context, messages: exchange_to_store});
+        current_node = found_node;
+        Promise.resolve(fb_send(bot, message, found_node))
+        .then(function(exchange_to_store){
+          controller.storage.sessions.save(sess.uuid, {start_time: time_stamp, timeout: sess.timeout, userid: user_uuid, last_context: current_node.input_context, messages: exchange_to_store});
         });
-        console.log('input context : '+ found_node.input_context);
       })
       .catch(function(err){
         console.log(err);
@@ -218,12 +219,13 @@ controller.on('message_received', function(bot, message) {
               var current_node_childs = dialog.root_nodes[parseInt(input_context)].childs;	// Get current node childs
               var current_node_fallback = dialog.root_nodes[parseInt(input_context)].fallback;		// Get current node fallback
 
-              Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message))
-              .then(function(found_node){
-                console.log('new context : '+ found_node.input_context);
-                Promise.resolve(fb_send(bot, message, found_node, user_data)).then(function(exchange_to_store){
-                  controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: found_node.input_context, messages: exchange_to_store});
-                });
+              nodeSearch(dialog, current_node, current_node_childs,current_node_fallback, message)
+              .then(function(found_node) {
+                current_node = found_node;
+                Promise.resolve(fb_send(bot, message, found_node))
+                .then(function(exchange_to_store){
+                  controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: current_node.input_context, messages: exchange_to_store});
+                })
               })
               .catch(function(err){
                 console.log(err);
@@ -236,12 +238,12 @@ controller.on('message_received', function(bot, message) {
               var current_node_childs = dialog.child_nodes[parseInt(input_context)].childs		// Get current node childs
               var current_node_fallback = dialog.child_nodes[parseInt(input_context)].fallback;		// Get current node fallback
 
-              Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message))
-              .then(function(found_node){
-                console.log('new context : '+ found_node.input_context);
-                Promise.resolve(fb_send(bot, message, found_node, user_data))
+              nodeSearch(dialog, current_node, current_node_childs, current_node_fallback, message)
+              .then(function(found_node) {
+                current_node = found_node;
+                Promise.resolve(fb_send(bot, message, found_node))
                 .then(function(exchange_to_store){
-                  controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: found_node.input_context, messages: exchange_to_store});
+                  controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: current_node.input_context, messages: exchange_to_store});
                 });
               })
               .catch(function(err){
@@ -255,11 +257,12 @@ controller.on('message_received', function(bot, message) {
               var current_node_childs = dialog.fallback_nodes[parseInt(input_context)].childs		// Get current node childs
               var current_node_fallback = dialog.fallback_nodes[parseInt(input_context)].fallback;		// Get current node fallback
 
-              Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message))
-              .then(function(found_node){
-                console.log('new context : '+ found_node.input_context);
-                Promise.resolve(fb_send(bot, message, found_node, user_data)).then(function(exchange_to_store){
-                  controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: found_node.input_context, messages: exchange_to_store});
+              nodeSearch(dialog, current_node, current_node_childs,current_node_fallback, message)
+              .then(function(found_node) {
+                current_node = found_node;
+                Promise.resolve(fb_send(bot, message, found_node))
+                .then(function(exchange_to_store){
+                  controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: current_node.input_context, messages: exchange_to_store[0]});
                 });
               })
               .catch(function(err){
@@ -274,11 +277,12 @@ controller.on('message_received', function(bot, message) {
               var current_node_childs = null;		// Get current node childs
               var current_node_fallback = null;		// Get current node fallback
 
-              Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message))
-              .then( function(found_node) {
-                console.log('new context : '+ found_node.input_context);
-                Promise.resolve(fb_send(bot, message, found_node, user_data)).then(function(exchange_to_store){
-                  controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: found_node.input_context, messages: exchange_to_store});
+              nodeSearch(dialog, current_node, current_node_childs,current_node_fallback, message)
+              .then(function(found_node) {
+                current_node = found_node;
+                Promise.resolve(fb_send(bot, message, found_node))
+                .then(function(exchange_to_store){
+                  controller.storage.sessions.save(sess.uuid, {timeout: sess.timeout, last_context: current_node.input_context, messages: exchange_to_store[0]});
                 });
               })
               .catch(function(err){
@@ -298,12 +302,15 @@ controller.on('message_received', function(bot, message) {
             var current_node_childs = null;		// Get current node childs
             var current_node_fallback = null;		// Get current node fallback
 
-            Promise.resolve(node_search(dialog, current_node, current_node_childs, current_node_fallback, message)).then(function(found_node){
-              console.log('new context : '+ found_node.input_context);
-              Promise.resolve(fb_send(bot, message, found_node, user_data)).then(function(exchange_to_store){
-                controller.storage.sessions.save(sess.uuid, {start_time: time_stamp, timeout: sess.timeout, userid: userid, last_context: found_node.input_context, messages: exchange_to_store});
+            nodeSearch(dialog, current_node, current_node_childs,current_node_fallback, message)
+            .then(function(found_node) {
+              current_node = found_node;
+              Promise.resolve(fb_send(bot, message, found_node))
+              .then(function(exchange_to_store){
+                controller.storage.sessions.save(sess.uuid, {start_time: time_stamp, timeout: sess.timeout, userid: userid, last_context: found_node.input_context, messages: exchange_to_store[0]});
               });
-            }).catch(function(err){
+            })
+            .catch(function(err){
               console.log(err);
             });
           }
